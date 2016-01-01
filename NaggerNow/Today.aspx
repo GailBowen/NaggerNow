@@ -28,28 +28,28 @@
 	font-size: 1em;
   }
 
-  .colMan {
+  #colMan {
     width: 288px;
     float:left;
     padding-bottom: 2px;
     background-color: orange;
   }
 
-  .colOpt {
+  #colOpt {
     width: 288px;
     float:left;
     padding-bottom: 2px;
     background-color: yellow;
   }
 
-   .colDone {
+   #colDone {
     width: 288px;
     float:left;
     padding-bottom: 2px;
     background-color: greenyellow;
   }
 
-   .colSkip {
+   #colSkip {
     width: 288px;
     float:left;
     padding-bottom: 2px;
@@ -98,8 +98,18 @@
 
       function onPageLoad() {
     
-          $(".colMan").sortable({
-              connectWith: ".colDone",
+          $("#colMan").sortable({
+              connectWith: "#colDone",
+              update: function (event, ui) {
+                  //var out = "";
+
+                  //$('.portlet').each(function (index) {
+                  //    out += $(this).attr('id') + ',';
+                  //});
+
+                  //alert(out);
+                  alert($(this).attr('id'));
+              },
               handle: ".portlet-header",
               cancel: ".portlet-toggle",
               start: function (event, ui) {
@@ -110,8 +120,8 @@
               }
           });
 
-          $(".colDone").sortable({
-              connectWith: ".colOpt, .colMan",
+          $("#colDone").sortable({
+              connectWith: "#colOpt, #colMan",
               handle: ".portlet-header",
               cancel: ".portlet-toggle",
               start: function (event, ui) {
@@ -123,8 +133,8 @@
           });
 
 
-          $(".colOpt").sortable({
-              connectWith: ".colSkip, .colDone",
+          $("#colOpt").sortable({
+              connectWith: "#colSkip, #colDone",
               handle: ".portlet-header",
               cancel: ".portlet-toggle",
               start: function (event, ui) {
@@ -135,8 +145,8 @@
               }
           });
 
-          $(".colSkip").sortable({
-              connectWith: ".colOpt",
+          $("#colSkip").sortable({
+              connectWith: "#colOpt",
               handle: ".portlet-header",
               cancel: ".portlet-toggle",
               start: function (event, ui) {
@@ -175,7 +185,7 @@
         <tr>
             <td>
                 <div class="columnHeader">
-                    <h2 style="text-align:center">Must Do</h2>
+                    <h2 style="text-align:center">Mandated</h2>
                 </div>
             </td>
             <td>
@@ -197,7 +207,7 @@
 
         <tr>
             <td style="vertical-align:top">
-            <div class="colMan">
+            <div id="colMan">
 
                 <div class="portlet">
                     <div class="portlet-header">Money</div>
@@ -254,7 +264,7 @@
             </td>
 
             <td style="vertical-align:top">
-            <div class="colOpt">
+            <div id="colOpt">
 
                 <div class="portlet">
                     <div class="portlet-header portlet-header-optional">Sofa</div>
@@ -270,7 +280,7 @@
             </td>
 
             <td style="vertical-align:top">
-            <div class="colDone">
+            <div id="colDone">
 
                 <div class="portlet">
                     <div class="portlet-header">Politics</div>
@@ -286,7 +296,7 @@
             </td>
 
             <td style="vertical-align:top">
-            <div class="colSkip">
+            <div id="colSkip">
 
                 <div class="portlet">
                     <div class="portlet-header portlet-header-optional">Bike</div>
