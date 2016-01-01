@@ -175,7 +175,7 @@
         <tr>
             <td>
                 <div class="columnHeader">
-                    <h2 style="text-align:center">Mandated</h2>
+                    <h2 style="text-align:center">Must Do</h2>
                 </div>
             </td>
             <td>
