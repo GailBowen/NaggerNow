@@ -29,32 +29,26 @@
 	font-size: 1em;
   }
 
-  #colMan {
+  .col {
     width: 288px;
     float:left;
     padding-bottom: 2px;
+    min-height:6em;
+ }
+
+  #colMan {
     background-color: orange;
   }
 
   #colOpt {
-    width: 288px;
-    float:left;
-    padding-bottom: 2px;
     background-color: yellow;
-    min-height:6em;
   }
 
    #colDone {
-    width: 288px;
-    float:left;
-    padding-bottom: 2px;
     background-color: greenyellow;
   }
 
    #colSkip {
-    width: 288px;
-    float:left;
-    padding-bottom: 2px;
     background-color: gray;
   }
      
@@ -187,10 +181,6 @@
 </head>
 <body>
 
-
-
-
-
     <table>
         <tr>
             <td>
@@ -217,7 +207,7 @@
 
         <tr>
             <td style="vertical-align:top">
-            <div id="colMan">
+            <div id="colMan" class="col">
 
                 <div class="portlet" id="Money">
                     <div class="portlet-header">Money</div>
@@ -269,7 +259,7 @@
             </td>
 
             <td style="vertical-align:top">
-            <div id="colOpt">
+            <div id="colOpt" class="col">
 
                 <div class="portlet" id="Sofa">
                     <div class="portlet-header portlet-header-optional">Sofa</div>
@@ -285,7 +275,7 @@
             </td>
 
             <td style="vertical-align:top">
-            <div id="colDone">
+            <div id="colDone" class="col">
 
                 <div class="portlet" id="Politics">
                     <div class="portlet-header">Politics</div>
@@ -301,7 +291,7 @@
             </td>
 
             <td style="vertical-align:top">
-            <div id="colSkip">
+            <div id="colSkip" class="col">
 
                 <div class="portlet" id="Bike">
                     <div class="portlet-header portlet-header-optional">Bike</div>
