@@ -96,11 +96,7 @@
     
           $("#colMan").sortable({
               connectWith: "#colDone",
-              receive: function (event, ui) {
-                  alert($(this).attr('id'));
-                  alert(ui.item.attr('id'));
-                  return true;
-              },
+              receive: MoveInfo,
               handle: ".portlet-header",
               cancel: ".portlet-toggle",
               start: function (event, ui) {
@@ -113,11 +109,7 @@
 
           $("#colDone").sortable({
               connectWith: "#colOpt, #colMan",
-              receive: function (event, ui) {
-                  alert($(this).attr('id'));
-                  alert(ui.item.attr('id'));
-                  return true;
-              },
+              receive: MoveInfo,
               handle: ".portlet-header",
               cancel: ".portlet-toggle",
               start: function (event, ui) {
@@ -131,11 +123,7 @@
 
           $("#colOpt").sortable({
               connectWith: "#colSkip, #colDone",
-              receive: function (event, ui) {
-                  alert($(this).attr('id'));
-                  alert(ui.item.attr('id'));
-                  return true;
-              },
+              receive: MoveInfo,
               handle: ".portlet-header",
               cancel: ".portlet-toggle",
               start: function (event, ui) {
@@ -148,11 +136,7 @@
 
           $("#colSkip").sortable({
               connectWith: "#colOpt",
-              receive: function (event, ui) {
-                  alert($(this).attr('id'));
-                  alert(ui.item.attr('id'));
-                  return true;
-              },
+              receive: MoveInfo,
               handle: ".portlet-header",
               cancel: ".portlet-toggle",
               start: function (event, ui) {
@@ -163,6 +147,7 @@
               }
           });
 
+         
 
           $(".portlet")
             .addClass("ui-widget ui-widget-content ui-helper-clearfix ui-corner-all")
@@ -176,6 +161,15 @@
               icon.closest(".portlet").find(".portlet-content").toggle();
           });
       }
+
+
+      function MoveInfo(event, ui) {
+          alert($(this).attr('id'));
+          alert(ui.item.attr('id'));
+          return true;
+      }
+
+      
   </script>
 
 </head>
