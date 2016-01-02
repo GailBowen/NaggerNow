@@ -16,3 +16,8 @@ E:\NaggerNow\nuget\NaggerNow\NaggerNow\bin\NaggerNow.pdb
 E:\NaggerNow\nuget\NaggerNow\NaggerNow\obj\Debug\NaggerNow.csprojResolveAssemblyReference.cache
 E:\NaggerNow\nuget\NaggerNow\NaggerNow\obj\Debug\NaggerNow.dll
 E:\NaggerNow\nuget\NaggerNow\NaggerNow\obj\Debug\NaggerNow.pdb
+E:\Dropbox\Dropbox\Nagger\NaggerNow\NaggerNow\bin\log4net.dll
+E:\Dropbox\Dropbox\Nagger\NaggerNow\NaggerNow\bin\Microsoft.ApplicationBlocks.Data.dll
+E:\Dropbox\Dropbox\Nagger\NaggerNow\NaggerNow\bin\Newtonsoft.Json.dll
+E:\Dropbox\Dropbox\Nagger\NaggerNow\NaggerNow\bin\log4net.xml
+E:\Dropbox\Dropbox\Nagger\NaggerNow\NaggerNow\bin\Newtonsoft.Json.xml
