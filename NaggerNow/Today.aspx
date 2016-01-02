@@ -6,8 +6,9 @@
   
   <link href="Content/themes/smoothness/jquery-ui.smoothness.css" rel="stylesheet" />
 
-  <script src="Scripts/jquery-1.6.4.js"></script>
-  <script src="Scripts/jquery-ui-1.11.1.js"></script>
+  <script src="Scripts/jquery-2.1.4.js"></script>
+  <script src="Scripts/jquery-ui-1.11.4.js"></script>
+
 
   <style>
 
@@ -40,6 +41,7 @@
     float:left;
     padding-bottom: 2px;
     background-color: yellow;
+    min-height:6em;
   }
 
    #colDone {
@@ -100,15 +102,10 @@
     
           $("#colMan").sortable({
               connectWith: "#colDone",
-              update: function (event, ui) {
-                  //var out = "";
-
-                  //$('.portlet').each(function (index) {
-                  //    out += $(this).attr('id') + ',';
-                  //});
-
-                  //alert(out);
+              receive: function (event, ui) {
                   alert($(this).attr('id'));
+                  alert(ui.item.attr('id'));
+                  return true;
               },
               handle: ".portlet-header",
               cancel: ".portlet-toggle",
@@ -122,6 +119,11 @@
 
           $("#colDone").sortable({
               connectWith: "#colOpt, #colMan",
+              receive: function (event, ui) {
+                  alert($(this).attr('id'));
+                  alert(ui.item.attr('id'));
+                  return true;
+              },
               handle: ".portlet-header",
               cancel: ".portlet-toggle",
               start: function (event, ui) {
@@ -135,6 +137,11 @@
 
           $("#colOpt").sortable({
               connectWith: "#colSkip, #colDone",
+              receive: function (event, ui) {
+                  alert($(this).attr('id'));
+                  alert(ui.item.attr('id'));
+                  return true;
+              },
               handle: ".portlet-header",
               cancel: ".portlet-toggle",
               start: function (event, ui) {
@@ -147,6 +154,11 @@
 
           $("#colSkip").sortable({
               connectWith: "#colOpt",
+              receive: function (event, ui) {
+                  alert($(this).attr('id'));
+                  alert(ui.item.attr('id'));
+                  return true;
+              },
               handle: ".portlet-header",
               cancel: ".portlet-toggle",
               start: function (event, ui) {
@@ -156,8 +168,6 @@
                   ui.item.removeClass('tilt');
               }
           });
-
-      
 
 
           $(".portlet")
@@ -209,22 +219,22 @@
             <td style="vertical-align:top">
             <div id="colMan">
 
-                <div class="portlet">
+                <div class="portlet" id="Money">
                     <div class="portlet-header">Money</div>
                     <div class="portlet-content">Sat Nav sync?</div>
                 </div>
 
-                <div class="portlet">
+                <div class="portlet" id="Brave">
                     <div class="portlet-header">Brave</div>
                     <div class="portlet-content">Climbing?</div>
                 </div>
 
-                <div class="portlet">
+                <div class="portlet" id="Work">
                     <div class="portlet-header">Work</div>
                     <div class="portlet-content">Pluralsight</div>
                 </div>
 
-                <div class="portlet">
+                <div class="portlet" id="Artists">
                     <div class="portlet-header">Artists</div>
                     <div class="portlet-content">
                         Del Piombo 
@@ -239,23 +249,18 @@
                     </div>
                 </div>
 
-                <div class="portlet">
-                    <div class="portlet-header">Politics</div>
-                    <div class="portlet-content">Spectator podcast</div>
-                </div>
-
-                <div class="portlet">
+                <div class="portlet" id="Blog">
                     <div class="portlet-header">Blog</div>
                     <div class="portlet-content">Sugar</div>
                 </div>
 
-                <div class="portlet">
+                <div class="portlet" id="Vegetables">
                     <div class="portlet-header portlet-header-healthy">Vegetables</div>
                     <div class="portlet-content">Winter Squash</div>
                 </div>
 
 
-                <div class="portlet">
+                <div class="portlet" id="Fruit">
                     <div class="portlet-header portlet-header-healthy">Fruit</div>
                     <div class="portlet-content">Blackberries</div>
                 </div>
@@ -266,12 +271,12 @@
             <td style="vertical-align:top">
             <div id="colOpt">
 
-                <div class="portlet">
+                <div class="portlet" id="Sofa">
                     <div class="portlet-header portlet-header-optional">Sofa</div>
                     <div class="portlet-content">Polish the sofa with nourishing cream</div>
                 </div>
 
-                 <div class="portlet">
+                 <div class="portlet" id="Cat">
                     <div class="portlet-header portlet-header-optional">Cat</div>
                     <div class="portlet-content">Play with cat</div>
                 </div>
@@ -282,12 +287,12 @@
             <td style="vertical-align:top">
             <div id="colDone">
 
-                <div class="portlet">
+                <div class="portlet" id="Politics">
                     <div class="portlet-header">Politics</div>
                     <div class="portlet-content">Spectator podcast</div>
                 </div>
 
-                 <div class="portlet">
+                 <div class="portlet" id="BetterPlace">
                     <div class="portlet-header">Better place</div>
                     <div class="portlet-content">MicroLoan?</div>
                 </div>
@@ -298,12 +303,12 @@
             <td style="vertical-align:top">
             <div id="colSkip">
 
-                <div class="portlet">
+                <div class="portlet" id="Bike">
                     <div class="portlet-header portlet-header-optional">Bike</div>
                     <div class="portlet-content">Fix tyre</div>
                 </div>
 
-                <div class="portlet">
+                <div class="portlet" id="Meters">
                     <div class="portlet-header portlet-header-optional">Meters</div>
                     <div class="portlet-content">Gas and Electricity</div>
                 </div>
