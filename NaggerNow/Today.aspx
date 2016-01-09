@@ -136,6 +136,10 @@
 
               self.getCards();
 
+
+              //alert(self.Cards()[0].title);
+              //alert(self.Cards()[0].cardType);
+
               self.tokenCount = ko.observable("");
 
               self.sum = function (items, prop) {
@@ -145,6 +149,8 @@
               };
 
               self.tokenCount = self.sum(self.Cards(), 'tokensAwarded');
+              
+              //alert(self.tokenCount);
           }
 
 
@@ -235,7 +241,7 @@
 <body>
 
   <div id="CardsContainer">
-
+      
     <table>
         <tr>
             <td>
@@ -262,16 +268,16 @@
 
         <tr>
            <td style="vertical-align:top">
-            <div id="colOpt" class="col">
+            
+           <div id="colOpt" class="col" data-bind="foreach: Cards">
 
-                  <!-- ko foreach: Cards -->
-                  <div class="portlet" data-bind="attr: { id: title }">
-                    <div class="portlet-header portlet-header-optional"><!--ko text: title--><!--/ko--></div>
-                    <div class="portlet-content"><!--ko text: cardType--><!--/ko--></div>
-                  </div>
-                 <!-- /ko -->
+                <div class="portlet" data-bind="attr: { id: id }">
+                  <div class="portlet-header portlet-header-optional" data-bind="text: title + ' (' + tokensAwarded + ')'"></div>
+                  <div class="portlet-content" data-bind="text: cardType"></div>
+                </div>
 
             </div>
+
             </td>
 
             <td style="vertical-align:top">
@@ -361,6 +367,8 @@
             </td>
         </tr>
     </table>
+
+    <h1 data-bind="text: 'Token Count: ' + tokenCount"></h1>
 </div>
 
     

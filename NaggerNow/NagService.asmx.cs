@@ -56,9 +56,9 @@ namespace NaggerNow
                         title = rdr["Title"],
                         board = rdr["Board"],
                         list = rdr["List"],
-                        cardtype = rdr["CardType"],
+                        cardType = rdr["CardType"],
                         token = rdr["token"],
-                        tokensawarded = rdr["tokensawarded"]
+                        tokensAwarded = rdr["tokensawarded"]
                     });
                 }
 
