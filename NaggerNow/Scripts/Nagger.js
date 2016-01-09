@@ -1,9 +1,9 @@
 ﻿
-InfracastAPI = window.InfracastAPI || {};
+Nagger = window.Nagger || {};
 
 var baseURL = "";
 
-var InfracastAPI = function () {
+var Nagger = function () {
     var self = this;
 
     getData = function (serviceURL, dataPopulationFunction, type, dataType, async, params) {
@@ -179,70 +179,3 @@ String.prototype.endsWith = function (suffix) {
     return this.match(suffix + "$") == suffix;
 };
 
-
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + "; " + expires;
-}
-
-function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') c = c.substring(1);
-        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-    }
-    return "";
-}
-
-
-function daysBetween(first, second) {
-
-    // Copy date parts of the timestamps, discarding the time parts.
-    var one = new Date(first.getFullYear(), first.getMonth(), first.getDate());
-    var two = new Date(second.getFullYear(), second.getMonth(), second.getDate());
-
-    // Do the math.
-    var millisecondsPerDay = 1000 * 60 * 60 * 24;
-    var millisBetween = two.getTime() - one.getTime();
-    var days = millisBetween / millisecondsPerDay;
-
-    // Round down.
-    return Math.floor(days);
-}
-
-function SaveTourStatus(pagename) {
-    //InfracastAPI.postData('wsRefData.asmx/SaveTourStatus', pagename, function (data) { }, 'POST', 'text/plain', false);
-    //var postData = JSON.stringify({ formVars: pagename });
-    //var jd = JSON.parse(postData);
-    //var errorReport = '';
-    var formVars = 'wfSendMessage';
-    $.ajax({
-        type: "Get",
-        url: "wsRefData.asmx/SaveTourStatus?formVars=" + pagename,
-        contentType: "plain/text; charset=utf-8",
-        data: formVars,
-        dataType: "text",
-        cache: false,
-        //processData: true,
-        success: function (data) {
-        },
-        async: false,
-        error: function (jqXHR, textStatus, errorThrown) {
-            //var responseData = $.parseJSON(jqXHR.responseText);
-            //var parsedData = $.parseJSON(test.d);
-            //send error to client
-        }
-    });
-
-}

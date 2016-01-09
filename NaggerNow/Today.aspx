@@ -126,7 +126,7 @@
               self.getCards = function () {
 
                   var url = "/NagService.asmx/GetNags";
-                  InfracastAPI.getData(url, self.populateCards, 'GET', 'json', false);
+                  Nagger.getData(url, self.populateCards, 'GET', 'json', false);
               };
 
               self.populateCards = function (allData) {
