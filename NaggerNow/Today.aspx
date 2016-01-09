@@ -80,6 +80,7 @@
     right: 0;
     margin-top: -8px;
   }
+
   .portlet-content {
     padding: 0.4em;
    
@@ -94,38 +95,9 @@
       $(onPageLoad);
 
       function onPageLoad() {
-    
-          if (!Array.prototype.reduce) {
-              Array.prototype.reduce = function (callback /*, initialValue*/) {
-                  'use strict';
-                  if (this == null) {
-                      throw new TypeError('Array.prototype.reduce called on null or undefined');
-                  }
-                  if (typeof callback !== 'function') {
-                      throw new TypeError(callback + ' is not a function');
-                  }
-                  var t = Object(this), len = t.length >>> 0, k = 0, value;
-                  if (arguments.length == 2) {
-                      value = arguments[1];
-                  } else {
-                      while (k < len && !(k in t)) {
-                          k++;
-                      }
-                      if (k >= len) {
-                          throw new TypeError('Reduce of empty array with no initial value');
-                      }
-                      value = t[k++];
-                  }
-                  for (; k < len; k++) {
-                      if (k in t) {
-                          value = callback(value, t[k], k, t);
-                      }
-                  }
-                  return value;
-              };
-          }
+   
 
-          function serviceLevel(id, title, board, list, cardtype, token, tokensawarded) {
+          function Card(id, title, board, list, cardType, token, tokensAwarded) {
               var self = this;
 
               self.id = id;
@@ -136,34 +108,33 @@
 
               self.list = list;
 
-              self.cardtype = cardtype;
+              self.cardType = cardType;
 
               self.token = token;
 
-              self.tokensawarded = tokensawarded;
+              self.tokensAwarded = tokensAwarded;
 
           }
+          
 
+          function CardsViewModel() {
 
-
-          function FoldersViewModel() {
               var self = this;
 
-              self.serviceTypeListA = ko.observableArray("");
-
-
-              self.getServiceTypeListA = function () {
+              self.Cards = ko.observableArray("");
+                            
+              self.getCards = function () {
 
                   var url = "/NagService.asmx/GetNags";
-                  InfracastAPI.getData(url, self.populateServiceTypeListA, 'GET', 'json', false);
+                  InfracastAPI.getData(url, self.populateCards, 'GET', 'json', false);
               };
 
-              self.populateServiceTypeListA = function (allData) {
-                  var temp = $.map(allData, function (item) { return new serviceLevel(item.id, item.title, item.board, item.list, item.cardtype, item.token, item.tokensawarded) });
-                  self.serviceTypeListA(temp);
+              self.populateCards = function (allData) {
+                  var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.board, item.list, item.cardType, item.token, item.tokensAwarded) });
+                  self.Cards(temp);
               };
 
-              self.getServiceTypeListA();
+              self.getCards();
 
               self.tokenCount = ko.observable("");
 
@@ -173,33 +144,14 @@
                   }, 0);
               };
 
-              self.tokenCount = self.sum(self.serviceTypeListA(), 'tokensawarded');
-
-
-
+              self.tokenCount = self.sum(self.Cards(), 'tokensAwarded');
           }
 
 
-          var svm = new FoldersViewModel();
-          //$(document).ready(function () {
-          ko.applyBindings(svm, document.getElementById("SLAContainer"));
-          //});
-
-
-          /*Custom Knockout binding to allow 'Enter' to submit*/
-          ko.bindingHandlers.enterkey = {
-              init: function (element, valueAccessor, allBindings, viewModel) {
-                  var callback = valueAccessor();
-                  $(element).keypress(function (event) {
-                      var keyCode = (event.which ? event.which : event.keyCode);
-                      if (keyCode === 13) {
-                          callback.call(viewModel);
-                          return false;
-                      }
-                      return true;
-                  });
-              }
-          };
+          var svm = new CardsViewModel();
+          
+          ko.applyBindings(svm, document.getElementById("CardsContainer"));
+           
 
           $("#colMan").sortable({
               connectWith: "#colDone",
@@ -253,8 +205,7 @@
                   ui.item.removeClass('tilt');
               }
           });
-
-
+          
 
           $(".portlet")
             .addClass("ui-widget ui-widget-content ui-helper-clearfix ui-corner-all")
@@ -277,14 +228,13 @@
           return true;
       }
 
-
       
   </script>
 
 </head>
 <body>
 
-  <div id="SLAContainer">
+  <div id="CardsContainer">
 
     <table>
         <tr>
@@ -314,16 +264,10 @@
            <td style="vertical-align:top">
             <div id="colOpt" class="col">
 
-                 <div class="portlet" id="Test">
-                    <div class="portlet-header portlet-header-optional">Bike</div>
-                    <div class="portlet-content">Fix tyre</div>
-                </div>
-
-
-                  <!-- ko foreach: serviceTypeListA -->
+                  <!-- ko foreach: Cards -->
                   <div class="portlet" data-bind="attr: { id: title }">
                     <div class="portlet-header portlet-header-optional"><!--ko text: title--><!--/ko--></div>
-                    <div class="portlet-content"><!--ko text: cardtype--><!--/ko--></div>
+                    <div class="portlet-content"><!--ko text: cardType--><!--/ko--></div>
                   </div>
                  <!-- /ko -->
 
