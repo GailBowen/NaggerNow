@@ -1,9 +1,9 @@
 ﻿
-Nagger = window.Nagger || {};
+NaggerConnect = window.NaggerConnect || {};
 
 var baseURL = "";
 
-var Nagger = function () {
+var NaggerConnect = function () {
     var self = this;
 
     getData = function (serviceURL, dataPopulationFunction, type, dataType, async, params) {

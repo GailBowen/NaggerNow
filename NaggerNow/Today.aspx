@@ -9,7 +9,7 @@
   <script src="Scripts/jquery-2.1.4.js"></script>
   <script src="Scripts/jquery-ui-1.11.4.js"></script>
   <script src="Scripts/knockout-3.4.0.js"></script>
-  <script src="Scripts/Nagger.js"></script>
+  <script src="Scripts/NaggerConnect.js"></script>
   <link href="Content/Nagger.css" rel="stylesheet" />
   
   <script>
@@ -47,7 +47,7 @@
               self.getCards = function () {
 
                   var url = "/NagService.asmx/GetNags";
-                  Nagger.getData(url, self.populateCards, 'GET', 'json', false);
+                  NaggerConnect.getData(url, self.populateCards, 'GET', 'json', false);
               };
 
               self.populateCards = function (allData) {
