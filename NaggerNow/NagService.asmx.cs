@@ -84,6 +84,56 @@ namespace NaggerNow
 
         }
 
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void GetOptionalNags()
+        {
+            ArrayList objs = new ArrayList();
+
+            try
+            {
+
+                const string spName = "[dbo].[Cards_FetchOptional_Today]";
+
+
+                string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
+
+
+                SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
+
+
+                IDataReader rdr = SqlHelper.ExecuteReader(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+
+
+                while (rdr.Read())
+                {
+                    objs.Add(new
+                    {
+                        id = rdr["ID"],
+                        title = rdr["Title"],
+                        description = rdr["Description"],
+                        board = rdr["Board"],
+                        cardType = rdr["CardType"],
+                        token = rdr["token"],
+                        tokensAwarded = rdr["tokensawarded"],
+                        lastDone = rdr["lastdone"]
+                    });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (log.IsDebugEnabled)
+                {
+                    log.DebugFormat("Error getting Optional Nags: {0}", ex.Message);
+                }
+            }
+
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(objs));
+
+        }
 
         [WebMethod(EnableSession = true)]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]

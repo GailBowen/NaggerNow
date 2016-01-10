@@ -70,10 +70,20 @@ function CardsViewModel() {
     //Get optional cards
     self.OptionalCards = ko.observableArray("");
 
-    self.OptionalCards.push(new Card(22, 'Fox', 'Walk the fox', 'Fox', 'Optional', 3, 3, 0));
-    
-    //alert(self.Cards()[0].title);
-    //alert(self.Cards()[0].cardType);
+    self.getOptionalCards = function () {
+
+        var url = "/NagService.asmx/GetOptionalNags";
+        NaggerConnect.getData(url, self.populateOptionalCards, 'GET', 'json', false);
+    };
+
+    self.populateOptionalCards = function (allData) {
+        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.cardType, item.token, item.tokensAwarded, item.lastDone) });
+        self.OptionalCards(temp);
+    };
+
+    self.getOptionalCards();
+
+    alert(self.OptionalCards()[0].token);
 
     self.tokenCount = ko.observable("");
 

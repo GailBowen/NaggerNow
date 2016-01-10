@@ -53,7 +53,7 @@
                <div id="colOpt" class="col" data-bind="foreach: OptionalCards">
 
                     <div class="portlet" data-bind="attr: { id: id }">
-                      <div class="portlet-header portlet-header-optional" data-bind="text: title + ' (' + tokensAwarded + ')'"></div>
+                      <div class="portlet-header portlet-header-optional" data-bind="text: title + ' (' + token + ')'"></div>
                       <div class="portlet-content" data-bind="text: description"></div>
                     </div>
 
