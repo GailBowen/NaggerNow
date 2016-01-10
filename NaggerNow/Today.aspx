@@ -88,10 +88,14 @@
                 </td>
 
                 <td style="vertical-align:top">
-                <div id="colSkip" class="col">
+                 <div id="colSkip" class="col" data-bind="foreach: SkippedCards">
 
-                 
-                </div>
+                        <div class="portlet" data-bind="attr: { id: id }">
+                          <div class="portlet-header portlet-header-optional" data-bind="text: title"></div>
+                          <div class="portlet-content" data-bind="text: description"></div>
+                        </div>
+
+                    </div>
                 </td>
             </tr>
         </table>

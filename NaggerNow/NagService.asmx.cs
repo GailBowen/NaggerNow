@@ -137,6 +137,57 @@ namespace NaggerNow
 
         [WebMethod(EnableSession = true)]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void GetSkippedNags()
+        {
+            ArrayList objs = new ArrayList();
+
+            try
+            {
+
+                const string spName = "[dbo].[Cards_FetchSkipped_Today]";
+
+
+                string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
+
+
+                SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
+
+
+                IDataReader rdr = SqlHelper.ExecuteReader(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+
+
+                while (rdr.Read())
+                {
+                    objs.Add(new
+                    {
+                        id = rdr["ID"],
+                        title = rdr["Title"],
+                        description = rdr["Description"],
+                        board = rdr["Board"],
+                        cardType = rdr["CardType"],
+                        token = rdr["token"],
+                        tokensAwarded = rdr["tokensawarded"],
+                        lastDone = rdr["lastdone"]
+                    });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (log.IsDebugEnabled)
+                {
+                    log.DebugFormat("Error getting skipped Nags: {0}", ex.Message);
+                }
+            }
+
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(objs));
+
+        }
+
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void GetDoneTodayNags()
         {
             ArrayList objs = new ArrayList();
@@ -224,7 +275,78 @@ namespace NaggerNow
         }
 
 
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void NagMovedToSkipped(string Nag)
+        {
+            var result = JsonConvert.DeserializeObject<Card>(Nag);
 
+            string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
+
+            if (result.id == -1)
+            {
+                //ToDo
+            }
+            else
+            {
+                string spName = "NagMovedToSkipped";
+
+                SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
+                sqlParam[0].Value = result.id;
+
+                SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+
+                log.InfoFormat("Card skipped: {0}", Nag);
+            }
+
+            ArrayList objs = new ArrayList();
+            objs.Add(new
+            {
+                Test = "test",
+            });
+
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(objs));
+
+        }
+
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void NagMovedToOptional(string Nag)
+        {
+            var result = JsonConvert.DeserializeObject<Card>(Nag);
+
+            string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
+
+            if (result.id == -1)
+            {
+                //ToDo
+            }
+            else
+            {
+                string spName = "NagMovedToOptional";
+
+                SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
+                sqlParam[0].Value = result.id;
+
+                SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+
+                log.InfoFormat("Card moved back to optional: {0}", Nag);
+            }
+
+            ArrayList objs = new ArrayList();
+            objs.Add(new
+            {
+                Test = "test",
+            });
+
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(objs));
+
+        }
+        
         [WebMethod(EnableSession = true)]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void NagMovedToMandated(string Nag)

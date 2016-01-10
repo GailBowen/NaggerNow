@@ -83,8 +83,22 @@ function CardsViewModel() {
 
     self.getOptionalCards();
 
-    alert(self.OptionalCards()[0].token);
+    //Get Skipped cards
+    self.SkippedCards = ko.observableArray("");
 
+    self.getSkippedCards = function () {
+
+        var url = "/NagService.asmx/GetSkippedNags";
+        NaggerConnect.getData(url, self.populateSkippedCards, 'GET', 'json', false);
+    };
+
+    self.populateSkippedCards = function (allData) {
+        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.cardType, item.token, item.tokensAwarded, item.lastDone) });
+        self.SkippedCards(temp);
+    };
+
+    self.getSkippedCards();
+    
     self.tokenCount = ko.observable("");
 
     self.sum = function (items, prop) {
@@ -95,7 +109,6 @@ function CardsViewModel() {
 
     self.tokenCount = self.sum(self.OptionalCards(), 'tokensAwarded');
 
-    //alert(self.tokenCount);
 }
 
 function MoveInfo(event, ui) {
@@ -109,12 +122,20 @@ function MoveInfo(event, ui) {
     var encoded = encodeURIComponent(currentCard);
 
     switch (column) {
+        case 'colOpt':
+            var url = "/NagService.asmx/NagMovedToOptional?Nag=" + encoded;
+            break;
+
         case 'colMan':
             var url = "/NagService.asmx/NagMovedToMandated?Nag=" + encoded;
             break;
 
         case 'colDone':
             var url = "/NagService.asmx/NagDone?Nag=" + encoded;
+            break;
+
+        case 'colSkip':
+            var url = "/NagService.asmx/NagMovedToSkipped?Nag=" + encoded;
             break;
 
         default:
