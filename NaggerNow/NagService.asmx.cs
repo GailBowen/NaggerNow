@@ -35,8 +35,7 @@ namespace NaggerNow
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void GetMandatedNags()
         {
-            //GailToDo: Add security.
-
+          
             ArrayList objs = new ArrayList();
 
             try
@@ -240,27 +239,22 @@ namespace NaggerNow
 
         [WebMethod(EnableSession = true)]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void NagDone(string Nag)
+        public void NagMovedToDone(string Nag)
         {
             var result = JsonConvert.DeserializeObject<Card>(Nag);
 
             string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
 
-            if (result.id == -1)
-            {
-                //ToDo
-            }
-            else
-            {
-                string spName = "NagDone";
+            
+            string spName = "NagMovedToDone";
 
-                SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
-                sqlParam[0].Value = result.id;
+            SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
+            sqlParam[0].Value = result.id;
                
-                SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+            SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
 
-                log.InfoFormat("Card updated: {0}", Nag);
-            }
+            log.InfoFormat("Card updated: {0}", Nag);
+            
 
             ArrayList objs = new ArrayList();
             objs.Add(new
@@ -283,21 +277,16 @@ namespace NaggerNow
 
             string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
 
-            if (result.id == -1)
-            {
-                //ToDo
-            }
-            else
-            {
-                string spName = "NagMovedToSkipped";
+          
+            string spName = "NagMovedToSkipped";
 
-                SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
-                sqlParam[0].Value = result.id;
+            SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
+            sqlParam[0].Value = result.id;
 
-                SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+            SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
 
-                log.InfoFormat("Card skipped: {0}", Nag);
-            }
+            log.InfoFormat("Card skipped: {0}", Nag);
+          
 
             ArrayList objs = new ArrayList();
             objs.Add(new
@@ -319,21 +308,16 @@ namespace NaggerNow
 
             string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
 
-            if (result.id == -1)
-            {
-                //ToDo
-            }
-            else
-            {
-                string spName = "NagMovedToOptional";
+         
+            string spName = "NagMovedToOptional";
 
-                SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
-                sqlParam[0].Value = result.id;
+            SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
+            sqlParam[0].Value = result.id;
 
-                SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+            SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
 
-                log.InfoFormat("Card moved back to optional: {0}", Nag);
-            }
+            log.InfoFormat("Card moved back to optional: {0}", Nag);
+         
 
             ArrayList objs = new ArrayList();
             objs.Add(new
@@ -355,21 +339,15 @@ namespace NaggerNow
 
             string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
 
-            if (result.id == -1)
-            {
-                //ToDo
-            }
-            else
-            {
-                string spName = "NagMovedToMandated";
+            string spName = "NagMovedToMandated";
 
-                SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
-                sqlParam[0].Value = result.id;
+            SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
+            sqlParam[0].Value = result.id;
 
-                SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+            SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
 
-                log.InfoFormat("Card moved to mandated: {0}", Nag);
-            }
+            log.InfoFormat("Card moved to mandated: {0}", Nag);
+            
 
             ArrayList objs = new ArrayList();
             objs.Add(new

@@ -131,7 +131,7 @@ function MoveInfo(event, ui) {
             break;
 
         case 'colDone':
-            var url = "/NagService.asmx/NagDone?Nag=" + encoded;
+            var url = "/NagService.asmx/NagMovedToDone?Nag=" + encoded;
             break;
 
         case 'colSkip':
