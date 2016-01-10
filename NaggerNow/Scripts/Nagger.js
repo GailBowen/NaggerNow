@@ -1,64 +1,66 @@
 ﻿
+function Card(id, title, board, list, cardType, token, tokensAwarded) {
+    var self = this;
 
-function onPageLoad() {
+    self.id = id;
 
+    self.title = title;
 
-    function Card(id, title, board, list, cardType, token, tokensAwarded) {
-        var self = this;
+    self.board = board;
 
-        self.id = id;
+    self.list = list;
 
-        self.title = title;
+    self.cardType = cardType;
 
-        self.board = board;
+    self.token = token;
 
-        self.list = list;
+    self.tokensAwarded = tokensAwarded;
 
-        self.cardType = cardType;
+}
 
-        self.token = token;
+function CardsViewModel() {
 
-        self.tokensAwarded = tokensAwarded;
+    var self = this;
 
-    }
+    self.Cards = ko.observableArray("");
 
+    self.getCards = function () {
 
-    function CardsViewModel() {
+        var url = "/NagService.asmx/GetNags";
+        NaggerConnect.getData(url, self.populateCards, 'GET', 'json', false);
+    };
 
-        var self = this;
+    self.populateCards = function (allData) {
+        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.board, item.list, item.cardType, item.token, item.tokensAwarded) });
+        self.Cards(temp);
+    };
 
-        self.Cards = ko.observableArray("");
-
-        self.getCards = function () {
-
-            var url = "/NagService.asmx/GetNags";
-            NaggerConnect.getData(url, self.populateCards, 'GET', 'json', false);
-        };
-
-        self.populateCards = function (allData) {
-            var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.board, item.list, item.cardType, item.token, item.tokensAwarded) });
-            self.Cards(temp);
-        };
-
-        self.getCards();
+    self.getCards();
 
 
-        //alert(self.Cards()[0].title);
-        //alert(self.Cards()[0].cardType);
+    //alert(self.Cards()[0].title);
+    //alert(self.Cards()[0].cardType);
 
-        self.tokenCount = ko.observable("");
+    self.tokenCount = ko.observable("");
 
-        self.sum = function (items, prop) {
-            return items.reduce(function (a, b) {
-                return a + b[prop];
-            }, 0);
-        };
+    self.sum = function (items, prop) {
+        return items.reduce(function (a, b) {
+            return a + b[prop];
+        }, 0);
+    };
 
-        self.tokenCount = self.sum(self.Cards(), 'tokensAwarded');
+    self.tokenCount = self.sum(self.Cards(), 'tokensAwarded');
 
-        //alert(self.tokenCount);
-    }
+    //alert(self.tokenCount);
+}
 
+function MoveInfo(event, ui) {
+    alert($(this).attr('id'));
+    alert(ui.item.attr('id'));
+    return true;
+}
+
+function doStuff() {
 
     var svm = new CardsViewModel();
 
@@ -131,11 +133,4 @@ function onPageLoad() {
         icon.closest(".portlet").find(".portlet-content").toggle();
     });
 
-}
-
-
-function MoveInfo(event, ui) {
-    alert($(this).attr('id'));
-    alert(ui.item.attr('id'));
-    return true;
 }
