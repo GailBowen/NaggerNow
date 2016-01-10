@@ -1,4 +1,13 @@
-﻿
+﻿function MiniCard(id, description)
+{
+    var self = this;
+
+    self.id = id;
+    
+    self.description = description;
+
+}
+
 function Card(id, title, description, board, cardType, token, tokensAwarded, lastDone) {
     var self = this;
 
@@ -24,26 +33,28 @@ function CardsViewModel() {
 
     var self = this;
 
-    self.Cards = ko.observableArray("");
+    self.MandatedCards = ko.observableArray("");
 
+    self.getMandatedCards = function () {
+
+        var url = "/NagService.asmx/GetMandatedNags";
+        NaggerConnect.getData(url, self.populateMandatedCards, 'GET', 'json', false);
+    };
+
+    self.populateMandatedCards = function (allData) {
+        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.cardType, item.token, item.tokensAwarded, item.lastDone) });
+        self.MandatedCards(temp);
+    };
+
+
+    self.getMandatedCards();
+    
+    self.CardsDoneToday = ko.observableArray("");
+    
     self.OptionalCards = ko.observableArray("");
 
     self.OptionalCards.push(new Card(22, 'Fox', 'Walk the fox', 'Fox', 'Optional', 3, 3, 0));
     
-    self.getCards = function () {
-
-        var url = "/NagService.asmx/GetNags";
-        NaggerConnect.getData(url, self.populateCards, 'GET', 'json', false);
-    };
-
-    self.populateCards = function (allData) {
-        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.cardType, item.token, item.tokensAwarded, item.lastDone) });
-        self.Cards(temp);
-    };
-
-    self.getCards();
-
-
     //alert(self.Cards()[0].title);
     //alert(self.Cards()[0].cardType);
 
@@ -55,7 +66,7 @@ function CardsViewModel() {
         }, 0);
     };
 
-    self.tokenCount = self.sum(self.Cards(), 'tokensAwarded');
+    self.tokenCount = self.sum(self.OptionalCards(), 'tokensAwarded');
 
     //alert(self.tokenCount);
 }
@@ -63,6 +74,14 @@ function CardsViewModel() {
 function MoveInfo(event, ui) {
     alert($(this).attr('id'));
     alert(ui.item.attr('id'));
+    var currentCard = new MiniCard(ui.item.attr('id'), 'test');
+
+    currentCard = JSON.stringify(currentCard);
+
+    var encoded = encodeURIComponent(currentCard);
+
+    var url = "/NagService.asmx/NagDone?Nag=" + encoded;
+    NaggerConnect.getData(url, null, 'GET', 'json', false);
     return true;
 }
 

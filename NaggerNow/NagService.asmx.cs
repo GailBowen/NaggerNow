@@ -12,6 +12,13 @@ using log4net;
 
 namespace NaggerNow
 {
+
+    public class Card
+    {
+        public int id { get; set; }
+        public string description { get; set; }
+    }
+    
     /// <summary>
     /// Summary description for NagService
     /// </summary>
@@ -26,7 +33,7 @@ namespace NaggerNow
 
         [WebMethod(EnableSession = true)]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void GetNags()
+        public void GetMandatedNags()
         {
             //GailToDo: Add security.
 
@@ -42,8 +49,7 @@ namespace NaggerNow
 
 
                 SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
-
-
+                
 
                 IDataReader rdr = SqlHelper.ExecuteReader(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
 
@@ -68,9 +74,46 @@ namespace NaggerNow
             {
                 if (log.IsDebugEnabled)
                 {
-                    log.DebugFormat("Error getting SLAs: {0}", ex.Message);
+                    log.DebugFormat("Error getting Nags: {0}", ex.Message);
                 }
             }
+
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(objs));
+
+        }
+
+
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void NagDone(string Nag)
+        {
+            var result = JsonConvert.DeserializeObject<Card>(Nag);
+
+            string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
+
+            if (result.id == -1)
+            {
+                //ToDo
+            }
+            else
+            {
+                string spName = "NagDone";
+
+                SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
+                sqlParam[0].Value = result.id;
+               
+                SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+
+                log.InfoFormat("Card updated: {0}", Nag);
+            }
+
+            ArrayList objs = new ArrayList();
+            objs.Add(new
+            {
+                Test = "test",
+            });
 
             Context.Response.Clear();
             Context.Response.ContentType = "application/json";

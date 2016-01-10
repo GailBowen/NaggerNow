@@ -62,7 +62,7 @@
                 </td>
 
                 <td style="vertical-align:top">
-                    <div id="colMan" class="col" data-bind="foreach: Cards">
+                    <div id="colMan" class="col" data-bind="foreach: MandatedCards">
 
                     <div class="portlet" data-bind="attr: { id: id }">
                       <div class="portlet-header portlet-header" data-bind="text: title"></div>
@@ -77,15 +77,7 @@
                 <td style="vertical-align:top">
                 <div id="colDone" class="col">
 
-                    <div class="portlet" id="Politics">
-                        <div class="portlet-header">Politics</div>
-                        <div class="portlet-content">Spectator podcast</div>
-                    </div>
-
-                     <div class="portlet" id="BetterPlace">
-                        <div class="portlet-header">Better place</div>
-                        <div class="portlet-content">MicroLoan?</div>
-                    </div>
+                 
 
                 </div>
                 </td>
@@ -93,16 +85,7 @@
                 <td style="vertical-align:top">
                 <div id="colSkip" class="col">
 
-                    <div class="portlet" id="Bike">
-                        <div class="portlet-header portlet-header-optional">Bike</div>
-                        <div class="portlet-content">Fix tyre</div>
-                    </div>
-
-                    <div class="portlet" id="Meters">
-                        <div class="portlet-header portlet-header-optional">Meters</div>
-                        <div class="portlet-content">Gas and Electricity</div>
-                    </div>
-
+                 
                 </div>
                 </td>
             </tr>
