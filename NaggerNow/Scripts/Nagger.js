@@ -89,17 +89,32 @@ function CardsViewModel() {
 }
 
 function MoveInfo(event, ui) {
-
-    //alert($(this).attr('id'));
-    //alert(ui.item.attr('id'));
-
+        
+    var column = $(this).attr('id');
+    
     var currentCard = new MiniCard(ui.item.attr('id'), 'test');
 
     currentCard = JSON.stringify(currentCard);
 
     var encoded = encodeURIComponent(currentCard);
 
-    var url = "/NagService.asmx/NagDone?Nag=" + encoded;
+    switch (column) {
+        case 'colMan':
+            var url = "/NagService.asmx/NagMovedToMandated?Nag=" + encoded;
+            break;
+
+        case 'colDone':
+            var url = "/NagService.asmx/NagDone?Nag=" + encoded;
+            break;
+
+        default:
+            alert('A despicable error has occured');
+    }
+
+    
+
+
+
     NaggerConnect.getData(url, null, 'GET', 'json', false);
     return true;
 }

@@ -173,5 +173,42 @@ namespace NaggerNow
 
         }
 
+
+
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void NagMovedToMandated(string Nag)
+        {
+            var result = JsonConvert.DeserializeObject<Card>(Nag);
+
+            string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
+
+            if (result.id == -1)
+            {
+                //ToDo
+            }
+            else
+            {
+                string spName = "NagMovedToMandated";
+
+                SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
+                sqlParam[0].Value = result.id;
+
+                SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+
+                log.InfoFormat("Card moved to mandated: {0}", Nag);
+            }
+
+            ArrayList objs = new ArrayList();
+            objs.Add(new
+            {
+                Test = "test",
+            });
+
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(objs));
+
+        }
     }
 }
