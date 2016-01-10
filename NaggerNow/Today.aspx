@@ -64,22 +64,27 @@
                 <td style="vertical-align:top">
                     <div id="colMan" class="col" data-bind="foreach: MandatedCards">
 
-                    <div class="portlet" data-bind="attr: { id: id }">
-                      <div class="portlet-header portlet-header" data-bind="text: title"></div>
-                      <div class="portlet-content" data-bind="text: description"></div>
-                    </div>
+                        <div class="portlet" data-bind="attr: { id: id }">
+                          <div class="portlet-header portlet-header" data-bind="text: title"></div>
+                          <div class="portlet-content" data-bind="text: description"></div>
+                        </div>
 
-                </div>
+                    </div>
                 </td>
 
            
 
                 <td style="vertical-align:top">
-                <div id="colDone" class="col">
+                    <div id="colDone" class="col" data-bind="foreach: DoneTodayCards">
 
-                 
+                        <div class="portlet" data-bind="attr: { id: id }">
+                          <div class="portlet-header portlet-header" data-bind="text: title"></div>
+                          <div class="portlet-content" data-bind="text: description"></div>
+                        </div>
 
-                </div>
+                    </div>
+                
+
                 </td>
 
                 <td style="vertical-align:top">
