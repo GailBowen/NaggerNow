@@ -1,20 +1,22 @@
 ﻿
-function Card(id, title, board, list, cardType, token, tokensAwarded) {
+function Card(id, title, description, board, cardType, token, tokensAwarded, lastDone) {
     var self = this;
 
     self.id = id;
 
     self.title = title;
 
-    self.board = board;
+    self.description = description;
 
-    self.list = list;
+    self.board = board;
 
     self.cardType = cardType;
 
     self.token = token;
 
     self.tokensAwarded = tokensAwarded;
+
+    self.lastDone = lastDone;
 
 }
 
@@ -24,6 +26,10 @@ function CardsViewModel() {
 
     self.Cards = ko.observableArray("");
 
+    self.OptionalCards = ko.observableArray("");
+
+    self.OptionalCards.push(new Card(22, 'Fox', 'Walk the fox', 'Fox', 'Optional', 3, 3, 0));
+    
     self.getCards = function () {
 
         var url = "/NagService.asmx/GetNags";
@@ -31,7 +37,7 @@ function CardsViewModel() {
     };
 
     self.populateCards = function (allData) {
-        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.board, item.list, item.cardType, item.token, item.tokensAwarded) });
+        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.cardType, item.token, item.tokensAwarded, item.lastDone) });
         self.Cards(temp);
     };
 

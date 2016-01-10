@@ -34,8 +34,8 @@ namespace NaggerNow
 
             try
             {
-                
-                const string spName = "Cards_FetchAll_ImportantOrDue_Lite";
+
+                const string spName = "[dbo].[Cards_FetchMandated_Today]";
 
 
                 string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
@@ -54,11 +54,12 @@ namespace NaggerNow
                     {
                         id = rdr["ID"],
                         title = rdr["Title"],
+                        description = rdr["Description"],
                         board = rdr["Board"],
-                        list = rdr["List"],
                         cardType = rdr["CardType"],
                         token = rdr["token"],
-                        tokensAwarded = rdr["tokensawarded"]
+                        tokensAwarded = rdr["tokensawarded"],
+                        lastDone = rdr["lastdone"]
                     });
                 }
 

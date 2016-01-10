@@ -50,11 +50,11 @@
             <tr>
                <td style="vertical-align:top">
             
-               <div id="colOpt" class="col" data-bind="foreach: Cards">
+               <div id="colOpt" class="col" data-bind="foreach: OptionalCards">
 
                     <div class="portlet" data-bind="attr: { id: id }">
                       <div class="portlet-header portlet-header-optional" data-bind="text: title + ' (' + tokensAwarded + ')'"></div>
-                      <div class="portlet-content" data-bind="text: cardType"></div>
+                      <div class="portlet-content" data-bind="text: description"></div>
                     </div>
 
                 </div>
@@ -62,52 +62,11 @@
                 </td>
 
                 <td style="vertical-align:top">
-                <div id="colMan" class="col">
+                    <div id="colMan" class="col" data-bind="foreach: Cards">
 
-                    <div class="portlet" id="Money">
-                        <div class="portlet-header">Money</div>
-                        <div class="portlet-content">Sat Nav sync?</div>
-                    </div>
-
-                    <div class="portlet" id="Brave">
-                        <div class="portlet-header">Brave</div>
-                        <div class="portlet-content">Climbing?</div>
-                    </div>
-
-                    <div class="portlet" id="Work">
-                        <div class="portlet-header">Work</div>
-                        <div class="portlet-content">Pluralsight</div>
-                    </div>
-
-                    <div class="portlet" id="Artists">
-                        <div class="portlet-header">Artists</div>
-                        <div class="portlet-content">
-                            Del Piombo 
-                                    <br />
-                            Parmigiano
-                                    <br />
-                            Bruegel
-                                    <br />
-                            Altdorfer
-                                    <br />
-                            Pontormo
-                        </div>
-                    </div>
-
-                    <div class="portlet" id="Blog">
-                        <div class="portlet-header">Blog</div>
-                        <div class="portlet-content">Sugar</div>
-                    </div>
-
-                    <div class="portlet" id="Vegetables">
-                        <div class="portlet-header portlet-header-healthy">Vegetables</div>
-                        <div class="portlet-content">Winter Squash</div>
-                    </div>
-
-
-                    <div class="portlet" id="Fruit">
-                        <div class="portlet-header portlet-header-healthy">Fruit</div>
-                        <div class="portlet-content">Blackberries</div>
+                    <div class="portlet" data-bind="attr: { id: id }">
+                      <div class="portlet-header portlet-header" data-bind="text: title"></div>
+                      <div class="portlet-content" data-bind="text: description"></div>
                     </div>
 
                 </div>
