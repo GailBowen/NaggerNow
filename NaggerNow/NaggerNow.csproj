@@ -121,6 +121,7 @@
     <Content Include="NagService.asmx" />
     <Content Include="packages.config" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\Nagger.js" />
     <Content Include="Scripts\NaggerConnect.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
