@@ -5,14 +5,14 @@
   <title>Nagger</title>
   
   <link href="Content/themes/smoothness/jquery-ui.smoothness.css" rel="stylesheet" />
+  <link href="Content/Nagger.css" rel="stylesheet" />
 
   <script src="Scripts/jquery-2.1.4.js"></script>
   <script src="Scripts/jquery-ui-1.11.4.js"></script>
   <script src="Scripts/knockout-3.4.0.js"></script>
+
   <script src="Scripts/NaggerConnect.js"></script>
   <script src="Scripts/Nagger.js"></script>
-
-  <link href="Content/Nagger.css" rel="stylesheet" />
   
   <script>
       $(onPageLoad);
