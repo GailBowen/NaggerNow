@@ -3,6 +3,7 @@
     [ColumnID]      INT            CONSTRAINT [DF_Cards_ColumnID] DEFAULT ((1)) NOT NULL,
     [BoardID]       INT            CONSTRAINT [DF_Cards_ListID] DEFAULT ((1)) NOT NULL,
     [CardType]      INT            NOT NULL,
+    [Mandated]      BIT            CONSTRAINT [DF_Cards_Mandated] DEFAULT ((0)) NOT NULL,
     [LocationID]    INT            CONSTRAINT [DF_Cards_LocationID] DEFAULT ((1)) NOT NULL,
     [Title]         VARCHAR (50)   NOT NULL,
     [Description]   VARCHAR (MAX)  NULL,
@@ -21,6 +22,8 @@
     CONSTRAINT [FK_Cards_Columns] FOREIGN KEY ([ColumnID]) REFERENCES [dbo].[Columns] ([ID]),
     CONSTRAINT [FK_Cards_Locations] FOREIGN KEY ([LocationID]) REFERENCES [dbo].[Locations] ([ID])
 );
+
+
 
 
 

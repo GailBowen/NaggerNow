@@ -38,7 +38,8 @@ namespace NaggerLibrary
             {
                 while (rdr.Read())
                 {
-                    Console.WriteLine(rdr["Title"]);
+                    
+                    cards.Add(new Card(rdr));
                 }
             }
 
