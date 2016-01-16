@@ -77,5 +77,6 @@
     <Build Include="dbo\Stored Procedures\Cards_FetchDone_Today.sql" />
     <Build Include="dbo\Tables\Columns.sql" />
     <Build Include="dbo\Stored Procedures\Cards_FetchAll.sql" />
+    <Build Include="dbo\Tables\TaDas.sql" />
   </ItemGroup>
 </Project>

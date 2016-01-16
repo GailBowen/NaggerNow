@@ -30,8 +30,10 @@ namespace NaggerLibrary
 
         }
 
-        public static void FetchCards()
+        public static List<Card> FetchCards()
         {
+            List<Card> cards = new List<Card>();
+
             using (SqlDataReader rdr = FetchAll())
             {
                 while (rdr.Read())
@@ -40,6 +42,10 @@ namespace NaggerLibrary
                 }
             }
 
+
+            return cards;
         }
+
+
     }
 }
