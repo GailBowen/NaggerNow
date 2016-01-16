@@ -22,11 +22,11 @@
     min-height:6em;
  }
 
-  #colMan {
+  #colMust {
     background-color: orange;
   }
 
-  #colOpt {
+  #colShould {
     background-color: yellow;
   }
 

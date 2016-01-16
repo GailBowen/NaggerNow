@@ -50,7 +50,7 @@
             <tr>
                <td style="vertical-align:top">
             
-               <div id="colOpt" class="col" data-bind="foreach: OptionalCards">
+               <div id="colShould" class="col" data-bind="foreach: OptionalCards">
 
                     <div class="portlet" data-bind="attr: { id: id }">
                       <div class="portlet-header portlet-header-optional" data-bind="text: title + ' (' + token + ')'"></div>
@@ -62,7 +62,7 @@
                 </td>
 
                 <td style="vertical-align:top">
-                    <div id="colMan" class="col" data-bind="foreach: MandatedCards">
+                    <div id="colMust" class="col" data-bind="foreach: MandatedCards">
 
                         <div class="portlet" data-bind="attr: { id: id }">
                           <div class="portlet-header portlet-header" data-bind="text: title"></div>

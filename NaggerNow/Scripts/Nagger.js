@@ -33,21 +33,36 @@ function CardsViewModel() {
 
     var self = this;
 
-    //Get Mandated Cards
-    self.MandatedCards = ko.observableArray("");
+    //Get All Cards
+    self.AllCards = ko.observableArray("");
 
-    self.getMandatedCards = function () {
+    self.getAllCards = function () {
 
-        var url = "/NagService.asmx/GetMandatedNags";
-        NaggerConnect.getData(url, self.populateMandatedCards, 'GET', 'json', false);
+        var url = "/NagService.asmx/GetAllNags";
+        NaggerConnect.getData(url, self.populateAllCards, 'GET', 'json', false);
     };
 
-    self.populateMandatedCards = function (allData) {
+    self.populateAllCards = function (allData) {
         var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.cardType, item.token, item.tokensAwarded, item.lastDone) });
-        self.MandatedCards(temp);
+        self.AllCards(temp);
     };
     
-    self.getMandatedCards();
+    self.getAllCards();
+
+    self.MandatedType = ko.observable('colMust');
+
+    self.MandatedCards = ko.pureComputed(function () {
+        if (self.AllCards() != null) {
+            return ko.utils.arrayFilter(self.AllCards(), function (c) {
+                return c.slaTypeID == self.MandatedType();
+            });
+        }
+        else
+            return ko.observableArray("");
+    });
+
+
+
 
 
     //Get cards done today
@@ -122,11 +137,11 @@ function MoveInfo(event, ui) {
     var encoded = encodeURIComponent(currentCard);
 
     switch (column) {
-        case 'colOpt':
+        case 'colShould':
             var url = "/NagService.asmx/NagMovedToOptional?Nag=" + encoded;
             break;
 
-        case 'colMan':
+        case 'colMust':
             var url = "/NagService.asmx/NagMovedToMandated?Nag=" + encoded;
             break;
 
@@ -157,7 +172,7 @@ function doStuff() {
     ko.applyBindings(svm, document.getElementById("CardsContainer"));
 
 
-    $("#colMan").sortable({
+    $("#colMust").sortable({
         connectWith: "#colDone",
         receive: MoveInfo,
         handle: ".portlet-header",
@@ -171,7 +186,7 @@ function doStuff() {
     });
 
     $("#colDone").sortable({
-        connectWith: "#colOpt, #colMan",
+        connectWith: "#colShould, #colMust",
         receive: MoveInfo,
         handle: ".portlet-header",
         cancel: ".portlet-toggle",
@@ -184,7 +199,7 @@ function doStuff() {
     });
 
 
-    $("#colOpt").sortable({
+    $("#colShould").sortable({
         connectWith: "#colSkip, #colDone",
         receive: MoveInfo,
         handle: ".portlet-header",
@@ -198,7 +213,7 @@ function doStuff() {
     });
 
     $("#colSkip").sortable({
-        connectWith: "#colOpt",
+        connectWith: "#colShould",
         receive: MoveInfo,
         handle: ".portlet-header",
         cancel: ".portlet-toggle",

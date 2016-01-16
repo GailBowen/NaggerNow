@@ -75,5 +75,7 @@
     <Build Include="dbo\Stored Procedures\Cards_FetchOptional_Today.sql" />
     <Build Include="dbo\Stored Procedures\Cards_FetchMandated_Today.sql" />
     <Build Include="dbo\Stored Procedures\Cards_FetchDone_Today.sql" />
+    <Build Include="dbo\Tables\Columns.sql" />
+    <Build Include="dbo\Stored Procedures\Cards_FetchAll.sql" />
   </ItemGroup>
 </Project>
