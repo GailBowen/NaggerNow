@@ -27,12 +27,12 @@
             <tr>
                 <td>
                     <div class="columnHeader">
-                        <h2 style="text-align:center">Optional</h2>
+                        <h2 style="text-align:center">Should Do</h2>
                     </div>
                 </td>
                 <td>
                     <div class="columnHeader">
-                        <h2 style="text-align:center">Mandated</h2>
+                        <h2 style="text-align:center">Must Do</h2>
                     </div>
                 </td>
                 <td>
@@ -50,7 +50,7 @@
             <tr>
                <td style="vertical-align:top">
             
-               <div id="colShould" class="col" data-bind="foreach: OptionalCards">
+               <div id="colShould" class="col" data-bind="foreach: ShouldCards">
 
                     <div class="portlet" data-bind="attr: { id: id }">
                       <div class="portlet-header portlet-header-optional" data-bind="text: title + ' (' + token + ')'"></div>
@@ -62,7 +62,7 @@
                 </td>
 
                 <td style="vertical-align:top">
-                    <div id="colMust" class="col" data-bind="foreach: MandatedCards">
+                    <div id="colMust" class="col" data-bind="foreach: MustCards">
 
                         <div class="portlet" data-bind="attr: { id: id }">
                           <div class="portlet-header portlet-header" data-bind="text: title"></div>
@@ -75,7 +75,7 @@
            
 
                 <td style="vertical-align:top">
-                    <div id="colDone" class="col" data-bind="foreach: DoneTodayCards">
+                    <div id="colDone" class="col" data-bind="foreach: DoneCards">
 
                         <div class="portlet" data-bind="attr: { id: id }">
                           <div class="portlet-header portlet-header" data-bind="text: title"></div>
@@ -88,7 +88,7 @@
                 </td>
 
                 <td style="vertical-align:top">
-                 <div id="colSkip" class="col" data-bind="foreach: SkippedCards">
+                 <div id="colSkip" class="col" data-bind="foreach: SkipCards">
 
                         <div class="portlet" data-bind="attr: { id: id }">
                           <div class="portlet-header portlet-header-optional" data-bind="text: title"></div>

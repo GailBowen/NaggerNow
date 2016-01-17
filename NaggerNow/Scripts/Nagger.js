@@ -61,10 +61,8 @@ function CardsViewModel() {
     
     self.getAllCards();
 
-
-    alert(self.AllCards()[0].columnID);
     
-    self.MandatedCards = ko.pureComputed(function () {
+    self.MustCards = ko.pureComputed(function () {
         if (self.AllCards() != null) {
             return ko.utils.arrayFilter(self.AllCards(), function (c) {
                 return c.columnID == COLUMN.MUST.value;
@@ -74,10 +72,8 @@ function CardsViewModel() {
             return ko.observableArray("");
     });
 
-    alert(self.MandatedCards()[0].title);
 
-
-    self.DoneTodayCards = ko.pureComputed(function () {
+    self.DoneCards = ko.pureComputed(function () {
         if (self.AllCards() != null) {
             return ko.utils.arrayFilter(self.AllCards(), function (c) {
                 return c.columnID == COLUMN.DONE.value;
@@ -88,7 +84,7 @@ function CardsViewModel() {
     });
 
 
-    self.OptionalCards = ko.pureComputed(function () {
+    self.ShouldCards = ko.pureComputed(function () {
         if (self.AllCards() != null) {
             return ko.utils.arrayFilter(self.AllCards(), function (c) {
                 return c.columnID == COLUMN.SHOULD.value;
@@ -99,7 +95,7 @@ function CardsViewModel() {
     });
 
 
-    self.SkippedCards = ko.pureComputed(function () {
+    self.SkipCards = ko.pureComputed(function () {
         if (self.AllCards() != null) {
             return ko.utils.arrayFilter(self.AllCards(), function (c) {
                 return c.columnID == COLUMN.SKIP.value;
@@ -118,7 +114,7 @@ function CardsViewModel() {
         }, 0);
     };
 
-    self.tokenCount = self.sum(self.OptionalCards(), 'tokensAwarded');
+    self.tokenCount = self.sum(self.AllCards(), 'tokensAwarded');
 
 }
 
