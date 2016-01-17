@@ -27,6 +27,11 @@
             <tr>
                 <td>
                     <div class="columnHeader">
+                        <h2 style="text-align:center">Could Do</h2>
+                    </div>
+                </td>
+                <td>
+                    <div class="columnHeader">
                         <h2 style="text-align:center">Should Do</h2>
                     </div>
                 </td>
@@ -48,16 +53,29 @@
             </tr>
 
             <tr>
-               <td style="vertical-align:top">
+                 <td style="vertical-align:top">
             
-               <div id="colShould" class="col" data-bind="foreach: ShouldCards">
+                   <div id="colCould" class="col" data-bind="foreach: CouldCards">
 
-                    <div class="portlet" data-bind="attr: { id: id }">
-                      <div class="portlet-header portlet-header-optional" data-bind="text: title + ' (' + token + ')'"></div>
-                      <div class="portlet-content" data-bind="text: description"></div>
+                        <div class="portlet" data-bind="attr: { id: id }">
+                          <div class="portlet-header portlet-header-optional" data-bind="text: title + ' (' + token + ')'"></div>
+                          <div class="portlet-content" data-bind="text: description"></div>
+                        </div>
+
                     </div>
 
-                </div>
+                </td>
+                
+                <td style="vertical-align:top">
+            
+                   <div id="colShould" class="col" data-bind="foreach: ShouldCards">
+
+                        <div class="portlet" data-bind="attr: { id: id }">
+                          <div class="portlet-header portlet-header-optional" data-bind="text: title + ' (' + token + ')'"></div>
+                          <div class="portlet-content" data-bind="text: description"></div>
+                        </div>
+
+                    </div>
 
                 </td>
 

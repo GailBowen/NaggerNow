@@ -22,12 +22,17 @@
     min-height:6em;
  }
 
-  #colMust {
-    background-color: orange;
+
+  #colCould {
+    background-color: yellow;
   }
 
   #colShould {
-    background-color: yellow;
+    background-color: orange;
+  }
+
+  #colMust {
+    background-color: orangered;
   }
 
    #colDone {

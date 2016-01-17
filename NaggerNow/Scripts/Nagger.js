@@ -84,6 +84,18 @@ function CardsViewModel() {
     });
 
 
+    self.CouldCards = ko.pureComputed(function () {
+        if (self.AllCards() != null) {
+            return ko.utils.arrayFilter(self.AllCards(), function (c) {
+                return c.columnID == COLUMN.COULD.value;
+            });
+        }
+        else
+            return ko.observableArray("");
+    });
+
+
+
     self.ShouldCards = ko.pureComputed(function () {
         if (self.AllCards() != null) {
             return ko.utils.arrayFilter(self.AllCards(), function (c) {
@@ -93,6 +105,7 @@ function CardsViewModel() {
         else
             return ko.observableArray("");
     });
+
 
 
     self.SkipCards = ko.pureComputed(function () {
@@ -120,41 +133,36 @@ function CardsViewModel() {
 
 function MoveInfo(event, ui) {
         
-    var column = $(this).attr('id');
+    //var column = $(this).attr('id');
     
-    var currentCard = new MiniCard(ui.item.attr('id'), 'test');
+    //var currentCard = new MiniCard(ui.item.attr('id'), 'test');
 
-    currentCard = JSON.stringify(currentCard);
+    //currentCard = JSON.stringify(currentCard);
 
-    var encoded = encodeURIComponent(currentCard);
+    //var encoded = encodeURIComponent(currentCard);
 
-    switch (column) {
-        case 'colShould':
-            var url = "/NagService.asmx/NagMovedToOptional?Nag=" + encoded;
-            break;
+    //switch (column) {
+    //    case 'colShould':
+    //        var url = "/NagService.asmx/NagMovedToOptional?Nag=" + encoded;
+    //        break;
 
-        case 'colMust':
-            var url = "/NagService.asmx/NagMovedToMandated?Nag=" + encoded;
-            break;
+    //    case 'colMust':
+    //        var url = "/NagService.asmx/NagMovedToMandated?Nag=" + encoded;
+    //        break;
 
-        case 'colDone':
-            var url = "/NagService.asmx/NagMovedToDone?Nag=" + encoded;
-            break;
+    //    case 'colDone':
+    //        var url = "/NagService.asmx/NagMovedToDone?Nag=" + encoded;
+    //        break;
 
-        case 'colSkip':
-            var url = "/NagService.asmx/NagMovedToSkipped?Nag=" + encoded;
-            break;
+    //    case 'colSkip':
+    //        var url = "/NagService.asmx/NagMovedToSkipped?Nag=" + encoded;
+    //        break;
 
-        default:
-            alert('A despicable error has occured');
-    }
-
-    
-
-
-
-    NaggerConnect.getData(url, null, 'GET', 'json', false);
-    return true;
+    //    default:
+    //        alert('A despicable error has occured');
+ 
+    //NaggerConnect.getData(url, null, 'GET', 'json', false);
+    //return true;
 }
 
 function doStuff() {
@@ -178,7 +186,7 @@ function doStuff() {
     });
 
     $("#colDone").sortable({
-        connectWith: "#colShould, #colMust",
+        connectWith: "#colCould, #colShould, #colMust",
         receive: MoveInfo,
         handle: ".portlet-header",
         cancel: ".portlet-toggle",
@@ -204,8 +212,22 @@ function doStuff() {
         }
     });
 
+    $("#colCould").sortable({
+        connectWith: "#colSkip, #colDone",
+        receive: MoveInfo,
+        handle: ".portlet-header",
+        cancel: ".portlet-toggle",
+        start: function (event, ui) {
+            ui.item.addClass('tilt');
+        },
+        stop: function (event, ui) {
+            ui.item.removeClass('tilt');
+        }
+    });
+
+
     $("#colSkip").sortable({
-        connectWith: "#colShould",
+        connectWith: "#colCould, #colShould",
         receive: MoveInfo,
         handle: ".portlet-header",
         cancel: ".portlet-toggle",
