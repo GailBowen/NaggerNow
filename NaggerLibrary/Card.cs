@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
+using Microsoft.ApplicationBlocks.Data;
 
 namespace NaggerLibrary
 {
@@ -62,16 +64,29 @@ namespace NaggerLibrary
             return CardCategorizerChain.GetColumn(this);
         }
 
+        public void UpdateColumn()
+        {
+            string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
+
+            string spName = "Card_Update";
+
+            SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
+            sqlParam[0].Value = ID;
+            sqlParam[1].Value = (int)GetColumn();
+
+            SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+        }
+
     }
         
         public enum ColumnType
         {
-            colNone,
-            colCould,
-            colShould,
-            colMust,
-            colDone,
-            colSkip
+            colNone = 1,
+            colCould = 2,
+            colShould = 3,
+            colMust = 4,
+            colDone = 5,
+            colSkip = 6,
         }
 
     

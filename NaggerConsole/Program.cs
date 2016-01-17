@@ -42,13 +42,10 @@ namespace NaggerConsole
         {
            List<Card> cards =  NaggerProvider.FetchCards();
 
-           //foreach (var card in cards)
-           //{
-           //    if (card.GetColumn() == ColumnType.colShould)
-           //    {
-           //        Console.WriteLine("{0} - {1}", card.Title, card.GetColumn());
-           //    }
-           //}
+           foreach (var card in cards)
+           {
+               card.UpdateColumn();
+           }
 
             Console.WriteLine("Could Do: {0}", cards.Count(c => c.GetColumn() == ColumnType.colCould));
             Console.WriteLine("Should Do: {0}", cards.Count(c => c.GetColumn() == ColumnType.colShould));
