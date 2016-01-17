@@ -40,7 +40,22 @@ namespace NaggerConsole
 
         public static void ProcessCards()
         {
-            NaggerProvider.FetchCards();
+           List<Card> cards =  NaggerProvider.FetchCards();
+
+           //foreach (var card in cards)
+           //{
+           //    if (card.GetColumn() == ColumnType.colShould)
+           //    {
+           //        Console.WriteLine("{0} - {1}", card.Title, card.GetColumn());
+           //    }
+           //}
+
+            Console.WriteLine("Could Do: {0}", cards.Count(c => c.GetColumn() == ColumnType.colCould));
+            Console.WriteLine("Should Do: {0}", cards.Count(c => c.GetColumn() == ColumnType.colShould));
+            Console.WriteLine("Must Do: {0}", cards.Count(c => c.GetColumn() == ColumnType.colMust));
+            Console.WriteLine("Done: {0}", cards.Count(c => c.GetColumn() == ColumnType.colDone));
+            Console.WriteLine("Skipped: {0}", cards.Count(c => c.GetColumn() == ColumnType.colSkip));
+
         }
 
     }

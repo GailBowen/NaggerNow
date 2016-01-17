@@ -11,8 +11,10 @@ namespace NaggerLibrary
     public class Card
     {
         public int ID { get; set; }
-        
+
         public int ColumnID { get; set; }
+
+        public bool Mandated { get; set; }
 
         public int BoardID { get; set; }
 
@@ -30,23 +32,47 @@ namespace NaggerLibrary
 
         public int SkipCount { get; set; }
 
+        public DateTime LastSkip { get; set; }
+
+        public DateTime LastDone { get; set; }
+
         public bool Completed { get; set; }
 
         public Card(SqlDataReader rdr)
         {
             ID = Convert.ToInt32(rdr["ID"]);
             ColumnID = Convert.ToInt32(rdr["ColumnID"]);
+            Mandated = Convert.ToBoolean(rdr["Mandated"]);
             BoardID = Convert.ToInt32(rdr["BoardID"]);
             CardType = Convert.ToInt32(rdr["CardType"]);
             LocationID = Convert.ToInt32(rdr["LocationID"]);
             Title = Convert.ToString(rdr["Title"]);
-            Description = Convert.ToString("Description");
-            Created = Convert.ToDateTime("Created");
-            DueDate = Convert.ToDateTime("DueDate");
-            SkipCount = Convert.ToInt16("SkipCount");
-            Completed = Convert.ToBoolean("Completed");
+            Description = Convert.ToString(rdr["Description"]);
+            Created = Convert.ToDateTime(rdr["Created"]);
+            DueDate = Convert.ToDateTime(rdr["DueDate"]);
+            SkipCount = Convert.ToInt16(rdr["SkipCount"]);
+            LastSkip = rdr["LastSkip"] as DateTime? ?? default(DateTime);
+            LastDone = rdr["LastDone"] as DateTime? ?? default(DateTime);
+            Completed = Convert.ToBoolean(rdr["Completed"]);
+        }
 
+
+        public ColumnType GetColumn()
+        {
+            return CardCategorizerChain.GetColumn(this);
         }
 
     }
+        
+        public enum ColumnType
+        {
+            colNone,
+            colCould,
+            colShould,
+            colMust,
+            colDone,
+            colSkip
+        }
+
+    
 }

@@ -43,7 +43,6 @@ namespace NaggerLibrary
                 }
             }
 
-
             return cards;
         }
 
