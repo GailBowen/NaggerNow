@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -8,12 +9,12 @@ using System.Web.Services;
 using Microsoft.ApplicationBlocks.Data;
 using Newtonsoft.Json;
 using log4net;
-
+using NaggerLibrary;
 
 namespace NaggerNow
 {
 
-    public class Card
+    public class CurrentCard
     {
         public int id { get; set; }
         public string description { get; set; }
@@ -30,6 +31,53 @@ namespace NaggerNow
     public class NagService : System.Web.Services.WebService
     {
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+
+
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void GetAllNags()
+        {
+
+            ArrayList objs = new ArrayList();
+
+            try
+            {
+
+                List<Card> cards = NaggerProvider.FetchCards();
+
+                foreach (var card in cards)
+                {
+                    objs.Add(new
+                    {
+                        id = card.ID,
+                        title = card.Title,
+                        columnID = card.ColumnID,
+                        description = card.Description,
+                        board = card.BoardID,
+                        cardType = card.CardType,
+                        token = 0,
+                        tokensAwarded = 0,
+                        lastDone = card.LastDone
+                    });
+                }
+               
+
+            }
+            catch (Exception ex)
+            {
+                if (log.IsDebugEnabled)
+                {
+                    log.DebugFormat("Error getting Nags: {0}", ex.Message);
+                }
+            }
+
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(objs));
+
+        }
+
 
         [WebMethod(EnableSession = true)]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -249,7 +297,7 @@ namespace NaggerNow
             string spName = "NagMovedToDone";
 
             SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
-            sqlParam[0].Value = result.id;
+            sqlParam[0].Value = result.ID;
                
             SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
 
@@ -281,7 +329,7 @@ namespace NaggerNow
             string spName = "NagMovedToSkipped";
 
             SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
-            sqlParam[0].Value = result.id;
+            sqlParam[0].Value = result.ID;
 
             SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
 
@@ -312,7 +360,7 @@ namespace NaggerNow
             string spName = "NagMovedToOptional";
 
             SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
-            sqlParam[0].Value = result.id;
+            sqlParam[0].Value = result.ID;
 
             SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
 
@@ -342,7 +390,7 @@ namespace NaggerNow
             string spName = "NagMovedToMandated";
 
             SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
-            sqlParam[0].Value = result.id;
+            sqlParam[0].Value = result.ID;
 
             SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
 

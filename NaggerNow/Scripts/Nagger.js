@@ -8,7 +8,7 @@
 
 }
 
-function Card(id, title, description, board, cardType, token, tokensAwarded, lastDone) {
+function Card(id, title, description, board, cardType, token, tokensAwarded, lastDone, columnID) {
     var self = this;
 
     self.id = id;
@@ -27,11 +27,23 @@ function Card(id, title, description, board, cardType, token, tokensAwarded, las
 
     self.lastDone = lastDone;
 
+    self.columnID = columnID;
+
 }
 
 function CardsViewModel() {
 
     var self = this;
+
+
+    var COLUMN = {
+        NONE:  { value: 1, name: "colNone"},
+        COULD: { value: 2, name: "colCould" },
+        SHOULD: { value: 3, name: "colShould" },
+        MUST: { value: 4, name: "colMust" },
+        DONE: { value: 5, name: "colDone" },
+        SKIP: { value: 6, name: "colSkip" }
+    };
 
     //Get All Cards
     self.AllCards = ko.observableArray("");
@@ -43,18 +55,32 @@ function CardsViewModel() {
     };
 
     self.populateAllCards = function (allData) {
-        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.cardType, item.token, item.tokensAwarded, item.lastDone) });
+        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.cardType, item.token, item.tokensAwarded, item.lastDone, item.columnID) });
         self.AllCards(temp);
     };
     
     self.getAllCards();
 
-    self.MandatedType = ko.observable('colMust');
 
+    alert(self.AllCards()[0].columnID);
+    
     self.MandatedCards = ko.pureComputed(function () {
         if (self.AllCards() != null) {
             return ko.utils.arrayFilter(self.AllCards(), function (c) {
-                return c.slaTypeID == self.MandatedType();
+                return c.columnID == COLUMN.MUST.value;
+            });
+        }
+        else
+            return ko.observableArray("");
+    });
+
+    alert(self.MandatedCards()[0].title);
+
+
+    self.DoneTodayCards = ko.pureComputed(function () {
+        if (self.AllCards() != null) {
+            return ko.utils.arrayFilter(self.AllCards(), function (c) {
+                return c.columnID == COLUMN.DONE.value;
             });
         }
         else
@@ -62,58 +88,28 @@ function CardsViewModel() {
     });
 
 
+    self.OptionalCards = ko.pureComputed(function () {
+        if (self.AllCards() != null) {
+            return ko.utils.arrayFilter(self.AllCards(), function (c) {
+                return c.columnID == COLUMN.SHOULD.value;
+            });
+        }
+        else
+            return ko.observableArray("");
+    });
 
 
+    self.SkippedCards = ko.pureComputed(function () {
+        if (self.AllCards() != null) {
+            return ko.utils.arrayFilter(self.AllCards(), function (c) {
+                return c.columnID == COLUMN.SKIP.value;
+            });
+        }
+        else
+            return ko.observableArray("");
+    });
 
-    //Get cards done today
-    self.DoneTodayCards = ko.observableArray("");
-
-    self.getDoneTodayCards = function () {
-
-        var url = "/NagService.asmx/GetDoneTodayNags";
-        NaggerConnect.getData(url, self.populateDoneTodayCards, 'GET', 'json', false);
-    };
-
-    self.populateDoneTodayCards = function (allData) {
-        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.cardType, item.token, item.tokensAwarded, item.lastDone) });
-        self.DoneTodayCards(temp);
-    };
-
-    self.getDoneTodayCards();
-    
-    
-    //Get optional cards
-    self.OptionalCards = ko.observableArray("");
-
-    self.getOptionalCards = function () {
-
-        var url = "/NagService.asmx/GetOptionalNags";
-        NaggerConnect.getData(url, self.populateOptionalCards, 'GET', 'json', false);
-    };
-
-    self.populateOptionalCards = function (allData) {
-        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.cardType, item.token, item.tokensAwarded, item.lastDone) });
-        self.OptionalCards(temp);
-    };
-
-    self.getOptionalCards();
-
-    //Get Skipped cards
-    self.SkippedCards = ko.observableArray("");
-
-    self.getSkippedCards = function () {
-
-        var url = "/NagService.asmx/GetSkippedNags";
-        NaggerConnect.getData(url, self.populateSkippedCards, 'GET', 'json', false);
-    };
-
-    self.populateSkippedCards = function (allData) {
-        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.cardType, item.token, item.tokensAwarded, item.lastDone) });
-        self.SkippedCards(temp);
-    };
-
-    self.getSkippedCards();
-    
+      
     self.tokenCount = ko.observable("");
 
     self.sum = function (items, prop) {
