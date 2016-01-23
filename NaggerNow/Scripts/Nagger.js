@@ -48,6 +48,8 @@ function CardsViewModel() {
     //Get All Cards
     self.AllCards = ko.observableArray("");
 
+   
+
     self.getAllCards = function () {
 
         var url = "/NagService.asmx/GetAllNags";
@@ -60,7 +62,7 @@ function CardsViewModel() {
     };
     
     self.getAllCards();
-
+       
     
     self.MustCards = ko.pureComputed(function () {
         if (self.AllCards() != null) {
@@ -133,8 +135,16 @@ function CardsViewModel() {
 
 function MoveInfo(event, ui) {
         
-    //var column = $(this).attr('id');
+    var column = $(this).attr('id');
     
+    alert(ui.item.attr('id'));
+    alert(ui.item.attr('title'));
+    alert(ui.item.attr('board'));
+    alert(ui.item.attr('cardType'));
+    alert(ui.item.attr('lastDone'));
+    
+    alert(ui.item[0].childNodes['3'].innerHTML);
+  
     //var currentCard = new MiniCard(ui.item.attr('id'), 'test');
 
     //currentCard = JSON.stringify(currentCard);
