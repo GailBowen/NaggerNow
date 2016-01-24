@@ -1,11 +1,22 @@
-﻿function MiniCard(id, description)
+﻿var COLUMN = {
+    NONE:  { value: 1, name: "colNone"},
+    COULD: { value: 2, name: "colCould" },
+    SHOULD: { value: 3, name: "colShould" },
+    MUST: { value: 4, name: "colMust" },
+    DONE: { value: 5, name: "colDone" },
+    SKIP: { value: 6, name: "colSkip" }
+};
+
+function value_of_enum(col, colName) 
 {
-    var self = this;
-
-    self.id = id;
-    
-    self.description = description;
-
+    for (var k in col)
+    {
+   
+        if (col[k].name == colName)
+        {
+            return col[k].value;
+        }
+    }
 }
 
 function Card(id, title, description, board, cardType, token, tokensAwarded, lastDone, columnID) {
@@ -34,17 +45,7 @@ function Card(id, title, description, board, cardType, token, tokensAwarded, las
 function CardsViewModel() {
 
     var self = this;
-
-
-    var COLUMN = {
-        NONE:  { value: 1, name: "colNone"},
-        COULD: { value: 2, name: "colCould" },
-        SHOULD: { value: 3, name: "colShould" },
-        MUST: { value: 4, name: "colMust" },
-        DONE: { value: 5, name: "colDone" },
-        SKIP: { value: 6, name: "colSkip" }
-    };
-
+    
     //Get All Cards
     self.AllCards = ko.observableArray("");
 
@@ -137,42 +138,23 @@ function MoveInfo(event, ui) {
         
     var column = $(this).attr('id');
     
-    alert(ui.item.attr('id'));
-    alert(ui.item.attr('title'));
-    alert(ui.item.attr('board'));
-    alert(ui.item.attr('cardType'));
-    alert(ui.item.attr('lastDone'));
+    var id = ui.item.attr('id');
+    var title = ui.item.attr('title');
+    var board = ui.item.attr('board');
+    var cardType = ui.item.attr('cardType');
+    var lastDone = ui.item.attr('lastDone');
+    var description = ui.item[0].childNodes['3'].innerHTML;
     
-    alert(ui.item[0].childNodes['3'].innerHTML);
-  
-    //var currentCard = new MiniCard(ui.item.attr('id'), 'test');
+    var currentCard = new Card(id, title, description, board, cardType, 0, 0, lastDone, value_of_enum(COLUMN, column));
+          
+    currentCard = JSON.stringify(currentCard);
 
-    //currentCard = JSON.stringify(currentCard);
+    var encoded = encodeURIComponent(currentCard);
 
-    //var encoded = encodeURIComponent(currentCard);
-
-    //switch (column) {
-    //    case 'colShould':
-    //        var url = "/NagService.asmx/NagMovedToOptional?Nag=" + encoded;
-    //        break;
-
-    //    case 'colMust':
-    //        var url = "/NagService.asmx/NagMovedToMandated?Nag=" + encoded;
-    //        break;
-
-    //    case 'colDone':
-    //        var url = "/NagService.asmx/NagMovedToDone?Nag=" + encoded;
-    //        break;
-
-    //    case 'colSkip':
-    //        var url = "/NagService.asmx/NagMovedToSkipped?Nag=" + encoded;
-    //        break;
-
-    //    default:
-    //        alert('A despicable error has occured');
- 
-    //NaggerConnect.getData(url, null, 'GET', 'json', false);
-    //return true;
+    var url = "/NagService.asmx/UpdateCard?Nag=" + encoded;
+        
+    NaggerConnect.getData(url, null, 'GET', 'json', false);
+    return true;
 }
 
 function doStuff() {
@@ -180,6 +162,8 @@ function doStuff() {
     var svm = new CardsViewModel();
 
     ko.applyBindings(svm, document.getElementById("CardsContainer"));
+
+   
 
 
     $("#colMust").sortable({

@@ -40,6 +40,11 @@ namespace NaggerLibrary
 
         public bool Completed { get; set; }
 
+        public Card()
+        {
+
+        }
+
         public Card(SqlDataReader rdr)
         {
             ID = Convert.ToInt32(rdr["ID"]);

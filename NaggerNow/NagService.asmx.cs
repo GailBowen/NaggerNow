@@ -316,6 +316,38 @@ namespace NaggerNow
 
         }
 
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void UpdateCard(string Nag)
+        {
+            var result = JsonConvert.DeserializeObject<Card>(Nag);
+
+            string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
+
+
+            string spName = "NagMovedToDone";
+
+            SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
+            sqlParam[0].Value = result.ID;
+
+            SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+
+            log.InfoFormat("Card updated: {0}", Nag);
+
+
+            ArrayList objs = new ArrayList();
+            objs.Add(new
+            {
+                Test = "test",
+            });
+
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(objs));
+
+        }
+
+
 
         [WebMethod(EnableSession = true)]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
