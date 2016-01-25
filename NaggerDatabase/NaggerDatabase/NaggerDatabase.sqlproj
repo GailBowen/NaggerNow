@@ -66,16 +66,9 @@
     <Build Include="dbo\Tables\CardTypes.sql" />
     <Build Include="dbo\Tables\Cards.sql" />
     <Build Include="dbo\Tables\Boards.sql" />
-    <Build Include="dbo\Stored Procedures\NagMovedToSkipped.sql" />
-    <Build Include="dbo\Stored Procedures\NagMovedToOptional.sql" />
-    <Build Include="dbo\Stored Procedures\NagMovedToMandated.sql" />
-    <Build Include="dbo\Stored Procedures\NagMovedToDone.sql" />
-    <Build Include="dbo\Stored Procedures\Cards_FetchSkipped_Today.sql" />
-    <Build Include="dbo\Stored Procedures\Cards_FetchOptional_Today.sql" />
-    <Build Include="dbo\Stored Procedures\Cards_FetchMandated_Today.sql" />
-    <Build Include="dbo\Stored Procedures\Cards_FetchDone_Today.sql" />
     <Build Include="dbo\Tables\Columns.sql" />
     <Build Include="dbo\Stored Procedures\Cards_FetchAll.sql" />
     <Build Include="dbo\Tables\Logs.sql" />
+    <Build Include="dbo\Stored Procedures\Card_Update.sql" />
   </ItemGroup>
 </Project>
