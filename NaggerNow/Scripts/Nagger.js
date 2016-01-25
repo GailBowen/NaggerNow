@@ -39,18 +39,14 @@ function Card(id, title, description, board, cardType, token, tokensAwarded, las
     self.lastDone = lastDone;
 
     self.columnID = columnID;
-
 }
 
 function CardsViewModel() {
 
     var self = this;
-    
-    //Get All Cards
+        
     self.AllCards = ko.observableArray("");
-
-   
-
+    
     self.getAllCards = function () {
 
         var url = "/NagService.asmx/GetAllNags";
@@ -63,7 +59,26 @@ function CardsViewModel() {
     };
     
     self.getAllCards();
-       
+
+    self.CouldCards = ko.pureComputed(function () {
+        if (self.AllCards() != null) {
+            return ko.utils.arrayFilter(self.AllCards(), function (c) {
+                return c.columnID == COLUMN.COULD.value;
+            });
+        }
+        else
+            return ko.observableArray("");
+    });
+
+    self.ShouldCards = ko.pureComputed(function () {
+        if (self.AllCards() != null) {
+            return ko.utils.arrayFilter(self.AllCards(), function (c) {
+                return c.columnID == COLUMN.SHOULD.value;
+            });
+        }
+        else
+            return ko.observableArray("");
+    });
     
     self.MustCards = ko.pureComputed(function () {
         if (self.AllCards() != null) {
@@ -85,30 +100,6 @@ function CardsViewModel() {
         else
             return ko.observableArray("");
     });
-
-
-    self.CouldCards = ko.pureComputed(function () {
-        if (self.AllCards() != null) {
-            return ko.utils.arrayFilter(self.AllCards(), function (c) {
-                return c.columnID == COLUMN.COULD.value;
-            });
-        }
-        else
-            return ko.observableArray("");
-    });
-
-
-
-    self.ShouldCards = ko.pureComputed(function () {
-        if (self.AllCards() != null) {
-            return ko.utils.arrayFilter(self.AllCards(), function (c) {
-                return c.columnID == COLUMN.SHOULD.value;
-            });
-        }
-        else
-            return ko.observableArray("");
-    });
-
 
 
     self.SkipCards = ko.pureComputed(function () {
@@ -162,10 +153,33 @@ function doStuff() {
     var svm = new CardsViewModel();
 
     ko.applyBindings(svm, document.getElementById("CardsContainer"));
+    
+    $("#colCould").sortable({
+        connectWith: "#colSkip, #colDone",
+        receive: MoveInfo,
+        handle: ".portlet-header",
+        cancel: ".portlet-toggle",
+        start: function (event, ui) {
+            ui.item.addClass('tilt');
+        },
+        stop: function (event, ui) {
+            ui.item.removeClass('tilt');
+        }
+    });
 
-   
-
-
+    $("#colShould").sortable({
+        connectWith: "#colSkip, #colDone",
+        receive: MoveInfo,
+        handle: ".portlet-header",
+        cancel: ".portlet-toggle",
+        start: function (event, ui) {
+            ui.item.addClass('tilt');
+        },
+        stop: function (event, ui) {
+            ui.item.removeClass('tilt');
+        }
+    });
+    
     $("#colMust").sortable({
         connectWith: "#colDone",
         receive: MoveInfo,
@@ -191,35 +205,7 @@ function doStuff() {
             ui.item.removeClass('tilt');
         }
     });
-
-
-    $("#colShould").sortable({
-        connectWith: "#colSkip, #colDone",
-        receive: MoveInfo,
-        handle: ".portlet-header",
-        cancel: ".portlet-toggle",
-        start: function (event, ui) {
-            ui.item.addClass('tilt');
-        },
-        stop: function (event, ui) {
-            ui.item.removeClass('tilt');
-        }
-    });
-
-    $("#colCould").sortable({
-        connectWith: "#colSkip, #colDone",
-        receive: MoveInfo,
-        handle: ".portlet-header",
-        cancel: ".portlet-toggle",
-        start: function (event, ui) {
-            ui.item.addClass('tilt');
-        },
-        stop: function (event, ui) {
-            ui.item.removeClass('tilt');
-        }
-    });
-
-
+    
     $("#colSkip").sortable({
         connectWith: "#colCould, #colShould",
         receive: MoveInfo,
