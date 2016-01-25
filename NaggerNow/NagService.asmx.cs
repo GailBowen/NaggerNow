@@ -10,6 +10,7 @@ using Microsoft.ApplicationBlocks.Data;
 using Newtonsoft.Json;
 using log4net;
 using NaggerLibrary;
+using System.Web;
 
 namespace NaggerNow
 {
@@ -320,15 +321,18 @@ namespace NaggerNow
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void UpdateCard(string Nag)
         {
-            var result = JsonConvert.DeserializeObject<Card>(Nag);
+            var card = JsonConvert.DeserializeObject<Card>(Nag);
 
             string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
 
+            string decodedDescription = HttpUtility.HtmlDecode(card.Description);
 
-            string spName = "NagMovedToDone";
+            string spName = "[dbo].[Card_Update]";
 
             SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
-            sqlParam[0].Value = result.ID;
+            sqlParam[0].Value = card.ID;
+            sqlParam[1].Value = card.ColumnID;
+            sqlParam[2].Value = decodedDescription;
 
             SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
 
@@ -344,7 +348,6 @@ namespace NaggerNow
             Context.Response.Clear();
             Context.Response.ContentType = "application/json";
             Context.Response.Write(JsonConvert.SerializeObject(objs));
-
         }
 
 
