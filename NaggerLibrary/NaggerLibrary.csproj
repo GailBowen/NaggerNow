@@ -51,6 +51,7 @@
     <Compile Include="CardCategorizer.cs" />
     <Compile Include="CardCategorizerChain.cs" />
     <Compile Include="Categories.cs" />
+    <Compile Include="ICard.cs" />
     <Compile Include="NaggerProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

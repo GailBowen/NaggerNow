@@ -10,8 +10,10 @@ using Microsoft.ApplicationBlocks.Data;
 
 namespace NaggerLibrary
 {
-    public class Card
+    public class Card: ICard
     {
+        
+        #region Properties
         public int ID { get; set; }
 
         public int ColumnID { get; set; }
@@ -39,6 +41,7 @@ namespace NaggerLibrary
         public DateTime LastDone { get; set; }
 
         public bool Completed { get; set; }
+        #endregion
 
         public Card()
         {
@@ -46,6 +49,17 @@ namespace NaggerLibrary
         }
 
         public Card(SqlDataReader rdr)
+        {
+            Fetch(rdr);
+        }
+
+        public ColumnType AssignColumn()
+        {
+            return CardCategorizerChain.GetColumn(this);
+        }
+
+
+        public void Fetch(SqlDataReader rdr)
         {
             ID = Convert.ToInt32(rdr["ID"]);
             ColumnID = Convert.ToInt32(rdr["ColumnID"]);
@@ -62,14 +76,9 @@ namespace NaggerLibrary
             LastDone = rdr["LastDone"] as DateTime? ?? default(DateTime);
             Completed = Convert.ToBoolean(rdr["Completed"]);
         }
+               
 
-
-        public ColumnType GetColumn()
-        {
-            return CardCategorizerChain.GetColumn(this);
-        }
-
-        public void UpdateColumn()
+        public void Update()
         {
             string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
 
@@ -77,7 +86,7 @@ namespace NaggerLibrary
 
             SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
             sqlParam[0].Value = ID;
-            sqlParam[1].Value = (int)GetColumn();
+            sqlParam[1].Value = (int)AssignColumn();
             sqlParam[2].Value = Description;
 
             SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
