@@ -78,6 +78,7 @@ namespace NaggerLibrary
             SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
             sqlParam[0].Value = ID;
             sqlParam[1].Value = (int)GetColumn();
+            sqlParam[2].Value = Description;
 
             SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
         }
