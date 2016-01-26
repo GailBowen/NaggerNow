@@ -75,20 +75,12 @@ namespace NaggerNow
 
             string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
 
-            string decodedDescription = HttpUtility.HtmlDecode(card.Description);
+            card.Description = HttpUtility.HtmlDecode(card.Description);
 
-            string spName = "[dbo].[Card_Update]";
-
-            SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
-            sqlParam[0].Value = card.ID;
-            sqlParam[1].Value = card.ColumnID;
-            sqlParam[2].Value = decodedDescription;
-
-            SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+            card.Update();
 
             log.InfoFormat("Card updated: {0}", Nag);
-
-
+            
             ArrayList objs = new ArrayList();
             objs.Add(new
             {

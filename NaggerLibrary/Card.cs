@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.ApplicationBlocks.Data;
+using System;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
-using Microsoft.ApplicationBlocks.Data;
 
 namespace NaggerLibrary
 {
@@ -86,7 +82,7 @@ namespace NaggerLibrary
 
             SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
             sqlParam[0].Value = ID;
-            sqlParam[1].Value = (int)AssignColumn();
+            sqlParam[1].Value = ColumnID;
             sqlParam[2].Value = Description;
 
             SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
