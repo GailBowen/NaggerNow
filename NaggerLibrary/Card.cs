@@ -18,7 +18,7 @@ namespace NaggerLibrary
 
         public int BoardID { get; set; }
 
-        public int CardType { get; set; }
+        public int Frequency { get; set; }
 
         public int LocationID { get; set; }
 
@@ -61,7 +61,7 @@ namespace NaggerLibrary
             ColumnID = Convert.ToInt32(rdr["ColumnID"]);
             Mandated = Convert.ToBoolean(rdr["Mandated"]);
             BoardID = Convert.ToInt32(rdr["BoardID"]);
-            CardType = Convert.ToInt32(rdr["CardType"]);
+            Frequency = Convert.ToInt32(rdr["frequency"]);
             LocationID = Convert.ToInt32(rdr["LocationID"]);
             Title = Convert.ToString(rdr["Title"]);
             Description = Convert.ToString(rdr["Description"]);
@@ -99,6 +99,22 @@ namespace NaggerLibrary
             colDone = 5,
             colSkip = 6,
         }
+
+
+        public enum Frequency
+        { 
+            Specific = 0,
+            Daily = 1,
+            EOD = 2,
+            Weekly = 7,
+            EOW = 14,
+            Monthly = 30,
+            EOM = 60,
+            NowAndThen = 180,
+            Yearly = 365
+        }
+
+        
 
     
 }

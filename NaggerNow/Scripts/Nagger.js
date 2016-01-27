@@ -19,7 +19,7 @@ function value_of_enum(col, colName)
     }
 }
 
-function Card(id, title, description, board, cardType, token, tokensAwarded, lastDone, columnID) {
+function Card(id, title, description, board, frequency, token, tokensAwarded, lastDone, columnID) {
     var self = this;
 
     self.id = id;
@@ -30,7 +30,7 @@ function Card(id, title, description, board, cardType, token, tokensAwarded, las
 
     self.board = board;
 
-    self.cardType = cardType;
+    self.frequency = frequency;
 
     self.token = token;
 
@@ -54,7 +54,7 @@ function CardsViewModel() {
     };
 
     self.populateAllCards = function (allData) {
-        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.cardType, item.token, item.tokensAwarded, item.lastDone, item.columnID) });
+        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.frequency, item.token, item.tokensAwarded, item.lastDone, item.columnID) });
         self.AllCards(temp);
     };
     
@@ -132,11 +132,11 @@ function MoveInfo(event, ui) {
     var id = ui.item.attr('id');
     var title = ui.item.attr('title');
     var board = ui.item.attr('board');
-    var cardType = ui.item.attr('cardType');
+    var frequency = ui.item.attr('frequency');
     var lastDone = ui.item.attr('lastDone');
     var description = ui.item[0].childNodes['3'].innerHTML;
     
-    var currentCard = new Card(id, title, description, board, cardType, 0, 0, lastDone, value_of_enum(COLUMN, column));
+    var currentCard = new Card(id, title, description, board, frequency, 0, 0, lastDone, value_of_enum(COLUMN, column));
           
     currentCard = JSON.stringify(currentCard);
 
