@@ -85,6 +85,22 @@ namespace NaggerTests
             Assert.AreEqual(ColumnType.colMust, colType);
         }
 
+        [TestMethod]
+        public void AssignCardToMustDoColumn_MandatedDueToday()
+        {
+            SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
+
+            var card = new Card();
+            card.Frequency = (int)Frequency.Daily;
+            card.Mandated = true;
+            card.DueDate = new DateTime(2016, 1, 20); //This is today
+            card.SkipCount = 0;
+
+            ColumnType colType = card.AssignColumn();
+
+            Assert.AreEqual(ColumnType.colMust, colType);
+        }
+
         #endregion
         
         #region Done
@@ -99,6 +115,24 @@ namespace NaggerTests
             card.DueDate = new DateTime(2016, 1, 20);
             card.LastDone = new DateTime(2016, 1, 20); //Card was done today
             card.SkipCount = 2;
+
+            ColumnType colType = card.AssignColumn();
+
+            Assert.AreEqual(ColumnType.colDone, colType);
+        }
+
+
+        [TestMethod]
+        public void AssignCardToMustDoColumn_MandatedDueToday_DoneToday()
+        {
+            SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
+
+            var card = new Card();
+            card.Frequency = (int)Frequency.Daily;
+            card.Mandated = true;
+            card.DueDate = new DateTime(2016, 1, 20); 
+            card.LastDone = new DateTime(2016, 1, 20); //This is today
+            card.SkipCount = 0;
 
             ColumnType colType = card.AssignColumn();
 
@@ -126,10 +160,5 @@ namespace NaggerTests
 
         #endregion
 
-
-
-
-        
-    
     }
 }
