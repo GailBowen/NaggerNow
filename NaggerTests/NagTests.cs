@@ -14,6 +14,8 @@ namespace NaggerTests
     public class NagTests
     {
 
+        #region CouldDo
+      
         [TestMethod]
         public void AssignCardToCouldDoColumn()
         {
@@ -30,6 +32,9 @@ namespace NaggerTests
         }
 
 
+        #endregion
+
+        #region ShouldDo
         [TestMethod]
         public void AssignCardToShouldDoColumn_DueToday()
         {
@@ -45,7 +50,9 @@ namespace NaggerTests
 
             Assert.AreEqual(ColumnType.colShould, colType);
         }
+        #endregion
 
+        #region MustDo
         [TestMethod]
         public void AssignCardToMustDoColumn_SkippedTwice()
         {
@@ -62,6 +69,67 @@ namespace NaggerTests
             Assert.AreEqual(ColumnType.colMust, colType);
         }
 
+        [TestMethod]
+        public void AssignCardToMustDoColumn_SpecificDueToday()
+        {
+            SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
+
+            var card = new Card();
+            card.Frequency = (int)Frequency.Specific;
+            card.Mandated = false;
+            card.DueDate = new DateTime(2016, 1, 20); //This is today
+            card.SkipCount = 0;
+
+            ColumnType colType = card.AssignColumn();
+
+            Assert.AreEqual(ColumnType.colMust, colType);
+        }
+
+        #endregion
+        
+        #region Done
+        [TestMethod]
+        public void AssignCardToDone()
+        {
+            SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
+
+            var card = new Card();
+            card.Frequency = (int)Frequency.NowAndThen;
+            card.Mandated = false;
+            card.DueDate = new DateTime(2016, 1, 20);
+            card.LastDone = new DateTime(2016, 1, 20); //Card was done today
+            card.SkipCount = 2;
+
+            ColumnType colType = card.AssignColumn();
+
+            Assert.AreEqual(ColumnType.colDone, colType);
+        }
+        #endregion
+
+        #region Skip
+        [TestMethod]
+        public void AssignCardToSkipped()
+        {
+            SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
+
+            var card = new Card();
+            card.Frequency = (int)Frequency.NowAndThen;
+            card.Mandated = false;
+            card.DueDate = new DateTime(2016, 1, 21); //Not due till tomorrow
+            card.LastSkip = new DateTime(2016, 1, 20); //Card was skipped today
+            card.SkipCount = 2;
+
+            ColumnType colType = card.AssignColumn();
+
+            Assert.AreEqual(ColumnType.colSkip, colType);
+        }
+
+        #endregion
+
+
+
+
+        
     
     }
 }
