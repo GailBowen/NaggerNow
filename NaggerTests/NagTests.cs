@@ -28,6 +28,40 @@ namespace NaggerTests
 
             Assert.AreEqual(ColumnType.colCould, colType);
         }
+
+
+        [TestMethod]
+        public void AssignCardToShouldDoColumn_DueToday()
+        {
+            SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
+
+            var card = new Card();
+            card.Frequency = (int)Frequency.NowAndThen;
+            card.Mandated = false;
+            card.DueDate = new DateTime(2016, 1, 20); //This is today
+            card.SkipCount = 1;
+
+            ColumnType colType = card.AssignColumn();
+
+            Assert.AreEqual(ColumnType.colShould, colType);
+        }
+
+        [TestMethod]
+        public void AssignCardToMustDoColumn_SkippedTwice()
+        {
+            SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
+
+            var card = new Card();
+            card.Frequency = (int)Frequency.NowAndThen;
+            card.Mandated = false;
+            card.DueDate = new DateTime(2016, 1, 20); //This is today
+            card.SkipCount = 2;
+
+            ColumnType colType = card.AssignColumn();
+
+            Assert.AreEqual(ColumnType.colMust, colType);
+        }
+
     
     }
 }

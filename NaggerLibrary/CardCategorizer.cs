@@ -50,10 +50,13 @@ namespace NaggerLibrary
             {
                 return true;
             }
-            else
+
+            if (card.DueDate.Date == SystemTime.Now.Invoke().Date && card.SkipCount >= 2)
             {
-                return false;
+                return true;
             }
+            
+            return false;
         }
 
 
