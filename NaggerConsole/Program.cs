@@ -3,6 +3,9 @@ using NaggerLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NaggerLibrary.Mock;
+
+
 
 namespace NaggerConsole
 {
@@ -19,13 +22,14 @@ namespace NaggerConsole
         
         public static void ProcessCards()
         {
-           List<Card> cards =  NaggerProvider.FetchCards();
+        
+            List<Card> cards = NaggerProvider.FetchCards();
 
-           foreach (var card in cards)
-           {
-               card.ColumnID = (int)card.AssignColumn();
-               card.Update();
-           }
+            foreach (var card in cards)
+            {
+                card.ColumnID = (int)card.AssignColumn();
+                card.Update();
+            }
 
             Console.WriteLine("Could Do: {0}", cards.Count(c => c.AssignColumn() == ColumnType.colCould));
             Console.WriteLine("Should Do: {0}", cards.Count(c => c.AssignColumn() == ColumnType.colShould));

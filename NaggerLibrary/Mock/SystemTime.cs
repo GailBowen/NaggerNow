@@ -16,6 +16,6 @@ namespace NaggerLibrary.Mock
     /// </summary>
     public static class SystemTime
     {
-        public static Func<DateTime> Now = () => SystemTime.Now.Invoke();
+        public static Func<DateTime> Now = () => DateTime.Now;
     }
 }

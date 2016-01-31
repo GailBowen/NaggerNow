@@ -22,6 +22,7 @@ namespace NaggerLibrary
 
         protected static bool DoneToday(Card card)
         {
+
             if (card.LastDone.Date == SystemTime.Now.Invoke().Date)
             {
                 return true;
