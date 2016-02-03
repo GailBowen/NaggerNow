@@ -31,8 +31,9 @@ namespace NaggerNow
 
             try
             {
+                var ndl = new NaggerDataLinker();
 
-                List<Card> cards = NaggerProvider.FetchCards();
+                List<Card> cards = ndl.GetCardCollection();
 
                 foreach (var card in cards)
                 {
@@ -77,7 +78,9 @@ namespace NaggerNow
 
             card.Description = HttpUtility.HtmlDecode(card.Description);
 
-            card.Update();
+            var ndl = new NaggerDataLinker();
+
+            ndl.Update(card);
 
             log.InfoFormat("Card updated: {0}", Nag);
             

@@ -22,13 +22,14 @@ namespace NaggerConsole
         
         public static void ProcessCards()
         {
-        
-            List<Card> cards = NaggerProvider.FetchCards();
+            var ndl = new NaggerDataLinker();
+
+            List<Card> cards = ndl.GetCardCollection();
 
             foreach (var card in cards)
             {
                 card.ColumnID = (int)card.AssignColumn();
-                card.Update();
+                ndl.Update(card);
             }
 
             Console.WriteLine("Could Do: {0}", cards.Count(c => c.AssignColumn() == ColumnType.colCould));

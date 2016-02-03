@@ -51,9 +51,12 @@
     <Compile Include="CardCategorizer.cs" />
     <Compile Include="CardCategorizerChain.cs" />
     <Compile Include="Categories.cs" />
+    <Compile Include="ColumnType.cs" />
+    <Compile Include="Frequency.cs" />
     <Compile Include="ICard.cs" />
+    <Compile Include="INaggerDataLinker.cs" />
     <Compile Include="Mock\SystemTime.cs" />
-    <Compile Include="NaggerProvider.cs" />
+    <Compile Include="NaggerDataLinker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

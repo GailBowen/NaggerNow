@@ -13,9 +13,38 @@ namespace NaggerTests
     [TestClass]
     public class NagTests
     {
+        #region MoveCards
+        [TestMethod]
+        public void MoveFromCouldDoToDone()
+        {
+            SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
+
+            DateTime dueDate = new DateTime(2016, 1, 21); //This is in the future
+
+            var card = new Card();
+            card.Frequency = (int)Frequency.NowAndThen;
+            card.Mandated = false;
+            card.DueDate = dueDate;
+            card.ColumnID = (int)ColumnType.colCould;
+            
+            //Card gets done
+            card.LastDone = SystemTime.Now.Invoke().Date;
+            card.ColumnID = (int)ColumnType.colDone;
+            card.PreviousDueDate = card.DueDate;
+            card.DueDate = card.DueDate.AddDays(card.Frequency);
+
+            Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastDone);
+            Assert.AreEqual((int)ColumnType.colDone, card.ColumnID);
+            Assert.AreEqual(dueDate, card.PreviousDueDate);
+            Assert.AreEqual(dueDate.AddDays(180), card.DueDate);
+            
+
+        }
+
+        #endregion
 
         #region CouldDo
-      
+
         [TestMethod]
         public void AssignCardToCouldDoColumn()
         {

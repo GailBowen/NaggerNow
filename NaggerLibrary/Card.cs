@@ -30,6 +30,8 @@ namespace NaggerLibrary
 
         public DateTime DueDate { get; set; }
 
+        public DateTime PreviousDueDate { get; set; }
+
         public int SkipCount { get; set; }
 
         public DateTime LastSkip { get; set; }
@@ -43,78 +45,13 @@ namespace NaggerLibrary
         {
 
         }
-
-        public Card(SqlDataReader rdr)
-        {
-            Fetch(rdr);
-        }
+             
 
         public ColumnType AssignColumn()
         {
             return CardCategorizerChain.GetColumn(this);
         }
-
-
-        public void Fetch(SqlDataReader rdr)
-        {
-            ID = Convert.ToInt32(rdr["ID"]);
-            ColumnID = Convert.ToInt32(rdr["ColumnID"]);
-            Mandated = Convert.ToBoolean(rdr["Mandated"]);
-            BoardID = Convert.ToInt32(rdr["BoardID"]);
-            Frequency = Convert.ToInt32(rdr["frequency"]);
-            LocationID = Convert.ToInt32(rdr["LocationID"]);
-            Title = Convert.ToString(rdr["Title"]);
-            Description = Convert.ToString(rdr["Description"]);
-            Created = Convert.ToDateTime(rdr["Created"]);
-            DueDate = Convert.ToDateTime(rdr["DueDate"]);
-            SkipCount = Convert.ToInt16(rdr["SkipCount"]);
-            LastSkip = rdr["LastSkip"] as DateTime? ?? default(DateTime);
-            LastDone = rdr["LastDone"] as DateTime? ?? default(DateTime);
-            Completed = Convert.ToBoolean(rdr["Completed"]);
-        }
-               
-
-        public void Update()
-        {
-            string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
-
-            string spName = "Card_Update";
-
-            SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
-            sqlParam[0].Value = ID;
-            sqlParam[1].Value = ColumnID;
-            sqlParam[2].Value = Description;
-
-            SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
-        }
-
+        
     }
-        
-        public enum ColumnType
-        {
-            colNone = 1,
-            colCould = 2,
-            colShould = 3,
-            colMust = 4,
-            colDone = 5,
-            colSkip = 6,
-        }
-
-
-        public enum Frequency
-        { 
-            Specific = 0,
-            Daily = 1,
-            EOD = 2,
-            Weekly = 7,
-            EOW = 14,
-            Monthly = 30,
-            EOM = 60,
-            NowAndThen = 180,
-            Yearly = 365
-        }
-
-        
-
-    
+           
 }
