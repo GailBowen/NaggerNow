@@ -12,5 +12,7 @@ namespace NaggerLibrary
     public interface ICard
     {
         ColumnType AssignColumn();
+
+        void ProcessTransition();
     }
 }

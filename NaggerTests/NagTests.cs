@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NaggerLibrary;
 using NaggerLibrary.Mock;
-
+using NaggerLibrary.Cards;
 
 namespace NaggerTests
 {
@@ -14,6 +14,7 @@ namespace NaggerTests
     public class NagTests
     {
         #region MoveCards
+
         [TestMethod]
         public void MoveFromCouldDoToDone()
         {
@@ -21,23 +22,42 @@ namespace NaggerTests
 
             DateTime dueDate = new DateTime(2016, 1, 21); //This is in the future
 
-            var card = new Card();
+            var card = new DoneCard();
             card.Frequency = (int)Frequency.NowAndThen;
             card.Mandated = false;
             card.DueDate = dueDate;
             card.ColumnID = (int)ColumnType.colCould;
             
             //Card gets done
-            card.LastDone = SystemTime.Now.Invoke().Date;
-            card.ColumnID = (int)ColumnType.colDone;
-            card.PreviousDueDate = card.DueDate;
-            card.DueDate = card.DueDate.AddDays(card.Frequency);
+            card.ProcessTransition();
 
             Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastDone);
             Assert.AreEqual((int)ColumnType.colDone, card.ColumnID);
             Assert.AreEqual(dueDate, card.PreviousDueDate);
             Assert.AreEqual(dueDate.AddDays(180), card.DueDate);
             
+        }
+
+        [TestMethod]
+        public void MoveFromCouldDoToSkipped()
+        {
+            SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
+
+            DateTime dueDate = new DateTime(2016, 1, 21); //This is in the future
+
+            var card = new SkipCard();
+            card.Frequency = (int)Frequency.NowAndThen;
+            card.Mandated = false;
+            card.DueDate = dueDate;
+            card.ColumnID = (int)ColumnType.colCould;
+
+            //Card gets skipped
+            card.ProcessTransition();
+            
+            Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastSkip);
+            Assert.AreEqual((int)ColumnType.colSkip, card.ColumnID);
+            Assert.AreEqual(dueDate, card.PreviousDueDate);
+            Assert.AreEqual(dueDate.AddDays(180), card.DueDate);
 
         }
 

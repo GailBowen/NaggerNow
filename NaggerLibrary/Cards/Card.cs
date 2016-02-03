@@ -51,7 +51,11 @@ namespace NaggerLibrary
         {
             return CardCategorizerChain.GetColumn(this);
         }
+
+        public void ProcessTransition()
+        { 
         
+        }
     }
            
 }
