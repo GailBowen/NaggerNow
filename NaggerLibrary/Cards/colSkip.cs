@@ -7,9 +7,9 @@ using NaggerLibrary.Mock;
 
 namespace NaggerLibrary.Cards
 {
-    public class SkipCard: Card
+    public class colSkip: Card
     {
-        public new void ProcessTransition()
+        public override void ProcessTransition()
         {
             LastSkip = SystemTime.Now.Invoke().Date;
             ColumnID = (int)ColumnType.colSkip;

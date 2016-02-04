@@ -128,6 +128,8 @@ function CardsViewModel() {
 function MoveInfo(event, ui) {
         
     var column = $(this).attr('id');
+
+    alert(column);
     
     var id = ui.item.attr('id');
     var title = ui.item.attr('title');

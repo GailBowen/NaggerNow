@@ -7,9 +7,9 @@ using NaggerLibrary.Mock;
 
 namespace NaggerLibrary.Cards
 {
-    public class DoneCard: Card
+    public class colDone: Card
     {
-        public new void ProcessTransition()
+        public override void ProcessTransition()
         {
             LastDone = SystemTime.Now.Invoke().Date;
             ColumnID = (int)ColumnType.colDone;

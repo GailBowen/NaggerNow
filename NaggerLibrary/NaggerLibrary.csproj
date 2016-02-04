@@ -47,11 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CardFactory.cs" />
     <Compile Include="Cards\Card.cs" />
     <Compile Include="CardCategorizer.cs" />
     <Compile Include="CardCategorizerChain.cs" />
-    <Compile Include="Cards\DoneCard.cs" />
-    <Compile Include="Cards\SkipCard.cs" />
+    <Compile Include="Cards\colDone.cs" />
+    <Compile Include="Cards\colSkip.cs" />
+    <Compile Include="Cards\colNone.cs" />
     <Compile Include="Categories.cs" />
     <Compile Include="ColumnType.cs" />
     <Compile Include="Frequency.cs" />

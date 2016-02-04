@@ -22,12 +22,13 @@ namespace NaggerTests
 
             DateTime dueDate = new DateTime(2016, 1, 21); //This is in the future
 
-            var card = new DoneCard();
+            CardFactory factory = new CardFactory();
+            ICard card = factory.CreateInstance("colDone".ToLower());
+
             card.FrequencyID = (int)Frequency.NowAndThen;
             card.Mandated = false;
             card.DueDate = dueDate;
-            card.ColumnID = (int)ColumnType.colCould;
-            
+                 
             //Card gets done
             card.ProcessTransition();
 
@@ -45,12 +46,13 @@ namespace NaggerTests
 
             DateTime dueDate = new DateTime(2016, 1, 21); //This is in the future
 
-            var card = new SkipCard();
+            CardFactory factory = new CardFactory();
+            ICard card = factory.CreateInstance("colSkip".ToLower());
+
             card.FrequencyID = (int)Frequency.NowAndThen;
             card.Mandated = false;
             card.DueDate = dueDate;
-            card.ColumnID = (int)ColumnType.colCould;
-
+           
             //Card gets skipped
             card.ProcessTransition();
             

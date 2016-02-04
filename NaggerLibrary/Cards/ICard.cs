@@ -11,6 +11,39 @@ namespace NaggerLibrary
 {
     public interface ICard
     {
+        #region Properties
+             int ID { get; set; }
+
+             int ColumnID { get; set; }
+
+             bool Mandated { get; set; }
+
+             int BoardID { get; set; }
+
+             int FrequencyID { get; set; }
+
+             int LocationID { get; set; }
+
+             string Title { get; set; }
+
+             string Description { get; set; }
+
+             DateTime Created { get; set; }
+
+             DateTime DueDate { get; set; }
+
+             DateTime PreviousDueDate { get; set; }
+
+             int SkipCount { get; set; }
+
+             DateTime LastSkip { get; set; }
+
+             DateTime LastDone { get; set; }
+
+             bool Completed { get; set; }
+        #endregion
+        
+        
         ColumnType AssignColumn();
 
         void ProcessTransition();
