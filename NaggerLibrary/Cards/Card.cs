@@ -18,7 +18,7 @@ namespace NaggerLibrary
 
         public int BoardID { get; set; }
 
-        public int Frequency { get; set; }
+        public int FrequencyID { get; set; }
 
         public int LocationID { get; set; }
 

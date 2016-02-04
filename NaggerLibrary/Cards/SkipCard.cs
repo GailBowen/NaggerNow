@@ -14,7 +14,7 @@ namespace NaggerLibrary.Cards
             LastSkip = SystemTime.Now.Invoke().Date;
             ColumnID = (int)ColumnType.colSkip;
             PreviousDueDate = DueDate;
-            DueDate = DueDate.AddDays(Frequency);
+            DueDate = DueDate.AddDays(FrequencyID);
         }
     }
 }

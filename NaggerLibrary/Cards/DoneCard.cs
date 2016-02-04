@@ -14,7 +14,7 @@ namespace NaggerLibrary.Cards
             LastDone = SystemTime.Now.Invoke().Date;
             ColumnID = (int)ColumnType.colDone;
             PreviousDueDate = DueDate;
-            DueDate = DueDate.AddDays(Frequency);
+            DueDate = DueDate.AddDays(FrequencyID);
         }
     }
 }

@@ -44,7 +44,7 @@ namespace NaggerNow
                         columnID = card.ColumnID,
                         description = card.Description,
                         board = card.BoardID,
-                        frequency = card.Frequency,
+                        frequency = card.FrequencyID,
                         token = 0,
                         tokensAwarded = 0,
                         lastDone = card.LastDone

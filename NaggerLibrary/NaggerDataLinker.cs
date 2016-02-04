@@ -22,7 +22,7 @@ namespace NaggerLibrary
             card.ColumnID = Convert.ToInt32(rdr["ColumnID"]);
             card.Mandated = Convert.ToBoolean(rdr["Mandated"]);
             card.BoardID = Convert.ToInt32(rdr["BoardID"]);
-            card.Frequency = Convert.ToInt32(rdr["frequency"]);
+            card.FrequencyID = Convert.ToInt32(rdr["FrequencyID"]);
             card.LocationID = Convert.ToInt32(rdr["LocationID"]);
             card.Title = Convert.ToString(rdr["Title"]);
             card.Description = Convert.ToString(rdr["Description"]);

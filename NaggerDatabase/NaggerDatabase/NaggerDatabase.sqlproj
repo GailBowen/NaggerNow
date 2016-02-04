@@ -46,6 +46,8 @@
     <DefineTrace>true</DefineTrace>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatTSqlWarningsAsErrors>True</TreatTSqlWarningsAsErrors>
+    <SuppressTSqlWarnings>71558</SuppressTSqlWarnings>
   </PropertyGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
@@ -63,12 +65,12 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Locations.sql" />
-    <Build Include="dbo\Tables\CardTypes.sql" />
     <Build Include="dbo\Tables\Cards.sql" />
     <Build Include="dbo\Tables\Boards.sql" />
     <Build Include="dbo\Tables\Columns.sql" />
     <Build Include="dbo\Stored Procedures\Cards_FetchAll.sql" />
     <Build Include="dbo\Tables\Logs.sql" />
     <Build Include="dbo\Stored Procedures\Card_Update.sql" />
+    <Build Include="dbo\Tables\Frequencies.sql" />
   </ItemGroup>
 </Project>

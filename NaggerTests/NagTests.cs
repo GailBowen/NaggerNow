@@ -23,7 +23,7 @@ namespace NaggerTests
             DateTime dueDate = new DateTime(2016, 1, 21); //This is in the future
 
             var card = new DoneCard();
-            card.Frequency = (int)Frequency.NowAndThen;
+            card.FrequencyID = (int)Frequency.NowAndThen;
             card.Mandated = false;
             card.DueDate = dueDate;
             card.ColumnID = (int)ColumnType.colCould;
@@ -46,7 +46,7 @@ namespace NaggerTests
             DateTime dueDate = new DateTime(2016, 1, 21); //This is in the future
 
             var card = new SkipCard();
-            card.Frequency = (int)Frequency.NowAndThen;
+            card.FrequencyID = (int)Frequency.NowAndThen;
             card.Mandated = false;
             card.DueDate = dueDate;
             card.ColumnID = (int)ColumnType.colCould;
@@ -71,7 +71,7 @@ namespace NaggerTests
             SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
 
             var card = new Card();
-            card.Frequency = (int)Frequency.NowAndThen;
+            card.FrequencyID = (int)Frequency.NowAndThen;
             card.Mandated = false;
             card.DueDate = new DateTime(2016, 1, 21); //This is in the future
 
@@ -90,7 +90,7 @@ namespace NaggerTests
             SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
 
             var card = new Card();
-            card.Frequency = (int)Frequency.NowAndThen;
+            card.FrequencyID = (int)Frequency.NowAndThen;
             card.Mandated = false;
             card.DueDate = new DateTime(2016, 1, 20); //This is today
             card.SkipCount = 1;
@@ -108,7 +108,7 @@ namespace NaggerTests
             SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
 
             var card = new Card();
-            card.Frequency = (int)Frequency.NowAndThen;
+            card.FrequencyID = (int)Frequency.NowAndThen;
             card.Mandated = false;
             card.DueDate = new DateTime(2016, 1, 20); //This is today
             card.SkipCount = 2;
@@ -124,7 +124,7 @@ namespace NaggerTests
             SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
 
             var card = new Card();
-            card.Frequency = (int)Frequency.Specific;
+            card.FrequencyID = (int)Frequency.Specific;
             card.Mandated = false;
             card.DueDate = new DateTime(2016, 1, 20); //This is today
             card.SkipCount = 0;
@@ -140,7 +140,7 @@ namespace NaggerTests
             SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
 
             var card = new Card();
-            card.Frequency = (int)Frequency.Daily;
+            card.FrequencyID = (int)Frequency.Daily;
             card.Mandated = true;
             card.DueDate = new DateTime(2016, 1, 20); //This is today
             card.SkipCount = 0;
@@ -159,7 +159,7 @@ namespace NaggerTests
             SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
 
             var card = new Card();
-            card.Frequency = (int)Frequency.NowAndThen;
+            card.FrequencyID = (int)Frequency.NowAndThen;
             card.Mandated = false;
             card.DueDate = new DateTime(2016, 1, 20);
             card.LastDone = new DateTime(2016, 1, 20); //Card was done today
@@ -177,7 +177,7 @@ namespace NaggerTests
             SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
 
             var card = new Card();
-            card.Frequency = (int)Frequency.Daily;
+            card.FrequencyID = (int)Frequency.Daily;
             card.Mandated = true;
             card.DueDate = new DateTime(2016, 1, 20); 
             card.LastDone = new DateTime(2016, 1, 20); //This is today
@@ -196,7 +196,7 @@ namespace NaggerTests
             SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
 
             var card = new Card();
-            card.Frequency = (int)Frequency.NowAndThen;
+            card.FrequencyID = (int)Frequency.NowAndThen;
             card.Mandated = false;
             card.DueDate = new DateTime(2016, 1, 21); //Not due till tomorrow
             card.LastSkip = new DateTime(2016, 1, 20); //Card was skipped today

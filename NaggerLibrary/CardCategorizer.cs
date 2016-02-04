@@ -48,7 +48,7 @@ namespace NaggerLibrary
         protected static bool MustBeDoneToday(Card card)
         {
 
-            if (card.Frequency == (int)Frequency.Specific && card.DueDate.Date == SystemTime.Now.Invoke().Date && card.Completed == false)
+            if (card.FrequencyID == (int)Frequency.Specific && card.DueDate.Date == SystemTime.Now.Invoke().Date && card.Completed == false)
             {
                 return true;
             }
