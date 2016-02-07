@@ -66,7 +66,7 @@ namespace NaggerLibrary
             return cards;
         }
 
-        public void Update(Card card)
+        public void Update(ICard card)
         {
             string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
 

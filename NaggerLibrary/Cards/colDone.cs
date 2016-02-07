@@ -15,6 +15,7 @@ namespace NaggerLibrary.Cards
             ColumnID = (int)ColumnType.colDone;
             PreviousDueDate = DueDate;
             DueDate = DueDate.AddDays(FrequencyID);
+            Description = "Done Card!";
         }
     }
 }

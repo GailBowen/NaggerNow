@@ -70,13 +70,19 @@ namespace NaggerNow
      
         [WebMethod(EnableSession = true)]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void UpdateCard(string Nag)
+        public void UpdateCard(string Nag, string column)
         {
-            var card = JsonConvert.DeserializeObject<Card>(Nag);
+
+            CardFactory factory = new CardFactory();
+            ICard card = factory.CreateInstance(column.ToLower());
+            
+            card = (ICard)JsonConvert.DeserializeObject(Nag, card.GetType());
+
+            card.ProcessTransition();
 
             string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
 
-            card.Description = HttpUtility.HtmlDecode(card.Description);
+            //card.Description = HttpUtility.HtmlDecode(card.Description);
 
             var ndl = new NaggerDataLinker();
 

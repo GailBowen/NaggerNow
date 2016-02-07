@@ -15,6 +15,6 @@ namespace NaggerLibrary
 
         List<Card> GetCardCollection();
 
-        void Update(Card card);
+        void Update(ICard card);
     }
 }

@@ -37,6 +37,10 @@
     <Reference Include="Microsoft.ApplicationBlocks.Data">
       <HintPath>..\ref\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -51,9 +55,12 @@
     <Compile Include="Cards\Card.cs" />
     <Compile Include="CardCategorizer.cs" />
     <Compile Include="CardCategorizerChain.cs" />
+    <Compile Include="Cards\colCould.cs" />
     <Compile Include="Cards\colDone.cs" />
+    <Compile Include="Cards\colMust.cs" />
     <Compile Include="Cards\colSkip.cs" />
     <Compile Include="Cards\colNone.cs" />
+    <Compile Include="Cards\colShould.cs" />
     <Compile Include="Categories.cs" />
     <Compile Include="ColumnType.cs" />
     <Compile Include="Frequency.cs" />
