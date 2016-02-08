@@ -22,7 +22,7 @@ namespace NaggerLibrary
             Type t = GetTypeToCreate(cardName);
 
             if (t == null)
-                return new colNone();
+                return new Null();
 
             return Activator.CreateInstance(t) as ICard;
         }

@@ -75,6 +75,8 @@ namespace NaggerNow
 
             CardFactory factory = new CardFactory();
             ICard card = factory.CreateInstance(column.ToLower());
+
+            var type = card.GetType();
             
             card = (ICard)JsonConvert.DeserializeObject(Nag, card.GetType());
 

@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace NaggerLibrary.Cards
 {
-    public class colMust : Card
+    public class Null: Card
     {
-
         public override void ProcessTransition()
-        {
-            Description = "Must Do Card";
-        }
+        { }
     }
 }

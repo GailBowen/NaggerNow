@@ -7,7 +7,7 @@ using NaggerLibrary.Mock;
 
 namespace NaggerLibrary.Cards
 {
-    public class colSkip: Card
+    public class Skip: Card
     {
         public override void ProcessTransition()
         {

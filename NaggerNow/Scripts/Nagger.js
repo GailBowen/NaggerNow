@@ -141,10 +141,13 @@ function MoveInfo(event, ui) {
     currentCard = JSON.stringify(currentCard);
 
     var encoded = encodeURIComponent(currentCard);
-    
-    var url = "/NagService.asmx/UpdateCard?Nag=" + encoded + "&column=" + column;
+
+    var url = "/NagService.asmx/UpdateCard?Nag=" + encoded + "&column=" + column.substring(3);
             
     NaggerConnect.getData(url, null, 'GET', 'json', false);
+
+    location.reload();
+
     return true;
 }
 

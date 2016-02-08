@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace NaggerLibrary.Cards
 {
-    public class colShould : Card
+    public class Could: Card
     {
 
         public override void ProcessTransition()
         {
-            Description = "Should Do Card";
+            Description = "Could Do Card";
         }
     }
 }

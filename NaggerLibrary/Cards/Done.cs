@@ -7,7 +7,7 @@ using NaggerLibrary.Mock;
 
 namespace NaggerLibrary.Cards
 {
-    public class colDone: Card
+    public class Done: Card
     {
         public override void ProcessTransition()
         {

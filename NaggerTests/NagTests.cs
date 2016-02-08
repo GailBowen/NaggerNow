@@ -23,7 +23,7 @@ namespace NaggerTests
             DateTime dueDate = new DateTime(2016, 1, 21); //This is in the future
 
             CardFactory factory = new CardFactory();
-            ICard card = factory.CreateInstance("colDone".ToLower());
+            ICard card = factory.CreateInstance("Done".ToLower());
 
             card.FrequencyID = (int)Frequency.NowAndThen;
             card.Mandated = false;
@@ -47,7 +47,7 @@ namespace NaggerTests
             DateTime dueDate = new DateTime(2016, 1, 21); //This is in the future
 
             CardFactory factory = new CardFactory();
-            ICard card = factory.CreateInstance("colSkip".ToLower());
+            ICard card = factory.CreateInstance("Skip".ToLower());
 
             card.FrequencyID = (int)Frequency.NowAndThen;
             card.Mandated = false;
