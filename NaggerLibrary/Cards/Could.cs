@@ -11,7 +11,7 @@ namespace NaggerLibrary.Cards
 
         public override void ProcessTransition()
         {
-            Description = "Could Do Card";
+           
         }
     }
 }

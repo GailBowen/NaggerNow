@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
+using NaggerLibrary.Mock;
 
 namespace NaggerNow
 {
@@ -70,7 +71,7 @@ namespace NaggerNow
      
         [WebMethod(EnableSession = true)]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void UpdateCard(string Nag, string column)
+        public void UpdateCard(string Nag, string column, string previousColumn)
         {
 
             CardFactory factory = new CardFactory();
@@ -82,12 +83,22 @@ namespace NaggerNow
 
             string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
 
-            //card.Description = HttpUtility.HtmlDecode(card.Description);
+            card.Description = HttpUtility.HtmlDecode(card.Description);
 
             var ndl = new NaggerDataLinker();
 
             ndl.Update(card);
 
+            if (card.LastSkip == SystemTime.Now.Invoke().Date)
+            {
+                ndl.InsertSkipLogEntry(card);
+            }
+
+            if (card.LastDone == SystemTime.Now.Invoke().Date)
+            {
+                ndl.InsertDoneLogEntry(card);
+            }
+            
             log.InfoFormat("Card updated: {0}", Nag);
             
             ArrayList objs = new ArrayList();

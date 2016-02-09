@@ -126,7 +126,9 @@ function CardsViewModel() {
 }
 
 function MoveInfo(event, ui) {
-        
+    
+    var previousColumn = ui.sender.attr('id');
+
     var column = $(this).attr('id');
         
     var id = ui.item.attr('id');
@@ -142,7 +144,7 @@ function MoveInfo(event, ui) {
 
     var encoded = encodeURIComponent(currentCard);
 
-    var url = "/NagService.asmx/UpdateCard?Nag=" + encoded + "&column=" + column.substring(3);
+    var url = "/NagService.asmx/UpdateCard?Nag=" + encoded + "&column=" + column.substring(3) + "&previousColumn=" + previousColumn.substring(3);
             
     NaggerConnect.getData(url, null, 'GET', 'json', false);
 

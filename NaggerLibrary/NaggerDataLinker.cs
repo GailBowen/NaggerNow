@@ -80,5 +80,36 @@ namespace NaggerLibrary
             SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
         }
 
+        public void InsertDoneLogEntry(ICard card)
+        {
+            string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
+
+            string spName = "Logs_Insert";
+
+            SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
+            sqlParam[0].Value = card.ID;
+            sqlParam[1].Value = "DONE";
+            sqlParam[2].Value = card.LastDone;
+
+            SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+        }
+
+
+        public void InsertSkipLogEntry(ICard card)
+        {
+            string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
+
+            string spName = "Logs_Insert";
+
+            SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
+            sqlParam[0].Value = card.ID;
+            sqlParam[1].Value = "SKIP";
+            sqlParam[2].Value = card.LastSkip;
+
+            SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+        }
+
+
+
     }
 }
