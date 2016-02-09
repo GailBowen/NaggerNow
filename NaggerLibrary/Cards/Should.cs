@@ -8,6 +8,10 @@ namespace NaggerLibrary.Cards
 {
     public class Should : Card
     {
+        public Should()
+        {
+            ColumnID = (int)ColumnType.colShould;
+        }
 
         public override void ProcessTransition()
         {

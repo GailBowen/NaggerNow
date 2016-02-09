@@ -9,6 +9,11 @@ namespace NaggerLibrary.Cards
 {
     public class Skip: Card
     {
+        public Skip()
+        {
+            ColumnID = (int)ColumnType.colSkip;
+        }
+        
         public override void ProcessTransition()
         {
             LastSkip = SystemTime.Now.Invoke().Date;

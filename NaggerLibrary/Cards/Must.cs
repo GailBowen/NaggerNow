@@ -9,6 +9,11 @@ namespace NaggerLibrary.Cards
     public class Must : Card
     {
 
+        public Must()
+        {
+            ColumnID = (int)ColumnType.colMust;
+        }
+
         public override void ProcessTransition()
         {
           

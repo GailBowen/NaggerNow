@@ -8,6 +8,11 @@ namespace NaggerLibrary.Cards
 {
     public class Could: Card
     {
+        public Could()
+        {
+            ColumnID = (int)ColumnType.colCould;
+        }
+
 
         public override void ProcessTransition()
         {

@@ -9,6 +9,12 @@ namespace NaggerLibrary.Cards
 {
     public class Done: Card
     {
+
+        public Done()
+        {
+            ColumnID = (int)ColumnType.colDone;
+        }
+
         public override void ProcessTransition()
         {
             LastDone = SystemTime.Now.Invoke().Date;
