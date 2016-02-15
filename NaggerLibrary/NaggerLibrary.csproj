@@ -44,6 +44,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CardFactory.cs" />
+    <Compile Include="CardManager.cs" />
     <Compile Include="Cards\Card.cs" />
     <Compile Include="CardCategorizer.cs" />
     <Compile Include="CardCategorizerChain.cs" />

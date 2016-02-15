@@ -45,9 +45,10 @@ namespace NaggerNow
                         columnID = card.ColumnID,
                         description = card.Description,
                         board = card.BoardID,
-                        frequency = card.FrequencyID,
+                        frequencyID = card.FrequencyID,
                         token = 0,
                         tokensAwarded = 0,
+                        dueDate = card.DueDate,
                         lastDone = card.LastDone
                     });
                 }
@@ -71,45 +72,20 @@ namespace NaggerNow
      
         [WebMethod(EnableSession = true)]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void UpdateCard(string Nag, string column, string previousColumn)
+        public void ProcessCard(string Nag, string fromColumn, string toColumn)
         {
-
-            CardFactory factory = new CardFactory();
-            ICard card = factory.CreateInstance(column.ToLower());
-                                 
-            card = (ICard)JsonConvert.DeserializeObject(Nag, card.GetType());
-
-            card.ProcessTransition();
-
-            string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
-
-            card.Description = HttpUtility.HtmlDecode(card.Description);
-
+            CardManager mgr = new CardManager();
+            ICard card = mgr.ProcessCard(Nag, fromColumn, toColumn);
+                        
             var ndl = new NaggerDataLinker();
 
             ndl.Update(card);
-
-            if (card.LastSkip == SystemTime.Now.Invoke().Date)
-            {
-                ndl.InsertSkipLogEntry(card);
-            }
-
-            if (card.LastDone == SystemTime.Now.Invoke().Date)
-            {
-                ndl.InsertDoneLogEntry(card);
-            }
             
             log.InfoFormat("Card updated: {0}", Nag);
-            
-            ArrayList objs = new ArrayList();
-            objs.Add(new
-            {
-                Test = "test",
-            });
-
+          
             Context.Response.Clear();
             Context.Response.ContentType = "application/json";
-            Context.Response.Write(JsonConvert.SerializeObject(objs));
+            Context.Response.Write("Return nothing");
         }
 
     }

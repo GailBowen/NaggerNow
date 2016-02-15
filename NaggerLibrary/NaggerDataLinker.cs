@@ -9,6 +9,7 @@ using System.Configuration;
 using Microsoft.ApplicationBlocks.Data;
 using log4net;
 
+
 namespace NaggerLibrary
 {
     public class NaggerDataLinker: INaggerDataLinker
@@ -68,6 +69,12 @@ namespace NaggerLibrary
 
         public void Update(ICard card)
         {
+            UpdateCard(card);
+            UpdateLog(card);
+        }
+
+        public void UpdateCard(ICard card)
+        {
             string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
 
             string spName = "Card_Update";
@@ -76,8 +83,23 @@ namespace NaggerLibrary
             sqlParam[0].Value = card.ID;
             sqlParam[1].Value = card.ColumnID;
             sqlParam[2].Value = card.Description;
+            sqlParam[3].Value = card.DueDate;
 
             SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+        }
+
+        public void UpdateLog(ICard card)
+        {
+            
+            if (card.LastSkip == Mock.SystemTime.Now.Invoke().Date)
+            {
+                InsertSkipLogEntry(card);
+            }
+
+            if (card.LastDone == Mock.SystemTime.Now.Invoke().Date)
+            {
+                InsertDoneLogEntry(card);
+            }
         }
 
         public void InsertDoneLogEntry(ICard card)
@@ -93,8 +115,7 @@ namespace NaggerLibrary
 
             SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
         }
-
-
+        
         public void InsertSkipLogEntry(ICard card)
         {
             string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
@@ -108,8 +129,6 @@ namespace NaggerLibrary
 
             SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
         }
-
-
 
     }
 }

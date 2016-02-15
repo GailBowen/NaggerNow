@@ -19,7 +19,7 @@ function value_of_enum(col, colName)
     }
 }
 
-function Card(id, title, description, board, frequency, token, tokensAwarded, lastDone, columnID) {
+function Card(id, title, description, board, frequencyID, token, tokensAwarded, lastDone, columnID, dueDate) {
     var self = this;
 
     self.id = id;
@@ -30,7 +30,7 @@ function Card(id, title, description, board, frequency, token, tokensAwarded, la
 
     self.board = board;
 
-    self.frequency = frequency;
+    self.frequencyID = frequencyID;
 
     self.token = token;
 
@@ -39,6 +39,8 @@ function Card(id, title, description, board, frequency, token, tokensAwarded, la
     self.lastDone = lastDone;
 
     self.columnID = columnID;
+
+    self.dueDate = dueDate;
 }
 
 function CardsViewModel() {
@@ -54,7 +56,7 @@ function CardsViewModel() {
     };
 
     self.populateAllCards = function (allData) {
-        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.frequency, item.token, item.tokensAwarded, item.lastDone, item.columnID) });
+        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.frequencyID, item.token, item.tokensAwarded, item.lastDone, item.columnID, item.dueDate) });
         self.AllCards(temp);
     };
     
@@ -134,17 +136,18 @@ function MoveInfo(event, ui) {
     var id = ui.item.attr('id');
     var title = ui.item.attr('title');
     var board = ui.item.attr('board');
-    var frequency = ui.item.attr('frequency');
+    var frequencyID = ui.item.attr('frequencyID');
     var lastDone = ui.item.attr('lastDone');
+    var dueDate = ui.item.attr('dueDate');
     var description = ui.item[0].childNodes['3'].innerHTML;
-    
-    var currentCard = new Card(id, title, description, board, frequency, 0, 0, lastDone, value_of_enum(COLUMN, column));
+       
+    var currentCard = new Card(id, title, description, board, frequencyID, 0, 0, lastDone, value_of_enum(COLUMN, column), dueDate);
           
     currentCard = JSON.stringify(currentCard);
 
     var encoded = encodeURIComponent(currentCard);
 
-    var url = "/NagService.asmx/UpdateCard?Nag=" + encoded + "&column=" + column.substring(3) + "&previousColumn=" + previousColumn.substring(3);
+    var url = "/NagService.asmx/ProcessCard?Nag=" + encoded + "&fromColumn=" + previousColumn.substring(3) + "&toColumn=" + column.substring(3);
             
     NaggerConnect.getData(url, null, 'GET', 'json', false);
 

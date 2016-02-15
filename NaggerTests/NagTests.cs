@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NaggerLibrary;
 using NaggerLibrary.Mock;
 using NaggerLibrary.Cards;
+using Newtonsoft.Json;
 
 namespace NaggerTests
 {
@@ -20,22 +21,27 @@ namespace NaggerTests
         {
             SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
 
-            DateTime dueDate = new DateTime(2016, 1, 21); //This is in the future
+            Card testCard = new Card();
+            testCard.ID = 1;
+            testCard.DueDate = SystemTime.Now.Invoke().AddDays(2);
+            testCard.LastDone = SystemTime.Now.Invoke().AddDays(-2);
+            testCard.FrequencyID = 60;
 
-            CardFactory factory = new CardFactory();
-            ICard card = factory.CreateInstance("Done".ToLower());
+            string Nag = JsonConvert.SerializeObject(testCard);
 
-            card.FrequencyID = (int)Frequency.NowAndThen;
-            card.Mandated = false;
-            card.DueDate = dueDate;
-                 
-            //Card gets done
-            card.ProcessTransition();
+            DateTime previousDueDate = testCard.DueDate;
+            DateTime dueDate = testCard.DueDate.AddDays(testCard.FrequencyID);
+                       
 
-            Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastDone);
-            Assert.AreEqual((int)ColumnType.colDone, card.ColumnID);
-            Assert.AreEqual(dueDate, card.PreviousDueDate);
-            Assert.AreEqual(dueDate.AddDays(180), card.DueDate);
+            CardManager mgr = new CardManager();
+            ICard card = mgr.ProcessCard(Nag, "Could", "Done");
+
+
+            Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastDone, "Last done date");
+            Assert.AreEqual((int)ColumnType.colDone, card.ColumnID, "ColumnID");
+
+            Assert.AreEqual(previousDueDate, card.PreviousDueDate, "Previous due date");
+            Assert.AreEqual(dueDate, card.DueDate, "Due date");
             
         }
 
@@ -44,22 +50,30 @@ namespace NaggerTests
         {
             SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
 
-            DateTime dueDate = new DateTime(2016, 1, 21); //This is in the future
+            Card testCard = new Card();
+            testCard.ID = 1;
+            testCard.DueDate = SystemTime.Now.Invoke().AddDays(2);
+            testCard.LastDone = SystemTime.Now.Invoke().AddDays(-2);
+            testCard.FrequencyID = 60;
+            testCard.SkipCount = 1;
 
-            CardFactory factory = new CardFactory();
-            ICard card = factory.CreateInstance("Skip".ToLower());
+            string Nag = JsonConvert.SerializeObject(testCard);
 
-            card.FrequencyID = (int)Frequency.NowAndThen;
-            card.Mandated = false;
-            card.DueDate = dueDate;
-           
-            //Card gets skipped
-            card.ProcessTransition();
+            DateTime previousDueDate = testCard.DueDate;
+            DateTime dueDate = testCard.DueDate.AddDays(testCard.FrequencyID);
+            int skipCount = testCard.SkipCount + 1;
             
-            Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastSkip);
-            Assert.AreEqual((int)ColumnType.colSkip, card.ColumnID);
-            Assert.AreEqual(dueDate, card.PreviousDueDate);
-            Assert.AreEqual(dueDate.AddDays(180), card.DueDate);
+            CardManager mgr = new CardManager();
+            ICard card = mgr.ProcessCard(Nag, "Could", "Skip");
+
+            
+            Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastSkip, "Last skipped date");
+            Assert.AreEqual((int)ColumnType.colSkip, card.ColumnID, "Column ID");
+            Assert.AreEqual(skipCount, card.SkipCount, "Skip count");
+
+
+            Assert.AreEqual(previousDueDate, card.PreviousDueDate, "Previous due date");
+            Assert.AreEqual(dueDate, card.DueDate, "Due date");
 
         }
 

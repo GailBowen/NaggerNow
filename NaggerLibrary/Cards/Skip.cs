@@ -20,7 +20,7 @@ namespace NaggerLibrary.Cards
             ColumnID = (int)ColumnType.colSkip;
             PreviousDueDate = DueDate;
             DueDate = DueDate.AddDays(FrequencyID);
-            
+            SkipCount += 1;
         }
     }
 }

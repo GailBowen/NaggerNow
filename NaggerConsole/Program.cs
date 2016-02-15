@@ -29,7 +29,7 @@ namespace NaggerConsole
             foreach (var card in cards)
             {
                 card.ColumnID = (int)card.AssignColumn();
-                ndl.Update(card);
+                ndl.UpdateCard(card);
             }
 
             Console.WriteLine("Could Do: {0}", cards.Count(c => c.AssignColumn() == ColumnType.colCould));
