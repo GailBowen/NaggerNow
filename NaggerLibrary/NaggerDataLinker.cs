@@ -70,7 +70,6 @@ namespace NaggerLibrary
         public void Update(ICard card)
         {
             UpdateCard(card);
-            UpdateLog(card);
         }
 
         public void UpdateCard(ICard card)
@@ -85,48 +84,6 @@ namespace NaggerLibrary
             sqlParam[2].Value = card.Description;
             sqlParam[3].Value = card.DueDate;
             sqlParam[4].Value = card.SkipCount;
-
-            SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
-        }
-
-        public void UpdateLog(ICard card)
-        {
-            
-            if (card.LastSkip == Mock.SystemTime.Now.Invoke().Date)
-            {
-                InsertSkipLogEntry(card);
-            }
-
-            if (card.LastDone == Mock.SystemTime.Now.Invoke().Date)
-            {
-                InsertDoneLogEntry(card);
-            }
-        }
-
-        public void InsertDoneLogEntry(ICard card)
-        {
-            string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
-
-            string spName = "Logs_Insert";
-
-            SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
-            sqlParam[0].Value = card.ID;
-            sqlParam[1].Value = "DONE";
-            sqlParam[2].Value = card.LastDone;
-
-            SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
-        }
-        
-        public void InsertSkipLogEntry(ICard card)
-        {
-            string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
-
-            string spName = "Logs_Insert";
-
-            SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
-            sqlParam[0].Value = card.ID;
-            sqlParam[1].Value = "SKIP";
-            sqlParam[2].Value = card.LastSkip;
 
             SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
         }

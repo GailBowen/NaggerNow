@@ -19,7 +19,7 @@ function value_of_enum(col, colName)
     }
 }
 
-function Card(id, title, description, board, frequencyID, token, tokensAwarded, lastDone, columnID, dueDate, skipCount) {
+function Card(id, title, description, board, frequencyID, lastDone, columnID, dueDate, skipCount) {
     var self = this;
 
     self.id = id;
@@ -31,10 +31,6 @@ function Card(id, title, description, board, frequencyID, token, tokensAwarded, 
     self.board = board;
 
     self.frequencyID = frequencyID;
-
-    self.token = token;
-
-    self.tokensAwarded = tokensAwarded;
 
     self.lastDone = lastDone;
 
@@ -58,7 +54,7 @@ function CardsViewModel() {
     };
 
     self.populateAllCards = function (allData) {
-        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.frequencyID, item.token, item.tokensAwarded, item.lastDone, item.columnID, item.dueDate, item.skipCount) });
+        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.frequencyID, item.lastDone, item.columnID, item.dueDate, item.skipCount) });
         self.AllCards(temp);
     };
     
@@ -115,19 +111,8 @@ function CardsViewModel() {
         else
             return ko.observableArray("");
     });
-
-      
-    self.tokenCount = ko.observable("");
-
-    self.sum = function (items, prop) {
-        return items.reduce(function (a, b) {
-            return a + b[prop];
-        }, 0);
-    };
-
-    self.tokenCount = self.sum(self.AllCards(), 'tokensAwarded');
-
-}
+    
+ }
 
 function MoveInfo(event, ui) {
     
@@ -143,6 +128,8 @@ function MoveInfo(event, ui) {
     var dueDate = ui.item.attr('dueDate');
     var skipCount = ui.item.attr('skipCount');
     var description = ui.item[0].childNodes['3'].innerHTML;
+
+    alert(lastDone);
        
     var currentCard = new Card(id, title, description, board, frequencyID, 0, 0, lastDone, value_of_enum(COLUMN, column), dueDate, skipCount);
           

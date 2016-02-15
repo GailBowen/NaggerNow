@@ -58,7 +58,7 @@
                    <div id="colCould" class="col" data-bind="foreach: CouldCards">
 
                         <div class="portlet" data-bind="attr: { id: id, title: title, 'description': description, 'board': board, 'frequencyID': frequencyID, 'lastDone': lastDone, 'dueDate': dueDate, 'skipCount': skipCount}">
-                          <div class="portlet-header portlet-header-optional" data-bind="text: title + ' (' + token + ')'"></div>
+                          <div class="portlet-header portlet-header-optional" data-bind="text: title"></div>
                           <div class="portlet-content" data-bind="text: description" contenteditable="true"></div>
                         </div>
 
@@ -71,7 +71,7 @@
                    <div id="colShould" class="col" data-bind="foreach: ShouldCards">
 
                         <div class="portlet" data-bind="attr: { id: id, title: title, 'description': description, 'board': board, 'frequencyID': frequencyID, 'lastDone': lastDone, 'dueDate': dueDate, 'skipCount': skipCount }">
-                          <div class="portlet-header portlet-header-optional" data-bind="text: title + ' (' + token + ')'"></div>
+                          <div class="portlet-header portlet-header-optional" data-bind="text: title"></div>
                           <div class="portlet-content" data-bind="text: description" contenteditable="true"></div>
                         </div>
 
@@ -118,7 +118,7 @@
             </tr>
         </table>
 
-        <h1 data-bind="text: 'Token Count: ' + tokenCount"></h1>
+     
     </div>
     
 </body>

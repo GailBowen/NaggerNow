@@ -69,9 +69,8 @@
     <Build Include="dbo\Tables\Boards.sql" />
     <Build Include="dbo\Tables\Columns.sql" />
     <Build Include="dbo\Stored Procedures\Cards_FetchAll.sql" />
-    <Build Include="dbo\Tables\Logs.sql" />
     <Build Include="dbo\Stored Procedures\Card_Update.sql" />
     <Build Include="dbo\Tables\Frequencies.sql" />
-    <Build Include="dbo\Stored Procedures\Logs_Insert.sql" />
+    <Build Include="dbo\Tables\LogCards.sql" />
   </ItemGroup>
 </Project>

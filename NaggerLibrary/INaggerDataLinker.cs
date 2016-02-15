@@ -19,10 +19,5 @@ namespace NaggerLibrary
 
         void UpdateCard(ICard card);
 
-        void UpdateLog(ICard card);
-
-        void InsertDoneLogEntry(ICard card);
-
-        void InsertSkipLogEntry(ICard card);
     }
 }

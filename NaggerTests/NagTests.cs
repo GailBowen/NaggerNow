@@ -85,7 +85,6 @@ namespace NaggerTests
 
             Card testCard = new Card();
             testCard.ID = 1;
-            testCard.DueDate = SystemTime.Now.Invoke().AddDays(7);
             testCard.LastDone = SystemTime.Now.Invoke().Date;
             testCard.FrequencyID = 7;
 

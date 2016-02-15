@@ -21,3 +21,16 @@ E:\Dropbox\Dropbox\Nagger\NaggerNow\NaggerNow\bin\Microsoft.ApplicationBlocks.Da
 E:\Dropbox\Dropbox\Nagger\NaggerNow\NaggerNow\bin\Newtonsoft.Json.dll
 E:\Dropbox\Dropbox\Nagger\NaggerNow\NaggerNow\bin\log4net.xml
 E:\Dropbox\Dropbox\Nagger\NaggerNow\NaggerNow\bin\Newtonsoft.Json.xml
+E:\Dropbox\Dropbox\Nagger\NiceNagger\NaggerNow\bin\NaggerNow.dll.config
+E:\Dropbox\Dropbox\Nagger\NiceNagger\NaggerNow\bin\NaggerNow.dll
+E:\Dropbox\Dropbox\Nagger\NiceNagger\NaggerNow\bin\NaggerNow.pdb
+E:\Dropbox\Dropbox\Nagger\NiceNagger\NaggerNow\bin\log4net.dll
+E:\Dropbox\Dropbox\Nagger\NiceNagger\NaggerNow\bin\Microsoft.ApplicationBlocks.Data.dll
+E:\Dropbox\Dropbox\Nagger\NiceNagger\NaggerNow\bin\NaggerLibrary.dll
+E:\Dropbox\Dropbox\Nagger\NiceNagger\NaggerNow\bin\Newtonsoft.Json.dll
+E:\Dropbox\Dropbox\Nagger\NiceNagger\NaggerNow\bin\NaggerLibrary.pdb
+E:\Dropbox\Dropbox\Nagger\NiceNagger\NaggerNow\bin\log4net.xml
+E:\Dropbox\Dropbox\Nagger\NiceNagger\NaggerNow\bin\Newtonsoft.Json.xml
+E:\Dropbox\Dropbox\Nagger\NiceNagger\NaggerNow\obj\Debug\NaggerNow.csprojResolveAssemblyReference.cache
+E:\Dropbox\Dropbox\Nagger\NiceNagger\NaggerNow\obj\Debug\NaggerNow.dll
+E:\Dropbox\Dropbox\Nagger\NiceNagger\NaggerNow\obj\Debug\NaggerNow.pdb
