@@ -1,5 +1,4 @@
-﻿-- select * from dbo.cards
-CREATE PROCEDURE [dbo].[Cards_FetchAll]
+﻿CREATE PROCEDURE [dbo].[Cards_FetchAll]
 	
 AS
 BEGIN
@@ -8,20 +7,20 @@ BEGIN
 
 	select 
 		done.lastDone,
-		skip.lastSkip,
+		skipped.lastSkip,
 		c.*
 	from
 	cards c
 	left join 
 	(
-		select cardid, max(LogDate) as lastDone from logs where type = 'DONE'  group by cardid
+		select cardid, max(LogDate) as lastDone from logs where logtype = 'DONE'  group by cardid
 	) as done
 	on done.CardID = c.id
 	left join
 	(
-		select cardid, max(logdate) as lastSkip from logs where type = 'SKIP' group by cardid
-	) as skip
-	on skip.cardid = c.id
+		select cardid, max(logdate) as lastSkip from logs where logtype = 'SKIP' group by cardid
+	) as skipped
+	on skipped.cardid = c.id
 
 
 END

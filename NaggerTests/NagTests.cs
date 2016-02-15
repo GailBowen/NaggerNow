@@ -80,8 +80,27 @@ namespace NaggerTests
 
         [TestMethod]
         public void MoveFromDoneToCouldDo()
-        { 
-        
+        {
+            SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
+
+            Card testCard = new Card();
+            testCard.ID = 1;
+            testCard.DueDate = SystemTime.Now.Invoke().AddDays(7);
+            testCard.LastDone = SystemTime.Now.Invoke().Date;
+            testCard.FrequencyID = 7;
+
+            string Nag = JsonConvert.SerializeObject(testCard);
+
+
+            CardManager mgr = new CardManager();
+            ICard card = mgr.ProcessCard(Nag, "Done", "Could");
+
+
+            Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastDone, "Last done date");
+            Assert.AreEqual((int)ColumnType.colDone, card.ColumnID, "ColumnID");
+
+            Assert.AreEqual(previousDueDate, card.PreviousDueDate, "Previous due date");
+            Assert.AreEqual(dueDate, card.DueDate, "Due date");
         
         }
 
