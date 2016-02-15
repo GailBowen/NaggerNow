@@ -49,7 +49,8 @@ namespace NaggerNow
                         token = 0,
                         tokensAwarded = 0,
                         dueDate = card.DueDate,
-                        lastDone = card.LastDone
+                        lastDone = card.LastDone,
+                        skipCount = card.SkipCount
                     });
                 }
                

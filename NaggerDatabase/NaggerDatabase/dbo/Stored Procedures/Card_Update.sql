@@ -2,7 +2,9 @@
 CREATE PROCEDURE [dbo].[Card_Update]
 	@id int,
 	@columnID INT,
-	@description varchar(max)
+	@description varchar(max),
+	@dueDate date,
+	@skipCount int
 AS
 BEGIN
 	
@@ -10,7 +12,9 @@ BEGIN
 		dbo.Cards 
 	set 
 		ColumnID = @columnID,
-		Description = @description
+		Description = @description,
+		DueDate = @dueDate,
+		SkipCount = @skipCount
 	where 
 		id = @id
 

@@ -19,7 +19,7 @@ function value_of_enum(col, colName)
     }
 }
 
-function Card(id, title, description, board, frequencyID, token, tokensAwarded, lastDone, columnID, dueDate) {
+function Card(id, title, description, board, frequencyID, token, tokensAwarded, lastDone, columnID, dueDate, skipCount) {
     var self = this;
 
     self.id = id;
@@ -41,6 +41,8 @@ function Card(id, title, description, board, frequencyID, token, tokensAwarded, 
     self.columnID = columnID;
 
     self.dueDate = dueDate;
+
+    self.skipCount = skipCount;
 }
 
 function CardsViewModel() {
@@ -56,7 +58,7 @@ function CardsViewModel() {
     };
 
     self.populateAllCards = function (allData) {
-        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.frequencyID, item.token, item.tokensAwarded, item.lastDone, item.columnID, item.dueDate) });
+        var temp = $.map(allData, function (item) { return new Card(item.id, item.title, item.description, item.board, item.frequencyID, item.token, item.tokensAwarded, item.lastDone, item.columnID, item.dueDate, item.skipCount) });
         self.AllCards(temp);
     };
     
@@ -139,9 +141,10 @@ function MoveInfo(event, ui) {
     var frequencyID = ui.item.attr('frequencyID');
     var lastDone = ui.item.attr('lastDone');
     var dueDate = ui.item.attr('dueDate');
+    var skipCount = ui.item.attr('skipCount');
     var description = ui.item[0].childNodes['3'].innerHTML;
        
-    var currentCard = new Card(id, title, description, board, frequencyID, 0, 0, lastDone, value_of_enum(COLUMN, column), dueDate);
+    var currentCard = new Card(id, title, description, board, frequencyID, 0, 0, lastDone, value_of_enum(COLUMN, column), dueDate, skipCount);
           
     currentCard = JSON.stringify(currentCard);
 
