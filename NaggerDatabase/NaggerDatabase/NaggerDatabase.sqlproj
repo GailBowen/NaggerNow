@@ -71,6 +71,6 @@
     <Build Include="dbo\Stored Procedures\Cards_FetchAll.sql" />
     <Build Include="dbo\Stored Procedures\Card_Update.sql" />
     <Build Include="dbo\Tables\Frequencies.sql" />
-    <Build Include="dbo\Tables\LogCards.sql" />
+    <Build Include="dbo\Tables\CardActions.sql" />
   </ItemGroup>
 </Project>
