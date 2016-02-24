@@ -83,7 +83,9 @@ namespace NaggerLibrary
             sqlParam[1].Value = card.ColumnID;
             sqlParam[2].Value = card.Description;
             sqlParam[3].Value = card.DueDate;
-            sqlParam[4].Value = card.SkipCount;
+            sqlParam[4].Value = card.LastDone;
+            sqlParam[5].Value = card.LastSkip;
+            sqlParam[6].Value = card.SkipCount;
 
             SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
         }

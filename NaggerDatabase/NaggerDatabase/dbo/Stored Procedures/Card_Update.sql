@@ -4,18 +4,37 @@ CREATE PROCEDURE [dbo].[Card_Update]
 	@columnID INT,
 	@description varchar(max),
 	@dueDate date,
+	@lastDone date,
+	@lastSkip date,
 	@skipCount int
+
 AS
 BEGIN
 	
 	update 
 		dbo.Cards 
 	set 
-		ColumnID = @columnID,
-		Description = @description,
-		DueDate = @dueDate,
-		SkipCount = @skipCount
+		Description = @description
 	where 
 		id = @id
+
+
+		INSERT INTO [dbo].[CardActions]
+           ([CardID]
+           ,[ActionCreated]
+           ,[ColumnID]
+           ,[DueDate]
+           ,[LastDone]
+           ,[LastSkip]
+           ,[SkipCount])
+     VALUES
+           (@id
+           ,getdate()
+           ,@columnID
+           ,@dueDate
+           ,@lastDone
+           ,@lastSkip
+           ,@skipCount)
+           
 
 END
