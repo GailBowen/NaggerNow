@@ -134,14 +134,20 @@ function MoveInfo(event, ui) {
     currentCard = JSON.stringify(currentCard);
 
     var encoded = encodeURIComponent(currentCard);
-
+    
     var url = "/NagService.asmx/ProcessCard?Nag=" + encoded + "&fromColumn=" + previousColumn.substring(3) + "&toColumn=" + column.substring(3);
             
-    NaggerConnect.getData(url, null, 'GET', 'json', false);
+    NaggerConnect.getData(url, getResult, 'GET', 'json', false);
 
     location.reload();
 
     return true;
+}
+
+function getResult(allData) {
+    //if (allData.successMessage.length > 0) {
+    //    alert(allData.successMessage);
+    //}
 }
 
 function doStuff() {

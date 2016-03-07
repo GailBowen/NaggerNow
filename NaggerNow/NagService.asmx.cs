@@ -73,20 +73,35 @@ namespace NaggerNow
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void ProcessCard(string Nag, string fromColumn, string toColumn)
         {
+           
+                    
             var ndl = new NaggerDataLinker();
 
             CardManager mgr = new CardManager();
             ICard card = mgr.DeserializeCard(Nag, toColumn);
             ICard penultimateAction = ndl.GetPenultimateAction(card.ID);
-            card.ProcessTransition(fromColumn, penultimateAction);
-            
-            ndl.Update(card);
-            
-            log.InfoFormat("Card updated: {0}", Nag);
+            if (card.ProcessTransition(fromColumn, penultimateAction) == false)
+            {
+                log.InfoFormat("Error updating: {0}", Nag);
+
+                var result = new { successMessage = "" };
+                Context.Response.Clear();
+                Context.Response.ContentType = "application/json";
+                Context.Response.Write(JsonConvert.SerializeObject(result));
+            }
+            else
+            {
+                ndl.Update(card);
+                log.InfoFormat("Card updated: {0}", Nag);
+
+                var result = new { successMessage = "Card moved" };
+
+                Context.Response.Clear();
+                Context.Response.ContentType = "application/json";
+                Context.Response.Write(JsonConvert.SerializeObject(result));
+            }
           
-            Context.Response.Clear();
-            Context.Response.ContentType = "application/json";
-            Context.Response.Write("Return nothing");
+            
         }
 
     }

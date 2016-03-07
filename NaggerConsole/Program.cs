@@ -26,10 +26,17 @@ namespace NaggerConsole
 
             List<Card> cards = ndl.GetCardCollection();
 
+            int currentColumn = 0;
+
             foreach (var card in cards)
             {
+                currentColumn = card.ColumnID;
                 card.ColumnID = (int)card.AssignColumn();
-                ndl.UpdateCard(card);
+
+                if (card.ColumnID != currentColumn)
+                {
+                    ndl.UpdateCard(card);
+                }
             }
 
             Console.WriteLine("Could Do: {0}", cards.Count(c => c.AssignColumn() == ColumnType.colCould));
