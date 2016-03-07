@@ -28,20 +28,16 @@ namespace NaggerTests
             testCard.FrequencyID = 60;
 
             string Nag = JsonConvert.SerializeObject(testCard);
-
-            DateTime previousDueDate = testCard.DueDate;
+                        
             DateTime dueDate = SystemTime.Now.Invoke().Date.AddDays(testCard.FrequencyID);
-                       
-
+            
             CardManager mgr = new CardManager();
             ICard card = mgr.DeserializeCard(Nag, "Done");
             card.ProcessTransition("Could", new Card());
-
-
+            
             Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastDone, "Last done date");
             Assert.AreEqual(dueDate, card.DueDate, "Due date");
             Assert.AreEqual((int)ColumnType.colDone, card.ColumnID, "ColumnID");
-            
         }
 
         [TestMethod]
@@ -57,8 +53,7 @@ namespace NaggerTests
             testCard.SkipCount = 1;
 
             string Nag = JsonConvert.SerializeObject(testCard);
-
-            DateTime previousDueDate = testCard.DueDate;
+                    
             DateTime dueDate = testCard.DueDate.AddDays(testCard.FrequencyID);
             int skipCount = testCard.SkipCount + 1;
             
@@ -73,6 +68,81 @@ namespace NaggerTests
 
         }
 
+        [TestMethod]
+        public void MoveFromShouldDoToDone()
+        {
+            SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
+
+            Card testCard = new Card();
+            testCard.ID = 1;
+            testCard.DueDate = SystemTime.Now.Invoke().Date;
+            testCard.LastDone = SystemTime.Now.Invoke().AddDays(-59);
+            testCard.FrequencyID = 60;
+
+            string Nag = JsonConvert.SerializeObject(testCard);
+
+            DateTime dueDate = SystemTime.Now.Invoke().Date.AddDays(testCard.FrequencyID);
+
+            CardManager mgr = new CardManager();
+            ICard card = mgr.DeserializeCard(Nag, "Done");
+            card.ProcessTransition("Should", new Card());
+
+            Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastDone, "Last done date");
+            Assert.AreEqual(dueDate, card.DueDate, "Due date");
+            Assert.AreEqual((int)ColumnType.colDone, card.ColumnID, "ColumnID");
+        }
+
+        [TestMethod]
+        public void MoveFromShouldDoToSkipped()
+        {
+            SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
+
+            Card testCard = new Card();
+            testCard.ID = 1;
+            testCard.DueDate = SystemTime.Now.Invoke().Date;
+            testCard.LastDone = SystemTime.Now.Invoke().AddDays(-2);
+            testCard.FrequencyID = 60;
+            testCard.SkipCount = 1;
+
+            string Nag = JsonConvert.SerializeObject(testCard);
+                    
+            DateTime dueDate = testCard.DueDate.AddDays(testCard.FrequencyID);
+            int skipCount = testCard.SkipCount + 1;
+
+            CardManager mgr = new CardManager();
+            ICard card = mgr.DeserializeCard(Nag, "Skip");
+            card.ProcessTransition("Should", new Card());
+
+            Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastSkip, "Last skipped date");
+            Assert.AreEqual((int)ColumnType.colSkip, card.ColumnID, "Column ID");
+            Assert.AreEqual(skipCount, card.SkipCount, "Skip count");
+            Assert.AreEqual(dueDate, card.DueDate, "Due date");
+
+        }
+
+        [TestMethod]
+        public void MoveFromMustDoToDone()
+        {
+            SystemTime.Now = () => new DateTime(2016, 1, 20, 6, 36, 0);
+
+            Card testCard = new Card();
+            testCard.ID = 1;
+            testCard.DueDate = SystemTime.Now.Invoke().Date;
+            testCard.LastDone = SystemTime.Now.Invoke().AddDays(-1);
+            testCard.FrequencyID = 1;
+
+            string Nag = JsonConvert.SerializeObject(testCard);
+
+            DateTime dueDate = SystemTime.Now.Invoke().Date.AddDays(testCard.FrequencyID);
+
+            CardManager mgr = new CardManager();
+            ICard card = mgr.DeserializeCard(Nag, "Done");
+            card.ProcessTransition("Must", new Card());
+
+            Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastDone, "Last done date");
+            Assert.AreEqual(dueDate, card.DueDate, "Due date");
+            Assert.AreEqual((int)ColumnType.colDone, card.ColumnID, "ColumnID");
+        }
 
         [TestMethod]
         public void MoveFromCouldDoToDoneThenBackToCouldDo()
@@ -110,6 +180,160 @@ namespace NaggerTests
         
         }
 
+        [TestMethod]
+        public void MoveFromShouldDoToDoneThenBackToShouldDo()
+        {
+            SystemTime.Now = () => new DateTime(2016, 02, 01, 6, 36, 0);
+
+            Card testCard = new Card();
+            testCard.ID = 1;
+            testCard.LastDone = new DateTime(2016, 01, 26, 6, 36, 0);
+            testCard.DueDate = SystemTime.Now.Invoke().Date;
+            testCard.FrequencyID = 7;
+
+            DateTime originalLastDone = testCard.LastDone;
+            DateTime originalDueDate = testCard.DueDate;
+
+            string Nag = JsonConvert.SerializeObject(testCard);
+            
+            CardManager mgr = new CardManager();
+            ICard card = mgr.DeserializeCard(Nag, "Done");
+            card.ProcessTransition("Should", new Card());
+
+            Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastDone, "Last done");
+            Assert.AreEqual(SystemTime.Now.Invoke().Date.AddDays(7), card.DueDate, "Due Date");
+            Assert.AreEqual((int)ColumnType.colDone, card.ColumnID, "ColumnID");
+
+            Nag = JsonConvert.SerializeObject(card);
+
+            card = mgr.DeserializeCard(Nag, "Should");
+            card.ProcessTransition("Done", testCard);
+
+            Assert.AreEqual(originalLastDone, card.LastDone, "Last done");
+            Assert.AreEqual(originalDueDate, card.DueDate, "Due Date");
+            Assert.AreEqual((int)ColumnType.colShould, card.ColumnID, "ColumnID");
+        }
+
+        [TestMethod]
+        public void MoveFromMustDoToDoneThenBackToMustDo()
+        {
+            SystemTime.Now = () => new DateTime(2016, 02, 01, 6, 36, 0);
+
+            Card testCard = new Card();
+            testCard.ID = 1;
+            testCard.LastDone = new DateTime(2016, 01, 26, 6, 36, 0);
+            testCard.DueDate = SystemTime.Now.Invoke().Date;
+            testCard.FrequencyID = 7;
+
+            DateTime originalLastDone = testCard.LastDone;
+            DateTime originalDueDate = testCard.DueDate;
+
+            string Nag = JsonConvert.SerializeObject(testCard);
+
+            CardManager mgr = new CardManager();
+            ICard card = mgr.DeserializeCard(Nag, "Done");
+            card.ProcessTransition("Must", new Card());
+
+            Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastDone, "Last done");
+            Assert.AreEqual(SystemTime.Now.Invoke().Date.AddDays(7), card.DueDate, "Due Date");
+            Assert.AreEqual((int)ColumnType.colDone, card.ColumnID, "ColumnID");
+
+            Nag = JsonConvert.SerializeObject(card);
+
+            card = mgr.DeserializeCard(Nag, "Must");
+            card.ProcessTransition("Done", testCard);
+
+            Assert.AreEqual(originalLastDone, card.LastDone, "Last done");
+            Assert.AreEqual(originalDueDate, card.DueDate, "Due Date");
+            Assert.AreEqual((int)ColumnType.colMust, card.ColumnID, "ColumnID");
+        }
+
+        [TestMethod]
+        public void MoveFromCouldDoToSkipThenBackToCouldDo()
+        {
+            SystemTime.Now = () => new DateTime(2016, 02, 01, 6, 36, 0);
+
+            Card testCard = new Card();
+            testCard.ID = 1;
+            testCard.LastDone = new DateTime(2016, 01, 26, 6, 36, 0);
+            testCard.DueDate = new DateTime(2016, 02, 02, 6, 36, 0);
+            testCard.FrequencyID = 7;
+            testCard.SkipCount = 1;
+            testCard.LastSkip = new DateTime(2016, 01, 01, 6, 36, 0);
+
+            DateTime originalLastDone = testCard.LastDone;
+            DateTime originalDueDate = testCard.DueDate;
+            DateTime originalLastSkip = testCard.LastSkip;
+            int originalSkipCount = testCard.SkipCount;
+
+            string Nag = JsonConvert.SerializeObject(testCard);
+
+
+            CardManager mgr = new CardManager();
+            ICard card = mgr.DeserializeCard(Nag, "Skip");
+            card.ProcessTransition("Could", new Card());
+
+            Assert.AreEqual(originalLastDone, card.LastDone, "Last done");
+            Assert.AreEqual(originalDueDate.AddDays(testCard.FrequencyID), card.DueDate, "Due Date");
+            Assert.AreEqual((int)ColumnType.colSkip, card.ColumnID, "ColumnID");
+            Assert.AreEqual(originalSkipCount + 1, card.SkipCount, "Skip Count");
+            Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastSkip, "Skip date");
+
+            Nag = JsonConvert.SerializeObject(card);
+
+            card = mgr.DeserializeCard(Nag, "Could");
+            card.ProcessTransition("Skip", testCard);
+
+            Assert.AreEqual(originalLastDone, card.LastDone, "Last done");
+            Assert.AreEqual(originalDueDate, card.DueDate, "Due Date");
+            Assert.AreEqual((int)ColumnType.colCould, card.ColumnID, "ColumnID");
+            Assert.AreEqual(originalSkipCount, card.SkipCount, "Skip Count");
+            Assert.AreEqual(originalLastSkip, card.LastSkip, "Skip date");
+        }
+
+        [TestMethod]
+        public void MoveFromShouldDoToSkipThenBackToShouldDo()
+        {
+            SystemTime.Now = () => new DateTime(2016, 02, 01, 6, 36, 0);
+
+            Card testCard = new Card();
+            testCard.ID = 1;
+            testCard.LastDone = new DateTime(2016, 01, 26, 6, 36, 0);
+            testCard.DueDate = SystemTime.Now.Invoke().Date;
+            testCard.FrequencyID = 7;
+            testCard.SkipCount = 1;
+            testCard.LastSkip = new DateTime(2016, 01, 01, 6, 36, 0);
+
+            DateTime originalLastDone = testCard.LastDone;
+            DateTime originalDueDate = testCard.DueDate;
+            DateTime originalLastSkip = testCard.LastSkip;
+            int originalSkipCount = testCard.SkipCount;
+
+            string Nag = JsonConvert.SerializeObject(testCard);
+
+
+            CardManager mgr = new CardManager();
+            ICard card = mgr.DeserializeCard(Nag, "Skip");
+            card.ProcessTransition("Should", new Card());
+
+            Assert.AreEqual(originalLastDone, card.LastDone, "Last done");
+            Assert.AreEqual(originalDueDate.AddDays(testCard.FrequencyID), card.DueDate, "Due Date");
+            Assert.AreEqual((int)ColumnType.colSkip, card.ColumnID, "ColumnID");
+            Assert.AreEqual(originalSkipCount + 1, card.SkipCount, "Skip Count");
+            Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastSkip, "Skip date");
+
+            Nag = JsonConvert.SerializeObject(card);
+
+            card = mgr.DeserializeCard(Nag, "Should");
+            card.ProcessTransition("Skip", testCard);
+
+            Assert.AreEqual(originalLastDone, card.LastDone, "Last done");
+            Assert.AreEqual(originalDueDate, card.DueDate, "Due Date");
+            Assert.AreEqual((int)ColumnType.colShould, card.ColumnID, "ColumnID");
+            Assert.AreEqual(originalSkipCount, card.SkipCount, "Skip Count");
+            Assert.AreEqual(originalLastSkip, card.LastSkip, "Skip date");
+        }
+               
         #endregion
 
         #region CouldDo
