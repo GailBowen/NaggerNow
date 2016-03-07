@@ -8,7 +8,7 @@ namespace NaggerLibrary.Cards
 {
     public class Null: Card
     {
-        public override void ProcessTransition()
+        public override void ProcessTransition(ICard card)
         { }
     }
 }

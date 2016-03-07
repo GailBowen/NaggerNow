@@ -15,12 +15,11 @@ namespace NaggerLibrary.Cards
             ColumnID = (int)ColumnType.colDone;
         }
 
-        public override void ProcessTransition()
+        public override void ProcessTransition(ICard card)
         {
-            LastDone = SystemTime.Now.Invoke().Date;
             ColumnID = (int)ColumnType.colDone;
-            PreviousDueDate = DueDate;
-            DueDate = DueDate.AddDays(FrequencyID);
+            LastDone = SystemTime.Now.Invoke().Date;
+            DueDate = LastDone.AddDays(FrequencyID);
         }
     }
 }

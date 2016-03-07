@@ -39,17 +39,41 @@ namespace NaggerLibrary
 
         public IDataReader FetchAll()
         {   
-
                 const string spName = "[dbo].[Cards_FetchAll]";
-
-
+            
                 string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
+                            
+                return SqlHelper.ExecuteReader(dbConnString, CommandType.StoredProcedure, spName);               
 
+        }
 
-                SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
-                
-                return SqlHelper.ExecuteReader(dbConnString, CommandType.StoredProcedure, spName, sqlParam);               
+        public IDataReader FetchPenultimateAction(int cardID)
+        {
 
+            const string spName = "[dbo].[Cards_FetchPenultimateAction]";
+
+            string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
+
+            SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
+            sqlParam[0].Value = cardID;
+            
+            return SqlHelper.ExecuteReader(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+
+        }
+
+        public Card GetPenultimateAction(int cardID)
+        {
+            Card penultimateCard = new Card();
+            
+            using (IDataReader rdr = FetchPenultimateAction(cardID))
+            {
+                while (rdr.Read())
+                {
+                    penultimateCard = Fetch(rdr);
+                }
+            }
+
+            return penultimateCard;
         }
 
         public List<Card> GetCardCollection()

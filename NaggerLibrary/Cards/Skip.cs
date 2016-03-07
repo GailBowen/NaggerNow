@@ -13,12 +13,11 @@ namespace NaggerLibrary.Cards
         {
             ColumnID = (int)ColumnType.colSkip;
         }
-        
-        public override void ProcessTransition()
+
+        public override void ProcessTransition(ICard card)
         {
             LastSkip = SystemTime.Now.Invoke().Date;
             ColumnID = (int)ColumnType.colSkip;
-            PreviousDueDate = DueDate;
             DueDate = DueDate.AddDays(FrequencyID);
             SkipCount += 1;
         }

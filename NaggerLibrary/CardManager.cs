@@ -11,7 +11,8 @@ namespace NaggerLibrary
 {
     public class CardManager
     {
-        public ICard ProcessCard(string Nag, string fromColumn, string toColumn)
+
+        public ICard DeserializeCard(string Nag, string toColumn)
         {
             CardFactory factory = new CardFactory();
             ICard card = factory.CreateInstance(toColumn.ToLower());
@@ -19,8 +20,6 @@ namespace NaggerLibrary
             card = (ICard)JsonConvert.DeserializeObject(Nag, card.GetType());
 
             card.Description = HttpUtility.HtmlDecode(card.Description);
-
-            card.ProcessTransition();
 
             return card;
         }

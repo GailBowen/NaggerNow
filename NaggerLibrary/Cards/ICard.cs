@@ -32,8 +32,6 @@ namespace NaggerLibrary
 
              DateTime DueDate { get; set; }
 
-             DateTime PreviousDueDate { get; set; }
-
              int SkipCount { get; set; }
 
              DateTime LastSkip { get; set; }
@@ -41,11 +39,13 @@ namespace NaggerLibrary
              DateTime LastDone { get; set; }
 
              bool Completed { get; set; }
+                   
+                      
         #endregion
         
         
         ColumnType AssignColumn();
 
-        void ProcessTransition();
+        void ProcessTransition(ICard card);
     }
 }

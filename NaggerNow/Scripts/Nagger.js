@@ -128,10 +128,8 @@ function MoveInfo(event, ui) {
     var dueDate = ui.item.attr('dueDate');
     var skipCount = ui.item.attr('skipCount');
     var description = ui.item[0].childNodes['3'].innerHTML;
-
-    alert(lastDone);
-       
-    var currentCard = new Card(id, title, description, board, frequencyID, 0, 0, lastDone, value_of_enum(COLUMN, column), dueDate, skipCount);
+                            
+    var currentCard = new Card(id, title, description, board, frequencyID, lastDone, value_of_enum(COLUMN, column), dueDate, skipCount);
           
     currentCard = JSON.stringify(currentCard);
 

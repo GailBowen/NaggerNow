@@ -29,9 +29,7 @@ namespace NaggerLibrary
             public DateTime Created { get; set; }
 
             public DateTime DueDate { get; set; }
-
-            public DateTime PreviousDueDate { get; set; }
-
+        
             public int SkipCount { get; set; }
 
             public DateTime LastSkip { get; set; }
@@ -39,6 +37,8 @@ namespace NaggerLibrary
             public DateTime LastDone { get; set; }
 
             public bool Completed { get; set; }
+
+
         #endregion
 
         public Card()
@@ -52,7 +52,7 @@ namespace NaggerLibrary
             return CardCategorizerChain.GetColumn(this);
         }
 
-        public virtual void ProcessTransition()
+        public virtual void ProcessTransition(ICard card)
         { 
         
         }

@@ -73,11 +73,13 @@ namespace NaggerNow
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void ProcessCard(string Nag, string fromColumn, string toColumn)
         {
-            CardManager mgr = new CardManager();
-            ICard card = mgr.ProcessCard(Nag, fromColumn, toColumn);
-                        
             var ndl = new NaggerDataLinker();
 
+            CardManager mgr = new CardManager();
+            ICard card = mgr.DeserializeCard(Nag, toColumn);
+            ICard penultimateAction = ndl.GetPenultimateAction(card.ID);
+            card.ProcessTransition(penultimateAction);
+            
             ndl.Update(card);
             
             log.InfoFormat("Card updated: {0}", Nag);
