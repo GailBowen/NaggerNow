@@ -35,7 +35,7 @@ namespace NaggerTests
 
             CardManager mgr = new CardManager();
             ICard card = mgr.DeserializeCard(Nag, "Done");
-            card.ProcessTransition(new Card());
+            card.ProcessTransition("Could", new Card());
 
 
             Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastDone, "Last done date");
@@ -64,7 +64,7 @@ namespace NaggerTests
             
             CardManager mgr = new CardManager();
             ICard card = mgr.DeserializeCard(Nag, "Skip");
-            card.ProcessTransition(new Card());
+            card.ProcessTransition("Could", new Card());
                         
             Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastSkip, "Last skipped date");
             Assert.AreEqual((int)ColumnType.colSkip, card.ColumnID, "Column ID");
@@ -93,7 +93,7 @@ namespace NaggerTests
 
             CardManager mgr = new CardManager();
             ICard card = mgr.DeserializeCard(Nag, "Done");
-            card.ProcessTransition(new Card());
+            card.ProcessTransition("Could", new Card());
 
             Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastDone, "Last done");
             Assert.AreEqual(SystemTime.Now.Invoke().Date.AddDays(7), card.DueDate, "Due Date");
@@ -102,7 +102,7 @@ namespace NaggerTests
             Nag = JsonConvert.SerializeObject(card);
 
             card = mgr.DeserializeCard(Nag, "Could");
-            card.ProcessTransition(testCard);
+            card.ProcessTransition("Done", testCard);
 
             Assert.AreEqual(originalLastDone, card.LastDone, "Last done");
             Assert.AreEqual(originalDueDate, card.DueDate, "Due Date");

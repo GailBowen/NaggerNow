@@ -15,7 +15,7 @@ namespace NaggerLibrary.Cards
             ColumnID = (int)ColumnType.colDone;
         }
 
-        public override void ProcessTransition(ICard card)
+        public override void ProcessTransition(string fromColumn, ICard penultimateAction)
         {
             ColumnID = (int)ColumnType.colDone;
             LastDone = SystemTime.Now.Invoke().Date;

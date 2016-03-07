@@ -78,7 +78,7 @@ namespace NaggerNow
             CardManager mgr = new CardManager();
             ICard card = mgr.DeserializeCard(Nag, toColumn);
             ICard penultimateAction = ndl.GetPenultimateAction(card.ID);
-            card.ProcessTransition(penultimateAction);
+            card.ProcessTransition(fromColumn, penultimateAction);
             
             ndl.Update(card);
             

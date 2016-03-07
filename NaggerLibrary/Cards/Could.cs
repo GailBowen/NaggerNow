@@ -15,14 +15,11 @@ namespace NaggerLibrary.Cards
         }
 
 
-        public override void ProcessTransition(ICard penultimateAction)
+        public override void ProcessTransition(string fromColumn, ICard penultimateAction)
         {
             ColumnID = (int)ColumnType.colCould;
 
-            DueDate = penultimateAction.DueDate;
-            LastDone = penultimateAction.LastDone;
-            LastSkip = penultimateAction.LastSkip;
-            SkipCount = penultimateAction.SkipCount;
+            Undo(fromColumn, penultimateAction);
         }
     }
 }

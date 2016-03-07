@@ -14,9 +14,11 @@ namespace NaggerLibrary.Cards
             ColumnID = (int)ColumnType.colMust;
         }
 
-        public override void ProcessTransition(ICard card)
+        public override void ProcessTransition(string fromColumn, ICard penultimateAction)
         {
-          
+            ColumnID = (int)ColumnType.colMust;
+
+            Undo(fromColumn, penultimateAction);
         }
     }
 }

@@ -52,9 +52,21 @@ namespace NaggerLibrary
             return CardCategorizerChain.GetColumn(this);
         }
 
-        public virtual void ProcessTransition(ICard card)
+        public virtual void ProcessTransition(string fromColumn, ICard penultimateAction)
         { 
         
+        }
+
+        public void Undo(string fromColumn, ICard penultimateAction)
+        {
+            DueDate = penultimateAction.DueDate;
+            LastDone = penultimateAction.LastDone;
+
+            if (fromColumn.ToLower() == "skip")
+            {
+                LastSkip = penultimateAction.LastSkip;
+                SkipCount = penultimateAction.SkipCount;
+            }
         }
     }
            

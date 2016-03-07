@@ -46,6 +46,6 @@ namespace NaggerLibrary
         
         ColumnType AssignColumn();
 
-        void ProcessTransition(ICard card);
+        void ProcessTransition(string fromColumn, ICard penultimateAction);
     }
 }
