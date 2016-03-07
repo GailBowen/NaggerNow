@@ -1,25 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NaggerLibrary.Mock;
+﻿using NaggerLibrary.Mock;
 
 namespace NaggerLibrary.Cards
 {
     public class Done: Card
     {
-
-        public Done()
+        
+        public override bool ProcessTransition(string fromColumn, ICard penultimateAction)
         {
-            ColumnID = (int)ColumnType.colDone;
-        }
-
-        public override void ProcessTransition(string fromColumn, ICard penultimateAction)
-        {
+            if (penultimateAction.ColumnID == (int)ColumnType.colSkip)
+            {
+                return false;
+            }
+            
             ColumnID = (int)ColumnType.colDone;
             LastDone = SystemTime.Now.Invoke().Date;
             DueDate = LastDone.AddDays(FrequencyID);
+
+            return true;
         }
     }
 }

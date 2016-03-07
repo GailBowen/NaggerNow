@@ -1,24 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NaggerLibrary.Cards
+﻿namespace NaggerLibrary.Cards
 {
     public class Must : Card
     {
-
-        public Must()
+        public override bool ProcessTransition(string fromColumn, ICard penultimateAction)
         {
-            ColumnID = (int)ColumnType.colMust;
-        }
 
-        public override void ProcessTransition(string fromColumn, ICard penultimateAction)
-        {
+            if (penultimateAction.ColumnID != (int)ColumnType.colMust)
+            {
+                return false;
+            }
             ColumnID = (int)ColumnType.colMust;
-
+            
             Undo(fromColumn, penultimateAction);
+
+            return true;
         }
     }
 }

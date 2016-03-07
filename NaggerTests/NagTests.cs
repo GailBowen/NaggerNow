@@ -154,6 +154,7 @@ namespace NaggerTests
             testCard.LastDone = new DateTime(2016, 01, 26, 6, 36, 0);
             testCard.DueDate = new DateTime(2016, 02, 02, 6, 36, 0);
             testCard.FrequencyID = 7;
+            testCard.ColumnID = (int)ColumnType.colCould;
 
             DateTime originalLastDone = testCard.LastDone;
             DateTime originalDueDate = testCard.DueDate;
@@ -163,6 +164,7 @@ namespace NaggerTests
 
             CardManager mgr = new CardManager();
             ICard card = mgr.DeserializeCard(Nag, "Done");
+
             card.ProcessTransition("Could", new Card());
 
             Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastDone, "Last done");
@@ -190,6 +192,7 @@ namespace NaggerTests
             testCard.LastDone = new DateTime(2016, 01, 26, 6, 36, 0);
             testCard.DueDate = SystemTime.Now.Invoke().Date;
             testCard.FrequencyID = 7;
+            testCard.ColumnID = (int)ColumnType.colShould;
 
             DateTime originalLastDone = testCard.LastDone;
             DateTime originalDueDate = testCard.DueDate;
@@ -224,6 +227,7 @@ namespace NaggerTests
             testCard.LastDone = new DateTime(2016, 01, 26, 6, 36, 0);
             testCard.DueDate = SystemTime.Now.Invoke().Date;
             testCard.FrequencyID = 7;
+            testCard.ColumnID = (int)ColumnType.colMust;
 
             DateTime originalLastDone = testCard.LastDone;
             DateTime originalDueDate = testCard.DueDate;
@@ -260,6 +264,7 @@ namespace NaggerTests
             testCard.FrequencyID = 7;
             testCard.SkipCount = 1;
             testCard.LastSkip = new DateTime(2016, 01, 01, 6, 36, 0);
+            testCard.ColumnID = (int)ColumnType.colCould;
 
             DateTime originalLastDone = testCard.LastDone;
             DateTime originalDueDate = testCard.DueDate;
@@ -303,6 +308,7 @@ namespace NaggerTests
             testCard.FrequencyID = 7;
             testCard.SkipCount = 1;
             testCard.LastSkip = new DateTime(2016, 01, 01, 6, 36, 0);
+            testCard.ColumnID = (int)ColumnType.colShould;
 
             DateTime originalLastDone = testCard.LastDone;
             DateTime originalDueDate = testCard.DueDate;
@@ -334,6 +340,41 @@ namespace NaggerTests
             Assert.AreEqual(originalLastSkip, card.LastSkip, "Skip date");
         }
                
+        #endregion
+
+        #region DoNotMoveCards
+        [TestMethod]
+        public void DoNotMoveFromMustDoToDoneThenToCouldDo()
+        {
+            SystemTime.Now = () => new DateTime(2016, 02, 01, 6, 36, 0);
+
+            Card testCard = new Card();
+            testCard.ID = 1;
+            testCard.LastDone = new DateTime(2016, 01, 26, 6, 36, 0);
+            testCard.DueDate = SystemTime.Now.Invoke().Date;
+            testCard.FrequencyID = 7;
+            testCard.ColumnID = (int)ColumnType.colMust;
+
+            DateTime originalLastDone = testCard.LastDone;
+            DateTime originalDueDate = testCard.DueDate;
+
+            string Nag = JsonConvert.SerializeObject(testCard);
+
+            CardManager mgr = new CardManager();
+            ICard card = mgr.DeserializeCard(Nag, "Done");
+            card.ProcessTransition("Must", new Card());
+
+            Assert.AreEqual(SystemTime.Now.Invoke().Date, card.LastDone, "Last done");
+            Assert.AreEqual(SystemTime.Now.Invoke().Date.AddDays(7), card.DueDate, "Due Date");
+            Assert.AreEqual((int)ColumnType.colDone, card.ColumnID, "ColumnID");
+
+            Nag = JsonConvert.SerializeObject(card);
+
+            card = mgr.DeserializeCard(Nag, "Could");
+            bool result = card.ProcessTransition("Done", testCard);
+
+            Assert.AreEqual(false, result, "Process transition result");
+        }
         #endregion
 
         #region CouldDo

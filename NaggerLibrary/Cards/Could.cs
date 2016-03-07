@@ -1,25 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NaggerLibrary.Mock;
-
-namespace NaggerLibrary.Cards
+﻿namespace NaggerLibrary.Cards
 {
     public class Could: Card
     {
-        public Could()
+       
+        public override bool ProcessTransition(string fromColumn, ICard penultimateAction)
         {
-            ColumnID = (int)ColumnType.colCould;
-        }
+            if (penultimateAction.ColumnID != (int)ColumnType.colCould)
+            {
+                return false;
+            }
 
-
-        public override void ProcessTransition(string fromColumn, ICard penultimateAction)
-        {
             ColumnID = (int)ColumnType.colCould;
 
             Undo(fromColumn, penultimateAction);
+
+            return true;
         }
     }
 }
