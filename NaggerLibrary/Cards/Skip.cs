@@ -4,7 +4,7 @@ namespace NaggerLibrary.Cards
 {
     public class Skip: Card
     {
-        public override bool ProcessTransition(string fromColumn, ICard penultimateAction)
+        public override bool ProcessTransition(string fromColumn, ICard penultimateAction, ICard mostRecentAction)
         {
             LastSkip = SystemTime.Now.Invoke().Date;
             ColumnID = (int)ColumnType.colSkip;

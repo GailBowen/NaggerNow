@@ -4,10 +4,10 @@ namespace NaggerLibrary.Cards
 {
     public class Done: Card
     {
-        
-        public override bool ProcessTransition(string fromColumn, ICard penultimateAction)
+
+        public override bool ProcessTransition(string fromColumn, ICard penultimateAction, ICard mostRecentAction)
         {
-            if (penultimateAction.ColumnID == (int)ColumnType.colSkip)
+            if (mostRecentAction.ColumnID == (int)ColumnType.colSkip)
             {
                 return false;
             }

@@ -61,6 +61,20 @@ namespace NaggerLibrary
 
         }
 
+        public IDataReader FetchMostRecentAction(int cardID)
+        {
+
+            const string spName = "[dbo].[Cards_FetchMostRecentAction]";
+
+            string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
+
+            SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
+            sqlParam[0].Value = cardID;
+
+            return SqlHelper.ExecuteReader(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+
+        }
+
         public Card GetPenultimateAction(int cardID)
         {
             Card penultimateCard = new Card();
@@ -74,6 +88,21 @@ namespace NaggerLibrary
             }
 
             return penultimateCard;
+        }
+
+        public Card GetMostRecentAction(int cardID)
+        {
+            Card mostRecentCard = new Card();
+
+            using (IDataReader rdr = FetchMostRecentAction(cardID))
+            {
+                while (rdr.Read())
+                {
+                    mostRecentCard = Fetch(rdr);
+                }
+            }
+
+            return mostRecentCard;
         }
 
         public List<Card> GetCardCollection()

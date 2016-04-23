@@ -45,3 +45,14 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+/.vs/config
+/.vs/NaggerNow/v14
+/NaggerConsole/obj/Debug
+/NaggerDatabase/NaggerDatabase/bin/Debug
+/NaggerDatabase/NaggerDatabase/obj/Debug
+/NaggerDatabase/NaggerDatabase/NaggerDatabase.dbmdl
+/NaggerLibrary/bin/Debug
+/NaggerLibrary/obj/Debug
+/NaggerNow/bin/NaggerLibrary.dll
+/NaggerNow/bin/NaggerLibrary.pdb
+/NaggerTests/obj/Debug

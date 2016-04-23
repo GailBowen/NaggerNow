@@ -52,7 +52,7 @@ namespace NaggerLibrary
             return CardCategorizerChain.GetColumn(this);
         }
 
-        public virtual bool ProcessTransition(string fromColumn, ICard penultimateAction)
+        public virtual bool ProcessTransition(string fromColumn, ICard penultimateAction, ICard mostRecentAction)
         {
             return true;
         }

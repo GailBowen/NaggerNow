@@ -2,7 +2,7 @@
 {
     public class Should : Card
     { 
-        public override bool ProcessTransition(string fromColumn, ICard penultimateAction)
+        public override bool ProcessTransition(string fromColumn, ICard penultimateAction, ICard mostRecentAction)
         {
             if (penultimateAction.ColumnID != (int)ColumnType.colShould)
             {

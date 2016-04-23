@@ -79,8 +79,9 @@ namespace NaggerNow
 
             CardManager mgr = new CardManager();
             ICard card = mgr.DeserializeCard(Nag, toColumn);
-            ICard penultimateAction = ndl.GetPenultimateAction(card.ID);
-            if (card.ProcessTransition(fromColumn, penultimateAction) == false)
+            ICard mostRecentAction = ndl.GetMostRecentAction(card.ID);
+            ICard previousAction = ndl.GetPenultimateAction(card.ID);
+            if (card.ProcessTransition(fromColumn, previousAction, mostRecentAction) == false)
             {
                 log.InfoFormat("Error updating: {0}", Nag);
 
