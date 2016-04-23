@@ -73,6 +73,7 @@
     <Build Include="dbo\Tables\Frequencies.sql" />
     <Build Include="dbo\Tables\CardActions.sql" />
     <Build Include="dbo\Stored Procedures\Cards_FetchPenultimateAction.sql" />
-    <Build Include="dbo\Stored Procedures\Cards_FetchCurrentAction.sql" />
+    <Build Include="dbo\Stored Procedures\Cards_FetchMostRecentAction.sql" />
+    <Build Include="dbo\Stored Procedures\Card_Insert.sql" />
   </ItemGroup>
 </Project>

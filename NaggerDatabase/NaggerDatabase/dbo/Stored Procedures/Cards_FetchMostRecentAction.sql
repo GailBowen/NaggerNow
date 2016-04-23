@@ -1,5 +1,5 @@
-﻿-- [dbo].[Cards_FetchPenultimateAction] 2
-create PROCEDURE [dbo].[Cards_FetchCurrentAction]
+﻿-- [dbo].[Cards_FetchMostRecentAction] 21
+CREATE PROCEDURE [dbo].[Cards_FetchMostRecentAction]
 	@cardID int
 AS
 BEGIN

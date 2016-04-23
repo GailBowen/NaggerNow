@@ -12,8 +12,7 @@ BEGIN
 		c.*, acts1.*
 	from
 	cards c
-	--left
-	join CardActions acts1 on (c.id = acts1.CardID)
+	left outer join CardActions acts1 on (c.id = acts1.CardID)
 	left outer join CardActions acts2 on (c.id = acts2.CardID and
 		(acts1.id < acts2.id or acts1.id = acts2.id and acts1.CardID < acts2.CardID))
     where acts2.CardID is null

@@ -56,3 +56,5 @@ Temporary Items
 /NaggerNow/bin/NaggerLibrary.dll
 /NaggerNow/bin/NaggerLibrary.pdb
 /NaggerTests/obj/Debug
+/NaggerConsole/bin/Debug
+/NaggerTests/bin/Debug
