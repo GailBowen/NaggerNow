@@ -37,7 +37,8 @@ namespace NagManager.Controllers
             {
                 Columns = GetColumns(),
                 Boards = GetBoards(),
-                Frequencies = GetFrequencies()
+                Frequencies = GetFrequencies(),
+                Locations = GetLocations()
             };
 
             return View(model);
@@ -149,5 +150,17 @@ namespace NagManager.Controllers
             return new SelectList(frequencies, "Value", "Text");
         }
 
+        private IEnumerable<SelectListItem> GetLocations()
+        {
+
+            var locations = db.Locations.Select(x =>
+                                new SelectListItem
+                                {
+                                    Value = x.ID.ToString(),
+                                    Text = x.Description
+                                });
+
+            return new SelectList(locations, "Value", "Text");
+        }
     }
 }

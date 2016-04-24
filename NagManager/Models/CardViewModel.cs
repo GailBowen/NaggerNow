@@ -14,6 +14,8 @@ namespace NagManager.Models
         public IEnumerable<SelectListItem> Boards { get; set; }
 
         public IEnumerable<SelectListItem> Frequencies { get; set; }
+
+        public IEnumerable<SelectListItem> Locations { get; set; }
     }
 
     public class Column
@@ -27,7 +29,14 @@ namespace NagManager.Models
         public int ID { get; set; }
         public String Description { get; set; }
     }
-    
+
+
+    public class Location
+    {
+        public int ID { get; set; }
+        public String Description { get; set; }
+    }
+
     public class Frequency
     {
         [Key]
@@ -50,8 +59,7 @@ namespace NagManager.Models
         public virtual DbSet<Column> Columns { get; set; }
         public virtual DbSet<Frequency> Frequencies { get; set; }
 
-        //public virtual DbSet<Location> Locations { get; set; }
-
+        public virtual DbSet<Location> Locations { get; set; }
 
     }
 
