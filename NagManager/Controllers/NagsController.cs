@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NaggerLibrary;
+using NagManager.Models;
 
 using System.Data;
 
@@ -11,6 +12,9 @@ namespace NagManager.Controllers
 {
     public class NagsController : Controller
     {
+
+        private Nags db = new Nags();
+
         // GET: Nags
         public ActionResult Index()
         {
@@ -29,27 +33,22 @@ namespace NagManager.Controllers
         // GET: Nags/Create
         public ActionResult Create()
         {
-            return View();
+            var model = new CardViewModel
+            {
+                Boards = GetBoards()
+            };
+
+            return View(model);
         }
 
         // POST: Nags/Create
         [HttpPost]
-        public ActionResult Create(Card newCard)
+        public ActionResult Create(CardViewModel newCard)
         {
-            //Card newCard = new Card();
-
+          
             try
             {
-
-                //newCard.ColumnID = Convert.ToInt16(collection["ColumnID"]);
-                //newCard.BoardID = Convert.ToInt16(collection["BoardID"]);
-                //newCard.FrequencyID = Convert.ToInt16(collection["FrequencyID"]);
-                //var test = collection["Mandated"];
-                //newCard.Mandated = Convert.ToBoolean(collection["Mandated"]);
-                //newCard.LocationID = Convert.ToInt16(collection["LocationID"]);
-                //newCard.Title = collection["Title"];
-                //newCard.Description = collection["Description"];
-
+          
                 NaggerDataLinker ndl = new NaggerDataLinker();
                 ndl.InsertCard(newCard);
 
@@ -105,6 +104,20 @@ namespace NagManager.Controllers
             {
                 return View();
             }
+        }
+
+
+        private IEnumerable<SelectListItem> GetBoards()
+        {
+
+            var boards = db.Boards.Select(x =>
+                                new SelectListItem
+                                {
+                                    Value = x.ID.ToString(),
+                                    Text = x.Description
+                                });
+            
+            return new SelectList(boards, "Value", "Text");
         }
     }
 }

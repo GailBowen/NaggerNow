@@ -3,6 +3,7 @@ using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.ComponentModel.DataAnnotations;
 
 namespace NaggerLibrary
 {
@@ -16,6 +17,7 @@ namespace NaggerLibrary
 
             public bool Mandated { get; set; }
 
+            [Display(Name = "Board")]
             public int BoardID { get; set; }
 
             public int FrequencyID { get; set; }
