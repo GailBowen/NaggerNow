@@ -35,6 +35,7 @@ namespace NagManager.Controllers
         {
             var model = new CardViewModel
             {
+                Columns = GetColumns(),
                 Boards = GetBoards(),
                 Frequencies = GetFrequencies()
             };
@@ -105,6 +106,19 @@ namespace NagManager.Controllers
             {
                 return View();
             }
+        }
+
+        private IEnumerable<SelectListItem> GetColumns()
+        {
+
+            var columns = db.Columns.Select(x =>
+                                new SelectListItem
+                                {
+                                    Value = x.ID.ToString(),
+                                    Text = x.Description
+                                });
+
+            return new SelectList(columns, "Value", "Text");
         }
 
 
