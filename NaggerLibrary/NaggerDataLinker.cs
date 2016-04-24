@@ -143,5 +143,23 @@ namespace NaggerLibrary
             SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
         }
 
+
+        public void InsertCard(ICard card)
+        {
+            string dbConnString = ConfigurationManager.ConnectionStrings["NaggerConn"].ConnectionString;
+
+            string spName = "Card_Insert";
+
+            SqlParameter[] sqlParam = SqlHelperParameterCache.GetSpParameterSet(dbConnString, spName);
+            sqlParam[0].Value = card.ColumnID;
+            sqlParam[1].Value = card.BoardID;
+            sqlParam[2].Value = card.FrequencyID;
+            sqlParam[3].Value = card.Mandated;
+            sqlParam[4].Value = card.LocationID;
+            sqlParam[5].Value = card.Title;
+            sqlParam[6].Value = card.Description;
+            
+            SqlHelper.ExecuteNonQuery(dbConnString, CommandType.StoredProcedure, spName, sqlParam);
+        }
     }
 }

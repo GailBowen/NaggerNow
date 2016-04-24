@@ -1,9 +1,10 @@
-﻿
+﻿--select * from dbo.columns
 --select * from dbo.boards
 --select * from dbo.frequencies
 --select * from dbo.locations
--- dbo.Card_Insert 8,7,1,2,'Cook weekly','Hugh Recipes?'
-CREATE PROCEDURE dbo.Card_Insert
+-- dbo.Card_Insert 1,8,7,1,2,'Cook weekly','Hugh Recipes?'
+CREATE PROCEDURE [dbo].[Card_Insert]
+		   @ColumnID int,
 		   @BoardID int,
            @FrequencyID int,
            @Mandated bit,
@@ -14,6 +15,8 @@ AS
 BEGIN
 	
 	SET NOCOUNT ON;
+
+	DECLARE @CardID int
 
     
 	INSERT INTO [dbo].[Cards]
@@ -32,4 +35,19 @@ BEGIN
            ,@Title
            ,@Description
            ,getdate())
+
+     SELECT @CardID = @@IDENTITY
+
+	 PRINT @CardID
+
+
+	  INSERT INTO [dbo].[CardActions]
+           ([CardID]
+           ,[ColumnID]
+           ,[DueDate])
+     VALUES
+           (@CardID
+           ,@ColumnID
+           ,GETDATE() + (@FrequencyID -1))
+           
 END

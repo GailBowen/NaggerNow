@@ -1,0 +1,113 @@
+﻿@model IEnumerable<NaggerLibrary.Card>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ColumnID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mandated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BoardID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FrequencyID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LocationID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DueDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SkipCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastSkip)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastDone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Completed)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ColumnID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mandated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BoardID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FrequencyID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocationID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DueDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SkipCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastSkip)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastDone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Completed)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

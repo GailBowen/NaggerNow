@@ -58,3 +58,7 @@ Temporary Items
 /NaggerTests/obj/Debug
 /NaggerConsole/bin/Debug
 /NaggerTests/bin/Debug
+/NagManager/bin/roslyn
+/NagManager/bin
+/NagManager/obj/Debug
+/packages
