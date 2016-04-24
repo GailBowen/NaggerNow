@@ -9,6 +9,8 @@ namespace NagManager.Models
 {
     public class CardViewModel: Card
     {
+        public String ColumnDescription { get; set; }
+
         public IEnumerable<SelectListItem> Columns { get; set; }
 
         public IEnumerable<SelectListItem> Boards { get; set; }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NaggerLibrary.Card>
+﻿@model IEnumerable<NagManager.Models.CardViewModel>
 
 @{
     Layout = null;
@@ -38,7 +38,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Created)
             </th>
             <th>
@@ -55,14 +55,14 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Completed)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     
     @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ColumnID)
+                @Html.DisplayFor(modelItem => item.ColumnDescription)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Mandated)
@@ -82,24 +82,25 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Created)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DueDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SkipCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastSkip)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastDone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Completed)
-            </td>
+            @*
+                <td>
+                    @Html.DisplayFor(modelItem => item.Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DueDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SkipCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastSkip)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastDone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Completed)
+                </td>*@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
                 @Html.ActionLink("Details", "Details", new { id=item.ID }) |

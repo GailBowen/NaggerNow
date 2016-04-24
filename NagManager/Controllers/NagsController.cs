@@ -18,10 +18,25 @@ namespace NagManager.Controllers
         // GET: Nags
         public ActionResult Index()
         {
+            var model = new List<CardViewModel>();
+
             NaggerDataLinker ndl = new NaggerDataLinker();
-            IEnumerable<Card> cards = ndl.GetCardCollection();
-            
-            return View(cards);
+            List<Card> cards = ndl.GetCardCollection();
+
+            var viewModel =
+                from n in cards
+                join cols in db.Columns on n.ColumnID equals cols.ID
+                select new CardViewModel {
+                    ColumnDescription = cols.Description,
+                    Mandated = n.Mandated,
+                    BoardID = n.BoardID,
+                    FrequencyID = n.FrequencyID,
+                    LocationID = n.LocationID,
+                    Title = n.Title,
+                    Description = n.Description
+                };
+                
+            return View(viewModel);
         }
 
         // GET: Nags/Details/5
