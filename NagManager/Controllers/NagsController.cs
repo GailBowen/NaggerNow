@@ -24,20 +24,22 @@ namespace NagManager.Controllers
             List<Card> cards = ndl.GetCardCollection();
 
             var viewModel =
-                from n in cards
-                join cols in db.Columns on n.ColumnID equals cols.ID
-                join l in db.Locations on n.LocationID equals l.ID
-                join b in db.Boards on n.BoardID equals b.ID
+                from c in cards
+                join m in db.Columns on c.ColumnID equals m.ID
+                join l in db.Locations on c.LocationID equals l.ID
+                join b in db.Boards on c.BoardID equals b.ID
+                join f in db.Frequencies on c.FrequencyID equals f.DayCount
                 select new CardViewModel {
-                    ColumnDescription = cols.Description,
+                    ColumnDescription = m.Description,
                     BoardDescription = b.Description,
                     LocationDescription = l.Description,
-                    Mandated = n.Mandated,
-                    BoardID = n.BoardID,
-                    FrequencyID = n.FrequencyID,
-                    LocationID = n.LocationID,
-                    Title = n.Title,
-                    Description = n.Description
+                    FrequencyDescription = f.Description,
+                    Mandated = c.Mandated,
+                    BoardID = c.BoardID,
+                    FrequencyID = c.FrequencyID,
+                    LocationID = c.LocationID,
+                    Title = c.Title,
+                    Description = c.Description
                 };
                 
             return View(viewModel);

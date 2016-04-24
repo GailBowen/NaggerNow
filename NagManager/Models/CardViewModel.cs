@@ -15,8 +15,7 @@ namespace NagManager.Models
 
         public String BoardDescription { get; set; }
 
-
-        //public String FrequencyDescription { get; set; }
+        public String FrequencyDescription { get; set; }
 
         public IEnumerable<SelectListItem> Columns { get; set; }
 
