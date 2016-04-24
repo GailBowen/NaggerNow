@@ -13,6 +13,7 @@ namespace NaggerLibrary
         #region Properties
             public int ID { get; set; }
 
+            [Display(Name = "Column")]
             public int ColumnID { get; set; }
 
             public bool Mandated { get; set; }
@@ -20,8 +21,10 @@ namespace NaggerLibrary
             [Display(Name = "Board")]
             public int BoardID { get; set; }
 
+            [Display(Name = "Frequency")]
             public int FrequencyID { get; set; }
 
+            [Display(Name = "Location")]
             public int LocationID { get; set; }
 
             public string Title { get; set; }

@@ -35,7 +35,8 @@ namespace NagManager.Controllers
         {
             var model = new CardViewModel
             {
-                Boards = GetBoards()
+                Boards = GetBoards(),
+                Frequencies = GetFrequencies()
             };
 
             return View(model);
@@ -119,5 +120,20 @@ namespace NagManager.Controllers
             
             return new SelectList(boards, "Value", "Text");
         }
+
+
+        private IEnumerable<SelectListItem> GetFrequencies()
+        {
+
+            var frequencies = db.Frequencies.Select(x =>
+                                new SelectListItem
+                                {
+                                    Value = x.DayCount.ToString(),
+                                    Text = x.Description
+                                });
+
+            return new SelectList(frequencies, "Value", "Text");
+        }
+
     }
 }
