@@ -11,6 +11,13 @@ namespace NagManager.Models
     {
         public String ColumnDescription { get; set; }
 
+        public String LocationDescription { get; set; }
+
+        public String BoardDescription { get; set; }
+
+
+        //public String FrequencyDescription { get; set; }
+
         public IEnumerable<SelectListItem> Columns { get; set; }
 
         public IEnumerable<SelectListItem> Boards { get; set; }

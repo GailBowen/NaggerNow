@@ -26,8 +26,12 @@ namespace NagManager.Controllers
             var viewModel =
                 from n in cards
                 join cols in db.Columns on n.ColumnID equals cols.ID
+                join l in db.Locations on n.LocationID equals l.ID
+                join b in db.Boards on n.BoardID equals b.ID
                 select new CardViewModel {
                     ColumnDescription = cols.Description,
+                    BoardDescription = b.Description,
+                    LocationDescription = l.Description,
                     Mandated = n.Mandated,
                     BoardID = n.BoardID,
                     FrequencyID = n.FrequencyID,
